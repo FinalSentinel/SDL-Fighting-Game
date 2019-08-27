@@ -10,6 +10,8 @@
 #include "TitleState.h"
 
 int main(int argc, char* argv[]){
+    //TODO Folder structures.
+    
     GameEngine* game = new GameEngine();
 
     if(!game->init()){

@@ -35,10 +35,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/AudioMenu.o \
 	${OBJECTDIR}/BattleMenu.o \
 	${OBJECTDIR}/Box.o \
 	${OBJECTDIR}/Character.o \
 	${OBJECTDIR}/CommandMenu.o \
+	${OBJECTDIR}/ControlsMenu.o \
 	${OBJECTDIR}/Entity.o \
 	${OBJECTDIR}/Frame.o \
 	${OBJECTDIR}/GalleryMenu.o \
@@ -53,6 +55,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/TitleState.o \
 	${OBJECTDIR}/VersusMenu.o \
 	${OBJECTDIR}/VersusState.o \
+	${OBJECTDIR}/VideoMenu.o \
 	${OBJECTDIR}/Window.o \
 	${OBJECTDIR}/main.o
 
@@ -81,6 +84,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fg_test.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fg_test ${OBJECTFILES} ${LDLIBSOPTIONS} -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
+${OBJECTDIR}/AudioMenu.o: AudioMenu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AudioMenu.o AudioMenu.cpp
+
 ${OBJECTDIR}/BattleMenu.o: BattleMenu.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -100,6 +108,11 @@ ${OBJECTDIR}/CommandMenu.o: CommandMenu.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandMenu.o CommandMenu.cpp
+
+${OBJECTDIR}/ControlsMenu.o: ControlsMenu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ControlsMenu.o ControlsMenu.cpp
 
 ${OBJECTDIR}/Entity.o: Entity.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -170,6 +183,11 @@ ${OBJECTDIR}/VersusState.o: VersusState.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VersusState.o VersusState.cpp
+
+${OBJECTDIR}/VideoMenu.o: VideoMenu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoMenu.o VideoMenu.cpp
 
 ${OBJECTDIR}/Window.o: Window.cpp
 	${MKDIR} -p ${OBJECTDIR}

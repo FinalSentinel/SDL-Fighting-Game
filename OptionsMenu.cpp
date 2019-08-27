@@ -13,6 +13,10 @@
 
 #include "OptionsMenu.h"
 
+#include "AudioMenu.h"
+#include "ControlsMenu.h"
+#include "VideoMenu.h"
+
 OptionsMenu::OptionsMenu(){
     /*
     options.emplace_back("");
@@ -51,6 +55,7 @@ std::string OptionsMenu::name(){
 void OptionsMenu::Change_controls(){
     //TODO
     std::cout<<"Controls"<<std::endl;
+    game->pushState(new ControlsMenu());
 
     return;
 }
@@ -58,6 +63,7 @@ void OptionsMenu::Change_controls(){
 void OptionsMenu::Video_settings(){
     //TODO 
     std::cout<<"Video"<<std::endl;
+    game->pushState(new VideoMenu());
 
     return;
 }
@@ -65,6 +71,7 @@ void OptionsMenu::Video_settings(){
 void OptionsMenu::Audio_settings(){
     //TODO 
     std::cout<<"Audio"<<std::endl;
+    game->pushState(new AudioMenu());
 
     return;
 }

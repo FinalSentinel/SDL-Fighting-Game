@@ -22,7 +22,7 @@ build/Debug/MinGW64-Windows/OptionsMenu.o: OptionsMenu.cpp OptionsMenu.h \
  c:/SDL64/include/SDL_render.h c:/SDL64/include/SDL_sensor.h \
  c:/SDL64/include/SDL_shape.h c:/SDL64/include/SDL_system.h \
  c:/SDL64/include/SDL_timer.h c:/SDL64/include/SDL_version.h GameEngine.h \
- Window.h
+ Window.h AudioMenu.h ControlsMenu.h VideoMenu.h
 
 OptionsMenu.h:
 
@@ -123,3 +123,9 @@ c:/SDL64/include/SDL_version.h:
 GameEngine.h:
 
 Window.h:
+
+AudioMenu.h:
+
+ControlsMenu.h:
+
+VideoMenu.h:
