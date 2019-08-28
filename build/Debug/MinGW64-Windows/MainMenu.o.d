@@ -22,7 +22,8 @@ build/Debug/MinGW64-Windows/MainMenu.o: MainMenu.cpp MainMenu.h \
  c:/SDL64/include/SDL_render.h c:/SDL64/include/SDL_sensor.h \
  c:/SDL64/include/SDL_shape.h c:/SDL64/include/SDL_system.h \
  c:/SDL64/include/SDL_timer.h c:/SDL64/include/SDL_version.h GameEngine.h \
- Window.h BattleMenu.h OptionsMenu.h GalleryMenu.h StoryMenu.h
+ Window.h Texture.h c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h \
+ BattleMenu.h OptionsMenu.h GalleryMenu.h StoryMenu.h
 
 MainMenu.h:
 
@@ -123,6 +124,12 @@ c:/SDL64/include/SDL_version.h:
 GameEngine.h:
 
 Window.h:
+
+Texture.h:
+
+c:/SDL64/include/SDL_ttf.h:
+
+c:/SDL64/include/SDL.h:
 
 BattleMenu.h:
 

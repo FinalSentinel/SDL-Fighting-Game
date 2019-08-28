@@ -18,7 +18,9 @@
 
 #include "GameState.h"
 
-class Texture;
+#include "Texture.h"
+
+const int MAX_MENU_SIZE = 10;
 
 class MenuState : public GameState{
 protected:
@@ -26,12 +28,15 @@ protected:
 	
     int selection = 0;
 	
+	int index = 0;
+	
 	//XXX
 	int numSelections;
 
 	//TODO stringstreams
 	std::vector<std::string> options;
 	std::vector<std::function<void()> > actions;
+	//TODO objects
 	std::vector<Texture*> buttons;
 	
 //  std::vector<std::string> options;

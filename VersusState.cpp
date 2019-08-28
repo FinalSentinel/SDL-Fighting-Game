@@ -303,9 +303,11 @@ void VersusState::controllerButtonHandler(SDL_Event e){
             break;
 
         case SDL_CONTROLLER_BUTTON_LEFTSTICK:
+            //FIXME Doesn't work on PS4 mode
             break;
 
         case SDL_CONTROLLER_BUTTON_RIGHTSTICK:
+            //FIXME Doesn't work on PS4 mode
             break;
 
         case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:

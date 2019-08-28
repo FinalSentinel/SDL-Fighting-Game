@@ -61,7 +61,7 @@ void GameState::eventHandler(SDL_Event e){
                     }
                 }
             }
-            std::string hold = SDL_GameControllerGetStringForButton(SDL_GameControllerButton((int) (e.cbutton.button)));
+            std::string hold = SDL_GameControllerGetStringForButton(SDL_GameControllerButton((int)(e.cbutton.button)));
             for(unsigned int i = 0; i < hold.length(); i++){
                 hold[i] = std::toupper(hold[i]);
             }

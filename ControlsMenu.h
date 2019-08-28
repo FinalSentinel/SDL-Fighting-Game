@@ -22,6 +22,15 @@ class ControlsMenu: public MenuState{
 private:
 
 protected:
+	bool config;
+	
+	int configNum;
+	
+	Texture configPrompt;
+	
+	const std::string controlFormat = "controlFormat.txt";
+	
+	const std::string controlConfig = "controlConfig.txt";
 
 public:
 	ControlsMenu();
@@ -34,9 +43,22 @@ public:
 
 	std::string name();
 	
+	void render();
+	
+	void update();
+	
+	
+	
+	void controllerAxisHandler(SDL_Event e);
+	
+	void controllerButtonHandler(SDL_Event e);
+	
 	
 	
 	/*MENU FUNCTIONS*/
+	void Config_buttons();
+	void Set_button();
+	void Default();
 	void Back();
 };
 

@@ -7,8 +7,6 @@
 
 #include "MenuState.h"
 
-#include "Texture.h"
-
 /*
 MenuState MenuState::state;
 
@@ -45,7 +43,7 @@ void MenuState::load(){
 
     for(int i = 0; i < options.size(); i++){
         buttons.emplace_back(new Texture());
-        buttons[i]->loadText(game->gameWindow.renderer, options[i], 50);
+        buttons[i]->loadText(game->gameWindow.renderer, options[i], 100);
     }
     if(!buttons.empty()){
         buttons[selection]->setRGBA(0xFF, 0x80, 0x00);
@@ -66,12 +64,12 @@ void MenuState::render(){
     int x = game->gameWindow.get_w() / 5;
     //Menu height is the number of window height divided by numOptions + 2,
     //therefore equal blank space above and below.  Will implement scrolling.
-    int h = game->gameWindow.get_h() / (buttons.size() + 2);
+    int h = game->gameWindow.get_h() / (std::min((int)buttons.size(), MAX_MENU_SIZE) + 2);
 
     //TODO menu scrolling
 
-    for(int i = 0; i < buttons.size(); i++){
-        buttons[i]->render(game->gameWindow.renderer, x, h * (i + 1), 3 * x, h);
+    for(int i = 0; i < MAX_MENU_SIZE && i < buttons.size(); i++){
+        buttons[i + selection - index]->render(game->gameWindow.renderer, x, h * (i + 1), 3 * x, h);
     }
 
     return;
@@ -169,17 +167,35 @@ void MenuState::controllerButtonHandler(SDL_Event e){
 
             case SDL_CONTROLLER_BUTTON_DPAD_UP:
             {
+                if(index > 0){
+                    index--;
+                }
+                else if(selection == 0){
+                    index = std::min((int)buttons.size() - 1, MAX_MENU_SIZE - 1);
+                }
+                
                 buttons[selection]->setRGBA();
                 selection = (buttons.size() + selection - 1) % buttons.size();
                 buttons[selection]->setRGBA(0xFF, 0x80, 0x00);
+                
+                
             }
                 break;
 
             case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
             {
+                if(index < MAX_MENU_SIZE - 1 && index < buttons.size() - 1){
+                    index++;
+                }
+                else if(selection == buttons.size() - 1){
+                    index = 0;
+                }
+                
                 buttons[selection]->setRGBA();
                 selection = (buttons.size() + selection + 1) % buttons.size();
                 buttons[selection]->setRGBA(0xFF, 0x80, 0x00);
+                
+                
             }
                 break;
 

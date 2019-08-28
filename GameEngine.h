@@ -8,6 +8,7 @@
 #ifndef GAMEENGINE_GAMEENGINE_H_
 #define GAMEENGINE_GAMEENGINE_H_
 
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -36,6 +37,10 @@ private:
 protected:
 
 public:
+	std::fstream file;
+	
+	
+	
     GameEngine() : quit(false){};
 
     virtual ~GameEngine(){};

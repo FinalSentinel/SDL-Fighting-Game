@@ -12,9 +12,10 @@
         <itemPath>default.png</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="Options" projectFiles="true">
-        <itemPath>audio.txt</itemPath>
-        <itemPath>controls.txt</itemPath>
-        <itemPath>video.txt</itemPath>
+        <itemPath>audioConfig.txt</itemPath>
+        <itemPath>controlConfig.txt</itemPath>
+        <itemPath>controlFormat.txt</itemPath>
+        <itemPath>videoConfig.txt</itemPath>
       </logicalFolder>
       <itemPath>Cirno.ttf</itemPath>
     </logicalFolder>
@@ -211,15 +212,17 @@
       </item>
       <item path="Window.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="audio.txt" ex="false" tool="3" flavor2="0">
+      <item path="audioConfig.txt" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="controls.txt" ex="false" tool="3" flavor2="0">
+      <item path="controlConfig.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controlFormat.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="default.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="video.txt" ex="false" tool="3" flavor2="0">
+      <item path="videoConfig.txt" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -336,15 +339,17 @@
       </item>
       <item path="Window.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="audio.txt" ex="false" tool="3" flavor2="0">
+      <item path="audioConfig.txt" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="controls.txt" ex="false" tool="3" flavor2="0">
+      <item path="controlConfig.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="controlFormat.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="default.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="video.txt" ex="false" tool="3" flavor2="0">
+      <item path="videoConfig.txt" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
