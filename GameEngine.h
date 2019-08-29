@@ -37,7 +37,8 @@ private:
 protected:
 
 public:
-	std::fstream file;
+	std::ifstream fileI;
+	std::ofstream fileO;
 	
 	
 	

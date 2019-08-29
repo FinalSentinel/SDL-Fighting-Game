@@ -20,6 +20,7 @@
 
 class ControlsMenu: public MenuState{
 private:
+        char hold[32];
 
 protected:
 	bool config;
@@ -29,8 +30,8 @@ protected:
 	Texture configPrompt;
 	
 	const std::string controlFormat = "controlFormat.txt";
-	
 	const std::string controlConfig = "controlConfig.txt";
+	const std::string controlDefault = "controlConfigDefault.txt";
 
 public:
 	ControlsMenu();
@@ -40,6 +41,8 @@ public:
 	virtual ~ControlsMenu();
 	
 	
+	
+	void loadButtons();
 
 	std::string name();
 	

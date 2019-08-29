@@ -66,8 +66,6 @@ void MenuState::render(){
     //therefore equal blank space above and below.  Will implement scrolling.
     int h = game->gameWindow.get_h() / (std::min((int)buttons.size(), MAX_MENU_SIZE) + 2);
 
-    //TODO menu scrolling
-
     for(int i = 0; i < MAX_MENU_SIZE && i < buttons.size(); i++){
         buttons[i + selection - index]->render(game->gameWindow.renderer, x, h * (i + 1), 3 * x, h);
     }
@@ -97,7 +95,7 @@ void MenuState::update(){
 }
 
 void MenuState::controllerAxisHandler(SDL_Event e){
-    if(e.caxis.value == 32767){
+    if(e.caxis.value > 30000){
         switch(e.caxis.axis){
             case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
                 break;

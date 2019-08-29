@@ -13,6 +13,9 @@
 
 #include "ControlsMenu.h"
 
+//TODO Keyboard controls
+//TODO Menu controls
+
 ControlsMenu::ControlsMenu(): config(false){
     /*
     options.emplace_back("");
@@ -20,21 +23,42 @@ ControlsMenu::ControlsMenu(): config(false){
     
      */
 
-    options.emplace_back("Configure Buttons");
+    options.emplace_back("Quick Config");
     actions.emplace_back(std::bind(Config_buttons, this));
 
-    game->file.open(controlFormat);
-    if(game->file.is_open()){
-        char hold[32];
-        while(game->file.getline(hold, 32)){
-            options.emplace_back(hold);
+    //TODO do better
+    game->fileI.open(controlFormat);
+    if(!game->fileI.is_open()){
+        std::cerr << "ERROR unable to open control format fileI." << std::endl;
+    }
+    else{
+        while(game->fileI.getline(hold, 32)){
+            //TODO better loop check
+            options.emplace_back(std::string(hold) + ": ");
             actions.emplace_back(std::bind(Set_button, this));
         }
     }
-    else{
-        game->file.close();
-        std::cerr << "ERROR unable to open control format file." << std::endl;
+    game->fileI.close();
+    
+    game->fileI.open(controlConfig);
+    if(!game->fileI.is_open()){
+        std::cerr << "ERROR unable to open control config fileI." << std::endl;
     }
+    else{
+        int i = 1;
+        while(game->fileI.getline(hold, 32)){
+            //TODO better loop check
+            if(std::string(hold) == "") break;
+            options[i].append(std::string(hold) + "/");
+            i++;
+        }
+        i = 1;
+        while(game->fileI.getline(hold, 32)){
+            options[i].append(std::string(hold));
+            i++;
+        }
+    }
+    game->fileI.close();
 
     options.emplace_back("Default");
     actions.emplace_back(std::bind(Default, this));
@@ -47,6 +71,60 @@ ControlsMenu::ControlsMenu(const ControlsMenu& orig){
 }
 
 ControlsMenu::~ControlsMenu(){
+}
+
+void ControlsMenu::loadButtons(){
+    //TODO DO BETTER
+    options.clear();
+    
+    options.emplace_back("Quick Config");
+
+    //TODO do better
+    game->fileI.open(controlFormat);
+    if(game->fileI.is_open()){
+        char hold[32];
+        while(game->fileI.getline(hold, 32)){
+            //TODO better loop check
+            options.emplace_back(std::string(hold) + ": ");
+        }
+    }
+    else{
+        std::cerr << "ERROR unable to open control format fileI." << std::endl;
+    }
+    game->fileI.close();
+    game->fileI.open(controlConfig);
+    if(game->fileI.is_open()){
+        char hold[32];
+        int i = 1;
+        while(game->fileI.getline(hold, 32)){
+            //TODO better loop check
+            if(std::string(hold) == "") break;
+            options[i].append(std::string(hold) + "/");
+            i++;
+        }
+        i = 1;
+        while(game->fileI.getline(hold, 32)){
+            options[i].append(std::string(hold));
+            i++;
+        }
+    }
+    else{
+        std::cerr << "ERROR unable to open control config fileI." << std::endl;
+    }
+    game->fileI.close();
+
+    options.emplace_back("Default");
+
+    options.emplace_back("Back");
+    
+    for(int i = 0; i < buttons.size(); i++){
+        buttons[i]->loadText(game->gameWindow.renderer, options[i], 100);
+    }
+    if(!buttons.empty()){
+        buttons[selection]->setRGBA(0xFF, 0x80, 0x00);
+    }
+    
+    return;
 }
 
 std::string ControlsMenu::name(){
@@ -63,7 +141,6 @@ void ControlsMenu::render(){
         //therefore equal blank space above and below.  Will implement scrolling.
         int y = game->gameWindow.get_h() / 3;
 
-        configPrompt.loadText(game->gameWindow.renderer, options[configNum], 100);
         configPrompt.render(game->gameWindow.renderer, x, y, x * 3, y);
     }
 
@@ -71,18 +148,25 @@ void ControlsMenu::render(){
 }
 
 void ControlsMenu::update(){
-    if(configNum  == options.size() - 2){
+    if(configNum >= 8 && configNum <= 13){
+        for(int i = 0; i < 6; i++){
+            game->fileI.getline(hold, 32);
+        }
+        configNum = 14;
+    }
+    if(configNum == options.size() - 3){
         config = false;
 
         //TODO Set player controls
         //TODO save controls to file
-
-        game->file.close();
+        
+        game->fileI.close();
 
         for(int i = 0; i < buttons.size(); i++){
             //TODO get RGBA
             buttons[i]->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
         }
+        buttons[selection]->setRGBA(0xFF, 0x80, 0x00);
     }
 
     return;
@@ -99,10 +183,10 @@ void ControlsMenu::controllerAxisHandler(SDL_Event e){
     else{
         if(e.caxis.value > 30000){
             if(e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
-                //TODO set stuff
+                std::cout << SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(e.caxis.axis)) << std::endl;
+                game->fileI.getline(hold, 32);
+                configPrompt.loadText(game->gameWindow.renderer, std::string(hold), 100);
                 configNum++;
-                //XXX
-                game->file << SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(e.caxis.axis)) << std::endl;
             }
         }
     }
@@ -120,12 +204,26 @@ void ControlsMenu::controllerButtonHandler(SDL_Event e){
             MenuState::controllerButtonHandler(e);
         }
         else{
-  //          if(e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
+            if(e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
                 std::cout  << SDL_GameControllerGetStringForButton(SDL_GameControllerButton(e.cbutton.button)) << std::endl;
+                game->fileI.getline(hold, 32);
+                configPrompt.loadText(game->gameWindow.renderer, std::string(hold), 100);
                 configNum++;
-                //XXX
-                game->file << SDL_GameControllerGetStringForButton(SDL_GameControllerButton(e.cbutton.button)) << std::endl;
-   //         }
+            }
+            else{
+                config = false;
+
+                //TODO Set player controls
+                //TODO save controls to file
+
+                game->fileI.close();
+
+                for(int i = 0; i < buttons.size(); i++){
+                    //TODO get RGBA
+                    buttons[i]->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                }
+                buttons[selection]->setRGBA(0xFF, 0x80, 0x00);
+            }
         }
     }
 
@@ -136,19 +234,23 @@ void ControlsMenu::controllerButtonHandler(SDL_Event e){
 void ControlsMenu::Config_buttons(){
     std::cout << "Set Buttons" << std::endl;
 
-    game->file.open(controlConfig);
-    if(game->file.is_open()){
+    game->fileI.open(controlFormat);
+    if(game->fileI.is_open()){
         config = true;
-        configNum = 1;
+        configNum = 5;
 
         for(int i = 0; i < buttons.size(); i++){
             //TODO get RGBA
             buttons[i]->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
+        for(int i = 0; i < 5; i++){
+            game->fileI.getline(hold, 32);
+        }
+        configPrompt.loadText(game->gameWindow.renderer, std::string(hold), 100);
     }
     else{
-        game->file.close();
-        std::cerr << "ERROR unable to  open controls file." << std::endl;
+        game->fileI.close();
+        std::cerr << "ERROR unable to open controls fileI." << std::endl;
     }
 
     return;
@@ -163,7 +265,26 @@ void ControlsMenu::Set_button(){
 
 void ControlsMenu::Default(){
     std::cout << "Default" << std::endl;
-    //TODO load default button config.
+    
+    //TODO YES/NO option
+    
+    game->fileI.open(controlDefault);
+        
+    if(!game->fileI.is_open()){
+        std::cerr << "ERROR cannot open controls default." << std::endl;
+    }
+    else if(std::remove(controlConfig.c_str()) != 0){
+        std::cerr<<"ERROR cannot delete controls config file"<<std::endl;
+    }
+    else{
+        game->fileO.open(controlConfig);
+        game->fileO << game->fileI.rdbuf();
+
+        game->fileO.close();
+        game->fileI.close();
+
+        loadButtons();
+    }
 
     return;
 }
