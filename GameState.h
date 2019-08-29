@@ -13,6 +13,8 @@
 
 #include "SDL.h"
 
+#include <sstream>
+
 #include "GameEngine.h"
 
 

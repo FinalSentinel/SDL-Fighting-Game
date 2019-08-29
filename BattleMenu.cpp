@@ -17,28 +17,28 @@
 
 BattleMenu::BattleMenu(){
     /*
-    options.emplace_back("");
-    actions.emplace_back(std::bind(, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("", new Texture(), std::bind(, this)));
     
     */
     
-    options.emplace_back("Versus");
-    actions.emplace_back(std::bind(Versus, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Versus", new Texture(), std::bind(Versus, this)));
     
-    options.emplace_back("Online");
-    actions.emplace_back(std::bind(Online, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Online", new Texture(), std::bind(Online, this)));
     
-    options.emplace_back("Training");
-    actions.emplace_back(std::bind(Training, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Training", new Texture(), std::bind(Training, this)));
     
-    options.emplace_back("Combos");
-    actions.emplace_back(std::bind(Combos, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Combos", new Texture(), std::bind(Combos, this)));
     
-    options.emplace_back("Tutorial");
-    actions.emplace_back(std::bind(Tutorial, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Tutorial", new Texture(), std::bind(Tutorial, this)));
     
-    options.emplace_back("Back");
-    actions.emplace_back(std::bind(Back, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Back", new Texture(), std::bind(Back, this)));
 }
 
 BattleMenu::BattleMenu(const BattleMenu& orig){

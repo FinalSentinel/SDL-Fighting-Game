@@ -11,14 +11,19 @@
 #define GAMEENGINE_GAMESTATES_MENUSTATE_H_
 
 #include <functional>
-#include <vector>
-
 //XXX
 #include <iostream>
+#include <tuple>
+#include <vector>
 
 #include "GameState.h"
-
 #include "Texture.h"
+
+enum Option_Structure{
+	TEXT,
+	GRAPHIC,
+	FUNCTION
+};
 
 const int MAX_MENU_SIZE = 10;
 
@@ -33,11 +38,8 @@ protected:
 	//XXX
 	int numSelections;
 
-	//TODO stringstreams
-	std::vector<std::string> options;
-	std::vector<std::function<void()> > actions;
-	//TODO objects
-	std::vector<Texture*> buttons;
+	//Tuple of menu option Text, Graphic, and Function
+	std::vector<std::tuple<std::string, Texture*, std::function<void()>>> options;
 	
 //  std::vector<std::string> options;
 //	

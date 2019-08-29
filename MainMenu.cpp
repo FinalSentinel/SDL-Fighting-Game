@@ -20,31 +20,25 @@
 
 MainMenu::MainMenu(){
     /*
-    options.emplace_back("");
-    actions.emplace_back(std::bind(, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("", new Texture(), std::bind(, this)));
     
-     */
+    */
 
-    options.emplace_back("Battle");
-    actions.emplace_back(std::bind(Battle, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Battle", new Texture(), std::bind(Battle, this)));
 
-    options.emplace_back("Story");
-    actions.emplace_back(std::bind(Story, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Story", new Texture(), std::bind(Story, this)));
 
-    options.emplace_back("Gallery");
-    actions.emplace_back(std::bind(Gallery, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Gallery", new Texture(), std::bind(Gallery, this)));
 
-    options.emplace_back("Options");
-    actions.emplace_back(std::bind(Options, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Options", new Texture(), std::bind(Options, this)));
 
-    options.emplace_back("Return to Title");
-    actions.emplace_back(std::bind(Return_to_title, this));
-
-    //actions[VERSUS] = std::bind(Versus, this);
-    //actions[STORY] = std::bind(Story, this);
-    //actions[GALLERY] = std::bind(Gallery, this);
-    //actions[OPTIONS] = std::bind(Options, this);
-    //actions[RETURN_TO_TITLE] = std::bind(Return_to_title, this);
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Return to Title", new Texture(), std::bind(Return_to_title, this)));
 }
 
 MainMenu::~MainMenu(){

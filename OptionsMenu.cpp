@@ -19,22 +19,22 @@
 
 OptionsMenu::OptionsMenu(){
     /*
-    options.emplace_back("");
-    actions.emplace_back(std::bind(, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("", new Texture(), std::bind(, this)));
     
     */
     
-    options.emplace_back("Change Controls");
-    actions.emplace_back(std::bind(Change_controls, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Change Controls", new Texture(), std::bind(Change_controls, this)));
 
-    options.emplace_back("Video Settings");
-    actions.emplace_back(std::bind(Video_settings, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Video Settings", new Texture(), std::bind(Video_settings, this)));
 
-    options.emplace_back("Audio Settings");
-    actions.emplace_back(std::bind(Audio_settings, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Audio Settings", new Texture(), std::bind(Audio_settings, this)));
     
-    options.emplace_back("Back");
-    actions.emplace_back(std::bind(Back, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Back", new Texture(), std::bind(Back, this)));
 }
 
 OptionsMenu::OptionsMenu(const OptionsMenu& orig){

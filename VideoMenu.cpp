@@ -15,13 +15,13 @@
 
 VideoMenu::VideoMenu(){
     /*
-    options.emplace_back("");
-    actions.emplace_back(std::bind(, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("", new Texture(), std::bind(, this)));
     
     */
     
-    options.emplace_back("Back");
-    actions.emplace_back(std::bind(Back, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Back", new Texture(), std::bind(Back, this)));
 }
 
 VideoMenu::VideoMenu(const VideoMenu& orig){

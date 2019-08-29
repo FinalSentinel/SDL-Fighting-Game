@@ -22,27 +22,26 @@ VersusMenu::VersusMenu(){
     hide = false;
 
     /*
-    options.emplace_back("");
-    actions.emplace_back(std::bind(, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("", new Texture(), std::bind(, this)));
     
     */
 
-    //Assign menu functions.
     //TODO divide into sections
-    options.emplace_back("Resume");
-    actions.emplace_back(std::bind(Resume, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Resume", new Texture(), std::bind(Resume, this)));
 
-    options.emplace_back("Command List");
-    actions.emplace_back(std::bind(Command_list, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Command List", new Texture(), std::bind(Command_list, this)));
 
-    options.emplace_back("Options");
-    actions.emplace_back(std::bind(Options, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Options", new Texture(), std::bind(Options, this)));
 
-    options.emplace_back("Hide Menu");
-    actions.emplace_back(std::bind(Hide_menu, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Hide Menu", new Texture(), std::bind(Hide_menu, this)));
 
-    options.emplace_back("Return to Main Menu");
-    actions.emplace_back(std::bind(Return_to_menu, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Return To Main Menu", new Texture(), std::bind(Return_to_menu, this)));
 }
 
 void VersusMenu::load(){

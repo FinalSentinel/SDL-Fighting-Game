@@ -35,8 +35,9 @@ public:
 	
 	
 	/*MENU FUNCTIONS*/
-	void play();
-	void back();
+	void Play();
+	void Back();
+	void none();
 };
 
 #endif /* COMMANDMENU_H */

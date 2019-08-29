@@ -24,6 +24,7 @@ private:
 
 protected:
 	bool config;
+	bool set;
 	
 	int configNum;
 	
@@ -59,10 +60,10 @@ public:
 	
 	
 	/*MENU FUNCTIONS*/
-	void Config_buttons();
-	void Set_button();
+	void Quick_config();
 	void Default();
 	void Back();
+	void none();
 };
 
 #endif /* CONTROLSMENU_H */

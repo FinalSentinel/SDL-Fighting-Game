@@ -15,25 +15,25 @@
 
 CommandMenu::CommandMenu(){
     /*
-    options.emplace_back("");
-    actions.emplace_back(std::bind(, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("", new Texture(), std::bind(, this)));
     
-     */
+    */
     
-    options.emplace_back("CHARACTER NAME");
-    actions.emplace_back(std::bind(play, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("CHARACTER NAME", new Texture(), std::bind(none, this)));
     
-    options.emplace_back("Move 1");
-    actions.emplace_back(std::bind(play, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Move 1", new Texture(), std::bind(Play, this)));
     
-    options.emplace_back("Move 2");
-    actions.emplace_back(std::bind(play, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Move 2", new Texture(), std::bind(Play, this)));
     
-    options.emplace_back("Move 3");
-    actions.emplace_back(std::bind(play, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Move 3", new Texture(), std::bind(Play, this)));
     
-    options.emplace_back("Back");
-    actions.emplace_back(std::bind(back, this));
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Back", new Texture(), std::bind(Back, this)));
 }
 
 CommandMenu::CommandMenu(const CommandMenu& orig){
@@ -49,13 +49,17 @@ std::string CommandMenu::name(){
 
 
 /*MENU FUNCTIONS*/
-void CommandMenu::play(){
+void CommandMenu::Play(){
     //TODO
     return;
 }
 
-void CommandMenu::back(){
+void CommandMenu::Back(){
     game->popState();
     
+    return;
+}
+
+void CommandMenu::none(){
     return;
 }
