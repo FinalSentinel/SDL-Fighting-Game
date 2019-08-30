@@ -48,13 +48,13 @@ public:
 
 
     //TODO event handler
-    void controllerAxisHandler(SDL_Event e);
+    void controllerAxisHandler();
 
-    void controllerButtonHandler(SDL_Event e);
+    void controllerButtonHandler();
 
-    void keyHandler(SDL_Event e);
+    void keyHandler();
 
-    void windowHandler(SDL_Event e);
+    void windowHandler();
 };
 
 #endif /* GAMEENGINE_STATES_TITLESTATE_H_ */

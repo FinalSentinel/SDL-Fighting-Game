@@ -75,12 +75,12 @@ void TitleState::update(){
     return;
 }
 
-void TitleState::controllerAxisHandler(SDL_Event e){
+void TitleState::controllerAxisHandler(){
     //TODO title gfx/sfx
-    switch(e.caxis.axis){
+    switch(game->e.caxis.axis){
         case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
         {
-            if(e.caxis.value == 32767){
+            if(game->e.caxis.value == 32767){
                 game->pushState(new MainMenu());
             }
         }
@@ -88,7 +88,7 @@ void TitleState::controllerAxisHandler(SDL_Event e){
 
         case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
         {
-            if(e.caxis.value == 32767){
+            if(game->e.caxis.value == 32767){
                 game->pushState(new MainMenu());
             }
         }
@@ -99,14 +99,14 @@ void TitleState::controllerAxisHandler(SDL_Event e){
     }
 }
 
-void TitleState::controllerButtonHandler(SDL_Event e){
+void TitleState::controllerButtonHandler(){
     //TODO multiple control method exclusion
     //TODO player differentiation
 
-    switch(e.cbutton.button){
+    switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_A:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -114,7 +114,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_B:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 //game->pushState(new MainMenu());
             }
         }
@@ -122,7 +122,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_X:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -130,7 +130,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_Y:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -138,7 +138,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_BACK:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 //Select button exits from title screen
                 game->close();
             }
@@ -147,7 +147,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_START:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -155,7 +155,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_LEFTSTICK:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -163,7 +163,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_RIGHTSTICK:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -171,7 +171,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -179,7 +179,7 @@ void TitleState::controllerButtonHandler(SDL_Event e){
 
         case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
         {
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new MainMenu());
             }
         }
@@ -193,12 +193,12 @@ void TitleState::controllerButtonHandler(SDL_Event e){
     return;
 }
 
-void TitleState::keyHandler(SDL_Event e){
+void TitleState::keyHandler(){
     //TODO keys to switch state
     return;
 }
 
-void TitleState::windowHandler(SDL_Event e){
+void TitleState::windowHandler(){
     //TODO
     return;
 }

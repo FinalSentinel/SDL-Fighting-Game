@@ -69,6 +69,9 @@ public:
     virtual void render();
 
     virtual void resume(/*TODO*/);
+	
+	//Returns to top of menu.
+	void returnToTop();
 
     virtual void unload(/*TODO*/);
 
@@ -77,14 +80,14 @@ public:
 
 
     //TODO event handler
-    virtual void controllerAxisHandler(SDL_Event e);
+    virtual void controllerAxisHandler();
 
-    virtual void controllerButtonHandler(SDL_Event e);
+    virtual void controllerButtonHandler();
 
-    virtual void keyHandler(SDL_Event e);
+    virtual void keyHandler();
 
     //TODO generalized window handler???
-    virtual void windowHandler(SDL_Event e);
+    virtual void windowHandler();
 };
 
 #endif /* GAMEENGINE_GAMESTATES_MENUSTATE_H_ */

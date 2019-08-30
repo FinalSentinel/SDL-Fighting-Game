@@ -48,7 +48,7 @@ public:
 	
 	
 	
-	virtual void controllerButtonHandler(SDL_Event e);
+	virtual void controllerButtonHandler();
 	
 
 	

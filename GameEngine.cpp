@@ -102,8 +102,6 @@ bool GameEngine::close(){
 }
 
 void GameEngine::eventHandler(){
-    SDL_Event e;
-
     while(SDL_PollEvent(&e)){
         //Engine handles game-wide events such as adding/removing controllers, or quitting, then pass to game state
         switch(e.type){
@@ -131,7 +129,7 @@ void GameEngine::eventHandler(){
                     }
                 }
 
-                stateStack.back()->eventHandler(e);
+                stateStack.back()->eventHandler();
             }
                 break;
 
@@ -167,7 +165,7 @@ void GameEngine::eventHandler(){
                     }
                 }
 
-                stateStack.back()->eventHandler(e);
+                stateStack.back()->eventHandler();
             }
                 break;
 
@@ -180,7 +178,7 @@ void GameEngine::eventHandler(){
                     SDL_GameControllerOpen(e.cdevice.which);
                 }
 
-                stateStack.back()->eventHandler(e);
+                stateStack.back()->eventHandler();
             }
                 break;
 
@@ -211,13 +209,13 @@ void GameEngine::eventHandler(){
                     }
                 }
 
-                stateStack.back()->eventHandler(e);
+                stateStack.back()->eventHandler();
             }
                 break;
 
             case SDL_CONTROLLERDEVICEREMAPPED:
 
-                stateStack.back()->eventHandler(e);
+                stateStack.back()->eventHandler();
 
                 break;
 
@@ -228,7 +226,7 @@ void GameEngine::eventHandler(){
                 //All other events handled by game state
             default:
                 if(!stateStack.empty()){
-                    stateStack.back()->eventHandler(e);
+                    stateStack.back()->eventHandler();
                 }
                 break;
         }

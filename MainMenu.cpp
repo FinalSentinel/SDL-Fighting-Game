@@ -65,9 +65,9 @@ void MainMenu::render(){
     return;
 }
 
-void MainMenu::controllerButtonHandler(SDL_Event e){
-    if(e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
-        MenuState::controllerButtonHandler(e);
+void MainMenu::controllerButtonHandler(){
+    if(game->e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
+        MenuState::controllerButtonHandler();
     }
 
     //TODO buttons

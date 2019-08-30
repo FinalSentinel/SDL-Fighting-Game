@@ -21,32 +21,32 @@ bool GameState::get_seen(){
     return seen;
 }
 
-void GameState::eventHandler(SDL_Event e){
+void GameState::eventHandler(){
     //Check event type and pass to event specific handler
-    switch(e.type){
+    switch(game->e.type){
         case SDL_CONTROLLERAXISMOTION:
         {
             //XXX
             int n = -1;
             for(unsigned int i = 0; i < game->getPlayersList().size(); i++){
                 if(game->getPlayersList()[i] != nullptr){
-                    if(SDL_GameControllerFromInstanceID(e.caxis.which) == game->getPlayersList()[i]->controller){
+                    if(SDL_GameControllerFromInstanceID(game->e.caxis.which) == game->getPlayersList()[i]->controller){
                         n = i + 1;
                     }
                 }
             }
-            std::string hold = SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(e.caxis.axis));
+            std::string hold = SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis));
 
-            if(e.caxis.value == 32767){
+            if(game->e.caxis.value == 32767){
                 std::locale loc;
 
                 for(unsigned int i = 0; i < hold.length(); i++){
                     hold[i] = std::toupper(hold[i], loc);
                 }
             }
-            std::cout << "Player " << n << " " << hold << ": " << e.caxis.value << std::endl;
+            std::cout << "Player " << n << " " << hold << ": " << game->e.caxis.value << std::endl;
 
-            controllerAxisHandler(e);
+            controllerAxisHandler();
         }
             break;
 
@@ -56,18 +56,18 @@ void GameState::eventHandler(SDL_Event e){
             int n = -1;
             for(unsigned int i = 0; i < game->getPlayersList().size(); i++){
                 if(game->getPlayersList()[i] != nullptr){
-                    if(SDL_GameControllerFromInstanceID(e.cbutton.which) == game->getPlayersList()[i]->controller){
+                    if(SDL_GameControllerFromInstanceID(game->e.cbutton.which) == game->getPlayersList()[i]->controller){
                         n = i + 1;
                     }
                 }
             }
-            std::string hold = SDL_GameControllerGetStringForButton(SDL_GameControllerButton((int)(e.cbutton.button)));
+            std::string hold = SDL_GameControllerGetStringForButton(SDL_GameControllerButton((int)(game->e.cbutton.button)));
             for(unsigned int i = 0; i < hold.length(); i++){
                 hold[i] = std::toupper(hold[i]);
             }
             std::cout << "Player " << n << " " << hold << std::endl;
 
-            controllerButtonHandler(e);
+            controllerButtonHandler();
         }
             break;
 
@@ -77,57 +77,57 @@ void GameState::eventHandler(SDL_Event e){
             int n = -1;
             for(unsigned int i = 0; i < game->getPlayersList().size(); i++){
                 if(game->getPlayersList()[i] != nullptr){
-                    if(SDL_GameControllerFromInstanceID(e.cbutton.which) == game->getPlayersList()[i]->controller){
+                    if(SDL_GameControllerFromInstanceID(game->e.cbutton.which) == game->getPlayersList()[i]->controller){
                         n = i + 1;
                     }
                 }
             }
-            std::string hold = SDL_GameControllerGetStringForButton(SDL_GameControllerButton((int) (e.cbutton.button)));
+            std::string hold = SDL_GameControllerGetStringForButton(SDL_GameControllerButton((int) (game->e.cbutton.button)));
             for(unsigned int i = 0; i < hold.length(); i++){
                 hold[i] = std::tolower(hold[i]);
             }
             std::cout << "Player " << n << " " << hold << std::endl;
 
-            controllerButtonHandler(e);
+            controllerButtonHandler();
         }
             break;
 
         case SDL_KEYDOWN:
         {
             //XXX
-            if(!e.key.repeat){
-                std::string hold = SDL_GetKeyName(e.key.keysym.sym);
+            if(!game->e.key.repeat){
+                std::string hold = SDL_GetKeyName(game->e.key.keysym.sym);
                 for(unsigned int i = 0; i < hold.size(); i++){
                     hold[i] = std::toupper(hold[i]);
                 }
                 std::cout << hold << std::endl;
             }
 
-            keyHandler(e);
+            keyHandler();
         }
             break;
 
         case SDL_KEYUP:
         {
             //XXX
-            if(!e.key.repeat){
-                std::string hold = SDL_GetKeyName(e.key.keysym.sym);
+            if(!game->e.key.repeat){
+                std::string hold = SDL_GetKeyName(game->e.key.keysym.sym);
                 for(unsigned int i = 0; i < hold.size(); i++){
                     hold[i] = std::tolower(hold[i]);
                 }
                 std::cout << hold << std::endl;
             }
 
-            keyHandler(e);
+            keyHandler();
         }
             break;
 
         case SDL_WINDOWEVENT:
-            windowHandler(e);
+            windowHandler();
             break;
 
         default:
-            //std::cerr<<"ERROR unknown event: "<<e.type<<std::endl;
+            //std::cerr<<"ERROR unknown event: "<<game->e.type<<std::endl;
             break;
     }
 

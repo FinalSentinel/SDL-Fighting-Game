@@ -267,17 +267,17 @@ void VersusState::update(){
     return;
 }
 
-void VersusState::controllerAxisHandler(SDL_Event e){
+void VersusState::controllerAxisHandler(){
 
     
     return;
 }
 
-void VersusState::controllerButtonHandler(SDL_Event e){
+void VersusState::controllerButtonHandler(){
     //TODO multiple control method exclusion
     //TODO player differentiation
 
-    switch(e.cbutton.button){
+    switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_A:
             break;
 
@@ -297,7 +297,7 @@ void VersusState::controllerButtonHandler(SDL_Event e){
             break;
 
         case SDL_CONTROLLER_BUTTON_START:
-            if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+            if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 game->pushState(new VersusMenu());
             }
             break;
@@ -340,23 +340,23 @@ void VersusState::controllerButtonHandler(SDL_Event e){
 
 //TODO CONTROLLER DEVICE handler
 
-void VersusState::keyHandler(SDL_Event e){
+void VersusState::keyHandler(){
     //TODO multiple control method exclusion
     //TODO player differentiation
 
     //TODO key repeat handling
-    if(!e.key.repeat){
+    if(!game->e.key.repeat){
         //TODO state based handling
         //NOTE setup two control list profiles and when keyboard is pressed do stuff
-        switch(e.key.keysym.sym){
+        switch(game->e.key.keysym.sym){
                 //TODO pass to character input handler?
             case SDLK_a:
-                if(e.type == SDL_KEYDOWN){
+                if(game->e.type == SDL_KEYDOWN){
                 }
                 break;
 
             case SDLK_d:
-                if(e.type == SDL_KEYDOWN){
+                if(game->e.type == SDL_KEYDOWN){
                 }
                 break;
 
@@ -364,7 +364,7 @@ void VersusState::keyHandler(SDL_Event e){
                 break;
 
             case SDLK_w:
-                if(e.type == SDL_KEYDOWN){
+                if(game->e.type == SDL_KEYDOWN){
                 }
                 break;
 
@@ -375,7 +375,7 @@ void VersusState::keyHandler(SDL_Event e){
     return;
 }
 
-void VersusState::windowHandler(SDL_Event e){
+void VersusState::windowHandler(){
     //TODO
     return;
 }

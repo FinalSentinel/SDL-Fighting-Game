@@ -16,15 +16,15 @@
 //TODO Keyboard controls
 //TODO Menu controls
 
-ControlsMenu::ControlsMenu(): config(false){
+ControlsMenu::ControlsMenu(): config(false), configNum(0){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("", new Texture(), std::bind(, this)));
     
-    */
+     */
 
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Quick Config", new Texture(), std::bind(Quick_config, this)));
+    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
+            ("Quick Config", new Texture(), std::bind(Quick_config, this)));
 
     //TODO do better
     game->fileI.open(controlFormat);
@@ -34,8 +34,8 @@ ControlsMenu::ControlsMenu(): config(false){
     else{
         while(game->fileI.getline(hold, 32)){
             //TODO better loop check            
-            options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-            (std::string(hold) + ": ", new Texture(), std::bind(none, this)));
+            options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
+                    (std::string(hold) + ": ", new Texture(), std::bind(none, this)));
         }
     }
     game->fileI.close();
@@ -60,11 +60,11 @@ ControlsMenu::ControlsMenu(): config(false){
     }
     game->fileI.close();
 
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Default", new Texture(), std::bind(Default, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(Back, this)));
+    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
+            ("Default", new Texture(), std::bind(Default, this)));
+
+    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
+            ("Back", new Texture(), std::bind(Back, this)));
 }
 
 ControlsMenu::ControlsMenu(const ControlsMenu& orig){
@@ -165,18 +165,18 @@ void ControlsMenu::update(){
     return;
 }
 
-void ControlsMenu::controllerAxisHandler(SDL_Event e){
+void ControlsMenu::controllerAxisHandler(){
     //TODO multiple control method exclusion
     //TODO player differentiation
     //TODO menu mapping
     //TODO make options files
     if(!config){
-        MenuState::controllerAxisHandler(e);
+        MenuState::controllerAxisHandler();
     }
     else{
-        if(e.caxis.value > 30000){
-            if(e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
-                std::cout << SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(e.caxis.axis)) << std::endl;
+        if(game->e.caxis.value > 30000){
+            if(game->e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || game->e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
+                std::cout << SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis)) << std::endl;
                 game->fileI.getline(hold, 32);
                 configPrompt.loadText(game->gameWindow.renderer, std::string(hold), 100);
                 configNum++;
@@ -187,54 +187,58 @@ void ControlsMenu::controllerAxisHandler(SDL_Event e){
     return;
 }
 
-void ControlsMenu::controllerButtonHandler(SDL_Event e){
+void ControlsMenu::controllerButtonHandler(){
     //TODO player differentiation
-    if(selection >= 1 && selection <= 18 &&
-       e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_UP && e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_DOWN){
-        if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
-            switch(e.cbutton.button){
-                case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
-                    selection = 0;
-                    break;
-                }
+    if(selection >= 1 && selection <= 18 && game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN &&
+       game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_UP && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_DOWN){
+        switch(game->e.cbutton.button){
+            case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
+                returnToTop();
+                
+                break;
+            }
 
-                default:
-                {
-                    if(selection >= 5 && selection <= 17){
-                        std::cout << "Set Button" << std::endl;
-                        //TODO
-                    }
-                    break;
+            default:{
+                if(selection >= 5 && selection <= 17){
+                    std::cout << "Set Button" << std::endl;
+                    //TODO
                 }
+                break;
             }
         }
     }
     else if(config){
-        if(e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
-            std::cout << SDL_GameControllerGetStringForButton(SDL_GameControllerButton(e.cbutton.button)) << std::endl;
-            game->fileI.getline(hold, 32);
-            configPrompt.loadText(game->gameWindow.renderer, std::string(hold), 100);
-            configNum++;
-        }
-        else{
-            config = false;
+        if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN &&
+                game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_UP && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_DOWN &&
+                game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_LEFT && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_RIGHT){
+            if(game->e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
+                std::cout << SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button)) << std::endl;
+                if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+                    game->fileI.getline(hold, 32);
+                    configPrompt.loadText(game->gameWindow.renderer, std::string(hold), 100);
+                    configNum++;
+                }
+                else{
+                    config = false;
 
-            //TODO Set player controls
-            //TODO save controls to file
+                    //TODO Set player controls
+                    //TODO save controls to file
 
-            game->fileI.close();
+                    game->fileI.close();
 
-            for(int i = 0; i < options.size(); i++){
-                //TODO get RGBA
-                std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                    for(int i = 0; i < options.size(); i++){
+                        //TODO get RGBA
+                        std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                    }
+                    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                }
             }
-            std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
         }
     }
     else{
-        MenuState::controllerButtonHandler(e);
+        MenuState::controllerButtonHandler();
     }
-
+    
     return;
 }
 

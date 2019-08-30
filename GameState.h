@@ -60,16 +60,16 @@ public:
 
 	
     //TODO event handler
-    void eventHandler(SDL_Event e);
+    void eventHandler();
 	
-    virtual void controllerAxisHandler(SDL_Event e) = 0;
+    virtual void controllerAxisHandler() = 0;
 
-    virtual void controllerButtonHandler(SDL_Event e) = 0;
+    virtual void controllerButtonHandler() = 0;
 
-    virtual void keyHandler(SDL_Event e) = 0;
+    virtual void keyHandler() = 0;
 
     //TODO generalized window handler???
-    virtual void windowHandler(SDL_Event e) = 0;
+    virtual void windowHandler() = 0;
 };
 
 #endif /* GAMEENGINE_GAMESTATE_H_ */

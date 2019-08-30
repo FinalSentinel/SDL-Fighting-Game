@@ -64,7 +64,7 @@ void VersusMenu::render(){
     return;
 }
 
-void VersusMenu::controllerButtonHandler(SDL_Event e){
+void VersusMenu::controllerButtonHandler(){
     //TODO multiple control method exclusion
     //TODO player differentiation
     //TODO menu mapping
@@ -72,13 +72,13 @@ void VersusMenu::controllerButtonHandler(SDL_Event e){
     bool hold = hide;
     
     if(!hide){
-        MenuState::controllerButtonHandler(e);
+        MenuState::controllerButtonHandler();
     }
     
-    if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN && hide == hold){
+    if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN && hide == hold){
 
         //TODO Player based menu control
-        switch(e.cbutton.button){
+        switch(game->e.cbutton.button){
             case SDL_CONTROLLER_BUTTON_A:
             {
                 hide = false;

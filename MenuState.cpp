@@ -71,6 +71,17 @@ void MenuState::resume(){
     return;
 }
 
+void MenuState::returnToTop(){
+    std::get<GRAPHIC>(options[selection])->setRGBA();
+
+    index = 0;
+    selection = 0;
+    
+    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+    
+    return;
+}
+
 void MenuState::unload(){
     //TODO unload stuff
 
@@ -85,9 +96,9 @@ void MenuState::update(){
     return;
 }
 
-void MenuState::controllerAxisHandler(SDL_Event e){
-    if(e.caxis.value > 30000){
-        switch(e.caxis.axis){
+void MenuState::controllerAxisHandler(){
+    if(game->e.caxis.value > 30000){
+        switch(game->e.caxis.axis){
             case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
                 break;
 
@@ -102,15 +113,15 @@ void MenuState::controllerAxisHandler(SDL_Event e){
     return;
 }
 
-void MenuState::controllerButtonHandler(SDL_Event e){
+void MenuState::controllerButtonHandler(){
     //TODO multiple control method exclusion
     //TODO player differentiation
     //TODO menu mapping
     //TODO make options files
 
-    if(e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
+    if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
         //TODO Player based menu control
-        switch(e.cbutton.button){
+        switch(game->e.cbutton.button){
             case SDL_CONTROLLER_BUTTON_A:
             {
                 //Activate menu selection.
@@ -196,8 +207,12 @@ void MenuState::controllerButtonHandler(SDL_Event e){
     return;
 }
 
-void MenuState::keyHandler(SDL_Event e){
+void MenuState::keyHandler(){
+    
+    return;
 }
 
-void MenuState::windowHandler(SDL_Event e){
+void MenuState::windowHandler(){
+    
+    return;
 }

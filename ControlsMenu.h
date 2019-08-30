@@ -24,7 +24,6 @@ private:
 
 protected:
 	bool config;
-	bool set;
 	
 	int configNum;
 	
@@ -53,9 +52,9 @@ public:
 	
 	
 	
-	void controllerAxisHandler(SDL_Event e);
+	void controllerAxisHandler();
 	
-	void controllerButtonHandler(SDL_Event e);
+	void controllerButtonHandler();
 	
 	
 	

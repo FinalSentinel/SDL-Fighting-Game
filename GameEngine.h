@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "SDL.h"
 #include "Window.h"
 
 //TODO flags enum?
@@ -39,6 +40,8 @@ protected:
 public:
 	std::ifstream fileI;
 	std::ofstream fileO;
+	
+	SDL_Event e;
 	
 	
 	

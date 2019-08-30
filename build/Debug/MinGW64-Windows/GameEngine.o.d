@@ -1,5 +1,5 @@
 build/Debug/MinGW64-Windows/GameEngine.o: GameEngine.cpp GameEngine.h \
- Window.h c:/SDL64/include/SDL.h c:/SDL64/include/SDL_main.h \
+ c:/SDL64/include/SDL.h c:/SDL64/include/SDL_main.h \
  c:/SDL64/include/SDL_stdinc.h c:/SDL64/include/SDL_config.h \
  c:/SDL64/include/SDL_platform.h c:/SDL64/include/begin_code.h \
  c:/SDL64/include/close_code.h c:/SDL64/include/SDL_assert.h \
@@ -21,14 +21,12 @@ build/Debug/MinGW64-Windows/GameEngine.o: GameEngine.cpp GameEngine.h \
  c:/SDL64/include/SDL_power.h c:/SDL64/include/SDL_render.h \
  c:/SDL64/include/SDL_sensor.h c:/SDL64/include/SDL_shape.h \
  c:/SDL64/include/SDL_system.h c:/SDL64/include/SDL_timer.h \
- c:/SDL64/include/SDL_version.h c:/SDL64/include/SDL_image.h \
+ c:/SDL64/include/SDL_version.h Window.h c:/SDL64/include/SDL_image.h \
  c:/SDL64/include/SDL.h c:/SDL64/include/SDL_mixer.h \
  c:/SDL64/include/SDL_ttf.h GameState.h Player.h TitleState.h Texture.h \
  MainMenu.h MenuState.h
 
 GameEngine.h:
-
-Window.h:
 
 c:/SDL64/include/SDL.h:
 
@@ -119,6 +117,8 @@ c:/SDL64/include/SDL_system.h:
 c:/SDL64/include/SDL_timer.h:
 
 c:/SDL64/include/SDL_version.h:
+
+Window.h:
 
 c:/SDL64/include/SDL_image.h:
 
