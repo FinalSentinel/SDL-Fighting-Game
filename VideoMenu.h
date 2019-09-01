@@ -27,19 +27,30 @@ class VideoMenu: public MenuState{
 private:
 	//TODO pass enum size
 	int dials[numDials];
+<<<<<<< Upstream, based on origin/master
+=======
+	
+	const int* resolution;
+>>>>>>> 9932bf5 Video options sans default implemented
 
 protected:
 
 public:
 	VideoMenu();
 
-	VideoMenu(const VideoMenu& orig);
-
 	virtual ~VideoMenu();
 	
 	
 
+	void load();
+	
 	std::string name();
+	
+	virtual void update();
+	
+	
+	
+	virtual void controllerButtonHandler();
 	
 	
 	
