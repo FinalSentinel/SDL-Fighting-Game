@@ -36,7 +36,7 @@ public:
 	
 	/*MENU FUNCTIONS*/
 	void Hold();
-	void Back();
+	//   Back = MenuState::back()
 };
 
 #endif /* STORYMENU_H */

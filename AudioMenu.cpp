@@ -21,7 +21,7 @@ AudioMenu::AudioMenu(){
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(Back, this)));
+    ("Back", new Texture(), std::bind(back, this)));
 }
 
 AudioMenu::AudioMenu(const AudioMenu& orig){
@@ -39,9 +39,10 @@ std::string AudioMenu::name(){
 
 
 /*MENU FUNCTIONS*/
-void AudioMenu::Back(){
-    std::cout<<"Options"<<std::endl;
-    game->popState();
+void AudioMenu::back(){
+    //TODO save options to file
+    
+    MenuState::back();
 
     return;
 }

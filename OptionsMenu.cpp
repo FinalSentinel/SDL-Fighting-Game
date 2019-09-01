@@ -34,7 +34,7 @@ OptionsMenu::OptionsMenu(){
     ("Audio Settings", new Texture(), std::bind(Audio_settings, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(Back, this)));
+    ("Back", new Texture(), std::bind(back, this)));
 }
 
 OptionsMenu::OptionsMenu(const OptionsMenu& orig){
@@ -72,12 +72,6 @@ void OptionsMenu::Audio_settings(){
     //TODO 
     std::cout<<"Audio"<<std::endl;
     game->pushState(new AudioMenu());
-
-    return;
-}
-
-void OptionsMenu::Back(){
-    game->popState();
 
     return;
 }

@@ -16,10 +16,17 @@
 
 #include "MenuState.h"
 
-
+enum Dials{
+	RESOLUTION,
+	FULLSCREEN,
+	VSYNC,
+	numDials
+};
 
 class VideoMenu: public MenuState{
 private:
+	//TODO pass enum size
+	int dials[numDials];
 
 protected:
 
@@ -36,8 +43,16 @@ public:
 	
 	
 	
+	virtual void controllerButtonHandler();
+	
+	
+	
 	/*MENU FUNCTIONS*/
-	void Back();
+	void Resolution();
+	void Fullscreen();
+	void VSync();
+	void Default();
+	void back();
 };
 
 #endif /* VIDEOMENU_H */

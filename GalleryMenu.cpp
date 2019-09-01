@@ -18,13 +18,13 @@ GalleryMenu::GalleryMenu(){
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("", new Texture(), std::bind(, this)));
     
-    */
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("STORY STUFF", new Texture(), std::bind(Hold, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(Back, this)));
+     */
+
+    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
+            ("STORY STUFF", new Texture(), std::bind(Hold, this)));
+
+    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
+            ("Back", new Texture(), std::bind(back, this)));
 }
 
 GalleryMenu::GalleryMenu(const GalleryMenu& orig){
@@ -33,8 +33,6 @@ GalleryMenu::GalleryMenu(const GalleryMenu& orig){
 GalleryMenu::~GalleryMenu(){
 }
 
-
-
 std::string GalleryMenu::name(){
     return "GalleryMenu";
 }
@@ -42,14 +40,8 @@ std::string GalleryMenu::name(){
 
 
 /*MENU FUNCTIONS*/
-	void GalleryMenu::Hold(){
-            std::cout<<"TEST HOLD TEST"<<std::endl;
-            
-            return;
-        }
-        
-	void GalleryMenu::Back(){
-            game->popState();
-            
-            return;
-        }
+void GalleryMenu::Hold(){
+    std::cout << "TEST HOLD TEST" << std::endl;
+
+    return;
+}

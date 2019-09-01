@@ -15,6 +15,13 @@ MenuState::MenuState(){
 MenuState::~MenuState(){
 }
 
+void MenuState::back(){
+    game->popState();
+    std::cout<<game->get_back()->name()<<std::endl;
+    
+    return;
+}
+
 //TODO safe function calling on invalid indexes?
 void MenuState::callAction(){
     std::get<FUNCTION>(options[selection])();
@@ -52,10 +59,10 @@ void MenuState::pause(){
 
 void MenuState::render(){
     //Menu x position is always at 3/5 of window width.
-    int x = game->gameWindow.get_w() / 5;
+    int x = game->gameWindow.getWidth() / 5;
     //Menu height is the number of window height divided by numOptions + 2,
     //therefore equal blank space above and below.  Will implement scrolling.
-    int h = game->gameWindow.get_h() / (std::min((int)options.size(), MAX_MENU_SIZE) + 2);
+    int h = game->gameWindow.getHeight() / (std::min((int)options.size(), MAX_MENU_SIZE) + 2);
 
     for(int i = 0; i < MAX_MENU_SIZE && i < options.size(); i++){
         std::get<GRAPHIC>(options[i + selection - index])->render(game->gameWindow.renderer, x, h * (i + 1), 3 * x, h);
@@ -132,7 +139,7 @@ void MenuState::controllerButtonHandler(){
 
             case SDL_CONTROLLER_BUTTON_B:
             {
-                game->popState();
+                back();
                 
                 break;
             }

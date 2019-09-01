@@ -45,9 +45,9 @@ public:
 	
 	
 	
-    GameEngine() : quit(false){};
+    GameEngine();
 
-    virtual ~GameEngine(){};
+    virtual ~GameEngine();
 
     Window gameWindow;
 

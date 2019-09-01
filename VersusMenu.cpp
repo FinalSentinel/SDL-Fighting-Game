@@ -29,7 +29,7 @@ VersusMenu::VersusMenu(){
 
     //TODO divide into sections
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Resume", new Texture(), std::bind(Resume, this)));
+    ("Resume", new Texture(), std::bind(back, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Command List", new Texture(), std::bind(Command_list, this)));
@@ -189,12 +189,6 @@ void VersusMenu::Options(){
 
 void VersusMenu::Hide_menu(){
     hide = true;
-
-    return;
-}
-
-void VersusMenu::Resume(){
-    close();
 
     return;
 }

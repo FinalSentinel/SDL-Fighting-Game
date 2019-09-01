@@ -38,7 +38,7 @@ public:
 	void Change_controls();
 	void Video_settings();
 	void Audio_settings();
-	void Back();
+	//   Back = MenuState::back()
 };
 
 #endif /* OPTIONSMENU_H */

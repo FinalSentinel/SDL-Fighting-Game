@@ -37,7 +37,7 @@ public:
 	
 	
 	/*MENU FUNCTIONS*/
-	void Back();
+	void back();
 };
 
 #endif /* AUDIOMENU_H */

@@ -64,7 +64,7 @@ ControlsMenu::ControlsMenu(): config(false), configNum(0){
             ("Default", new Texture(), std::bind(Default, this)));
 
     options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Back", new Texture(), std::bind(Back, this)));
+            ("Back", new Texture(), std::bind(back, this)));
 }
 
 ControlsMenu::ControlsMenu(const ControlsMenu& orig){
@@ -129,10 +129,10 @@ void ControlsMenu::render(){
 
     if(config){
         //Menu x position is always at 3/5 of window width.
-        int x = game->gameWindow.get_w() / 5;
+        int x = game->gameWindow.getWidth() / 5;
         //Menu height is the number of window height divided by numOptions + 2,
         //therefore equal blank space above and below.  Will implement scrolling.
-        int y = game->gameWindow.get_h() / 3;
+        int y = game->gameWindow.getHeight() / 3;
 
         configPrompt.render(game->gameWindow.renderer, x, y, x * 3, y);
     }
@@ -294,9 +294,10 @@ void ControlsMenu::Default(){
     return;
 }
 
-void ControlsMenu::Back(){
-    std::cout << "Options" << std::endl;
-    game->popState();
+void ControlsMenu::back(){
+    //TODO save to file
+    
+    MenuState::back();
 
     return;
 }

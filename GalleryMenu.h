@@ -36,7 +36,7 @@ public:
 	
 	/*MENU FUNCTIONS*/
 	void Hold();
-	void Back();
+	//   Back = MenuState::back()
 };
 
 #endif /* GALLERYMENU_H */

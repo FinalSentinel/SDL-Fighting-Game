@@ -22,13 +22,16 @@
 #include "MenuState.h"
 #include <typeinfo>
 
+GameEngine::GameEngine(): quit(false), gameWindow(Window()){
+    //TODO grab window dimensions from settings file
+}
+
+GameEngine::~GameEngine(){
+    players.clear();
+    stateStack.clear();
+}
 
 
-//GameEngine* GameEngine::instance(){
-//    static GameEngine engine;
-//    iGameState::game = &engine;
-//    return &engine;
-//}
 
 void GameEngine::addPlayer(Player* p){
     if(MAX_PLAYERS > 0){

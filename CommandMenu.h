@@ -36,7 +36,7 @@ public:
 	
 	/*MENU FUNCTIONS*/
 	void Play();
-	void Back();
+	//   Back = MenuState::back()
 	void none();
 };
 

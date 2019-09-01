@@ -55,7 +55,7 @@ public:
 	void Story();
 	void Gallery();
 	void Options();
-	void Return_to_title();
+	//   Return_to_title = MenuState::back()
 };
 
 #endif /* MAINMENU_H */

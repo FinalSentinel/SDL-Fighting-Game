@@ -9,6 +9,13 @@
 
 #include "SDL.h"
 
+Window::Window(): window(nullptr), renderer(nullptr){
+    //TODO Load resNum/fullscreen/vsync from settings file
+    resNum = 13;
+    fullscreen = false;
+    vSync = false;
+}
+
 Window::~Window(){
     if(renderer != nullptr){
         SDL_DestroyRenderer(renderer);
@@ -25,8 +32,9 @@ bool Window::init(){
     bool init = false;
 
     //TODO load flags from user chosen settings
-    window = SDL_CreateWindow("Fighting Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
-            SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Fighting Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+            resolutions[resNum][0], resolutions[resNum][1],
+            SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_SHOWN);
     if(window == nullptr){
         std::cerr << "Error creating window" << std::endl;
     }else{
@@ -50,10 +58,46 @@ bool Window::init(){
     return init;
 }
 
-int Window::get_h(){
-    return height;
+bool Window::get_fullscreen(){
+    return fullscreen;
 }
 
-int Window::get_w(){
-    return width;
+int Window::get_resNum(){
+    return resNum;
+}
+
+bool Window::get_vSync(){
+    return vSync;
+}
+
+int Window::getHeight(){
+    return resolutions[resNum][1];
+}
+
+int Window::getWidth(){
+    return resolutions[resNum][0];
+}
+
+void Window::resize(int res){
+    SDL_SetWindowSize(window, resolutions[res][0], resolutions[res][1]);
+    
+    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+    
+    return;
+}
+
+void Window::swapDisplayMode(){
+    fullscreen = !fullscreen;
+    
+    SDL_SetWindowFullscreen(window, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+    
+    return;
+}
+
+void Window::swapVSync(){
+    vSync = !vSync;
+
+    SDL_SetHint(SDL_HINT_RENDER_VSYNC, (vSync ? "1" : "0"));
+    
+    return;
 }

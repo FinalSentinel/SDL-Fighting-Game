@@ -33,7 +33,7 @@ CommandMenu::CommandMenu(){
     ("Move 3", new Texture(), std::bind(Play, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(Back, this)));
+    ("Back", new Texture(), std::bind(back, this)));
 }
 
 CommandMenu::CommandMenu(const CommandMenu& orig){
@@ -51,12 +51,6 @@ std::string CommandMenu::name(){
 /*MENU FUNCTIONS*/
 void CommandMenu::Play(){
     //TODO
-    return;
-}
-
-void CommandMenu::Back(){
-    game->popState();
-    
     return;
 }
 

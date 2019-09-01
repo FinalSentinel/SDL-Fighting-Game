@@ -12,9 +12,10 @@
 
 //Max players in a single game.
 const unsigned int ACTIVE_PLAYERS = 2;
-//TODO resizing window
-const int STAGE_WIDTH = 720;
-const int STAGE_HEIGHT = 480;
+
+//TODO Unit based stage/movement;
+const int STAGE_WIDTH = 1280;
+const int STAGE_HEIGHT = 720;
 
 class Player;
 class SDL_Rect;

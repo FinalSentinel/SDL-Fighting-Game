@@ -11,6 +11,7 @@
 
 int main(int argc, char* argv[]){
     //TODO Folder structures.
+    //TODO XML encoded options files?
     
     GameEngine* game = new GameEngine();
 

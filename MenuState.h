@@ -58,6 +58,8 @@ public:
 	
 	virtual void callAction();
 	
+	virtual void back();
+	
 	virtual void close();
 	
     virtual void load();

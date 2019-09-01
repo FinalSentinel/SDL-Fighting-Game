@@ -38,7 +38,7 @@ BattleMenu::BattleMenu(){
     ("Tutorial", new Texture(), std::bind(Tutorial, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(Back, this)));
+    ("Back", new Texture(), std::bind(back, this)));
 }
 
 BattleMenu::BattleMenu(const BattleMenu& orig){
@@ -87,13 +87,6 @@ void BattleMenu::Combos(){
 void BattleMenu::Tutorial(){
     std::cout<<"Tutorial"<<std::endl;
     game->pushState(new VersusState(/*TODO Flags*/));
-
-    return;
-}
-
-void BattleMenu::Back(){
-    std::cout<<"Main"<<std::endl;
-    game->popState();
 
     return;
 }

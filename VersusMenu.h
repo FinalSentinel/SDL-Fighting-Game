@@ -53,11 +53,11 @@ public:
 
 	
 	/*MENU FUNCTIONS*/
-	void Return_to_menu();
+	//   Resume = MenuState::back()
 	void Command_list();
 	void Options();
 	void Hide_menu();
-	void Resume();
+	void Return_to_menu();
 };
 
 #endif /* GAMEOBJECTS_MENUS_VERSUSMENU_H_ */

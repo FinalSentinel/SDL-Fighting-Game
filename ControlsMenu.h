@@ -61,7 +61,7 @@ public:
 	/*MENU FUNCTIONS*/
 	void Quick_config();
 	void Default();
-	void Back();
+	void back();
 	void none();
 };
 

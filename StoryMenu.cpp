@@ -24,7 +24,7 @@ StoryMenu::StoryMenu(){
     ("STORY STUFF", new Texture(), std::bind(Hold, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(Back, this)));
+    ("Back", new Texture(), std::bind(back, this)));
 }
 
 StoryMenu::StoryMenu(const StoryMenu& orig){
@@ -42,12 +42,6 @@ std::string StoryMenu::name(){
 /*MENU FUNCTIONS*/
 void StoryMenu::Hold(){
     std::cout << "TEST HOLD TEST" << std::endl;
-
-    return;
-}
-
-void StoryMenu::Back(){
-    game->popState();
 
     return;
 }

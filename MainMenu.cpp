@@ -38,7 +38,7 @@ MainMenu::MainMenu(){
     ("Options", new Texture(), std::bind(Options, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Return to Title", new Texture(), std::bind(Return_to_title, this)));
+    ("Return to Title", new Texture(), std::bind(back, this)));
 }
 
 MainMenu::~MainMenu(){
@@ -105,13 +105,6 @@ void MainMenu::Options(){
     //TODO
     std::cout << "Options" << std::endl;
     game->pushState(new OptionsMenu());
-
-    return;
-}
-
-void MainMenu::Return_to_title(){
-    std::cout << "Return to Title" << std::endl;
-    game->popState();
 
     return;
 }

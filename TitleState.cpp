@@ -48,11 +48,11 @@ void TitleState::render(){
     SDL_RenderClear(game->gameWindow.renderer);
 
     //TODO fit image to window
-    titleTexture.render(game->gameWindow.renderer, 0, 0, game->gameWindow.get_w(),
-                                                         game->gameWindow.get_h());
+    titleTexture.render(game->gameWindow.renderer, 0, 0, game->gameWindow.getWidth(),
+                                                         game->gameWindow.getHeight());
 
-    titleText.render(game->gameWindow.renderer, (game->gameWindow.get_w() - titleText.get_w()) / 2,
-                                                (game->gameWindow.get_h() - titleText.get_h()) / 2);
+    titleText.render(game->gameWindow.renderer, (game->gameWindow.getWidth()  - titleText.get_w()) / 2,
+                                                (game->gameWindow.getHeight() - titleText.get_h()) / 2);
 
     return;
 }

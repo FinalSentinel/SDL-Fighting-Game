@@ -40,7 +40,7 @@ public:
 	void Training();
 	void Combos();
 	void Tutorial();
-	void Back();
+	//   Back = MenuState::back()
 };
 
 #endif /* BATTLEMENU_H */
