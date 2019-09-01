@@ -11,11 +11,7 @@
 
 Window::Window(): window(nullptr), renderer(nullptr){
     //TODO Load resNum/fullscreen/vsync from settings file
-<<<<<<< Upstream, based on origin/master
-    resNum = 13;
-=======
     resNum = 14;
->>>>>>> 9932bf5 Video options sans default implemented
     fullscreen = false;
     vSync = false;
 }
@@ -75,27 +71,6 @@ bool Window::get_vSync(){
 }
 
 int Window::getHeight(){
-<<<<<<< Upstream, based on origin/master
-    return resolutions[resNum][1];
-}
-
-int Window::getWidth(){
-    return resolutions[resNum][0];
-}
-
-void Window::resize(int res){
-    SDL_SetWindowSize(window, resolutions[res][0], resolutions[res][1]);
-    
-    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-    
-    return;
-}
-
-void Window::swapDisplayMode(){
-    fullscreen = !fullscreen;
-    
-    SDL_SetWindowFullscreen(window, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
-=======
     if(fullscreen){
         SDL_DisplayMode m;
         SDL_GetCurrentDisplayMode(0, &m);
@@ -137,7 +112,6 @@ void Window::swapResolution(int res){
     SDL_SetWindowSize(window, resolutions[res][0], resolutions[res][1]);
     
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
->>>>>>> 9932bf5 Video options sans default implemented
     
     return;
 }
