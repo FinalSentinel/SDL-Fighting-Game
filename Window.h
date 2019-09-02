@@ -59,19 +59,17 @@ public:
 
     int getWidth();
 	
-	void save();
-	
 	void set_fullscreen(bool f);
 	
 	void set_resNum(int r);
 	
 	void set_vSync(bool v);
 
-	void swapDisplayMode();
+	void swapDisplayMode(bool f);
 	
 	void swapResolution(int res);
 	
-	void swapVSync();
+	void swapVSync(bool v);
 };
 
 #endif /* GAMEOBJECTS_WINDOW_H_ */

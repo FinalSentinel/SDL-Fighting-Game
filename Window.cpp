@@ -68,15 +68,15 @@ bool Window::get_vSync(){
 }
 
 int Window::getHeight(){
-    if(fullscreen){
+    //if(fullscreen){
         SDL_DisplayMode m;
-        SDL_GetCurrentDisplayMode(0, &m);
+        SDL_GetWindowDisplayMode(window, &m);
         
         return m.h;
-    }
-    else{
-        return resolutions[resNum][1];
-    }
+//    }
+//    else{
+//        return resolutions[resNum][1];
+//    }
 }
 
 const int* Window::getResolution(int i) const{
@@ -84,21 +84,15 @@ const int* Window::getResolution(int i) const{
 }
 
 int Window::getWidth(){
-    if(fullscreen){
+    //if(fullscreen){
         SDL_DisplayMode m;
-        SDL_GetCurrentDisplayMode(0, &m);
+        SDL_GetWindowDisplayMode(window, &m);
         
         return m.w;
-    }
-    else{
-        return resolutions[resNum][0];
-    }
-}
-
-void Window::save(){
-    //TODO
-    
-    return;
+//    }
+//    else{
+//        return resolutions[resNum][0];
+//    }
 }
 
 void Window::set_fullscreen(bool f){
@@ -119,9 +113,8 @@ void Window::set_vSync(bool v){
     return;
 }
 
-void Window::swapDisplayMode(){
-    Uint32 hold = SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN;
-    SDL_SetWindowFullscreen(window, hold ? 0 : SDL_WINDOW_FULLSCREEN);
+void Window::swapDisplayMode(bool f){
+    SDL_SetWindowFullscreen(window, f ? SDL_WINDOW_FULLSCREEN : 0);
     
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
     
@@ -136,8 +129,8 @@ void Window::swapResolution(int res){
     return;
 }
 
-void Window::swapVSync(){
-    SDL_SetHint(SDL_HINT_RENDER_VSYNC, (SDL_GetHintBoolean(SDL_HINT_RENDER_VSYNC, SDL_TRUE) ? "0" : "1"));
+void Window::swapVSync(bool v){
+    SDL_SetHint(SDL_HINT_RENDER_VSYNC, v ? "1" : "0");
     
     return;
 }

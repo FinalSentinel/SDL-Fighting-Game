@@ -125,8 +125,8 @@ void VideoMenu::controllerButtonHandler(){
                 resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
 
                 game->gameWindow.swapResolution(dials[RESOLUTION]);
-                game->gameWindow.swapDisplayMode();
-                game->gameWindow.swapVSync();
+                game->gameWindow.swapDisplayMode(dials[FULLSCREEN]);
+                game->gameWindow.swapVSync(dials[VSYNC]);
 
                 if(isback){
                     MenuState::back();
@@ -152,7 +152,21 @@ void VideoMenu::controllerButtonHandler(){
                 game->gameWindow.set_fullscreen(dials[FULLSCREEN]);
                 game->gameWindow.set_vSync(dials[VSYNC]);
                 
-                //TODO save options to file.
+                resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+                
+                //TODO
+                game->fileO.open(game->gameWindow.videoConfig);
+                if(!game->fileO.is_open()){
+                    std::cerr<<"ERROR unable to open config file.";
+                }
+                else{
+                    std::string hold = std::to_string(dials[RESOLUTION] )+ '\n' +
+                                       std::to_string(dials[FULLSCREEN]) + '\n' +
+                                       std::to_string(dials[VSYNC])      + '\n'  ;
+                    
+                    game->fileO << hold;
+                }
+                game->fileO.close();
 
                 if(isback){
                     MenuState::back();
@@ -285,7 +299,9 @@ void VideoMenu::Resolution(){
 void VideoMenu::Fullscreen(){
     //FIXME strange behavior coming out of fullscreen
     if((bool)dials[FULLSCREEN] != game->gameWindow.get_fullscreen()){
-        game->gameWindow.swapDisplayMode();
+        game->gameWindow.swapDisplayMode(dials[RESOLUTION]);
+        
+        resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
     
         prompt = true;
         
@@ -299,7 +315,7 @@ void VideoMenu::Fullscreen(){
 
 void VideoMenu::VSync(){
     if((bool)dials[VSYNC] != game->gameWindow.get_vSync()){
-        game->gameWindow.swapVSync();
+        game->gameWindow.swapVSync(dials[VSYNC]);
         
         prompt = true;
         
