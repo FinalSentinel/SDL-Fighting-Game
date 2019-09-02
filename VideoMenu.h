@@ -30,9 +30,13 @@ private:
 	
 	const int* resolution;
 	
-	std::string videoConfig = "videoConfig.txt";
+	bool prompt;
 	
-	std::string videoDefault = "videoConfigDefault.txt";
+	bool keep;
+	
+	bool isback;
+	
+	Texture* resPrompt;
 
 protected:
 
@@ -48,6 +52,8 @@ public:
 	std::string name();
 	
 	void reload();
+	
+	void render();
 	
 	void update();
 	

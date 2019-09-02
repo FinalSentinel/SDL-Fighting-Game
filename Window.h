@@ -35,6 +35,10 @@ public:
 	
 	const int totalResNum = 25;
 	
+	std::string videoConfig = "videoConfig.txt";
+	
+	std::string videoDefault = "videoConfigDefault.txt";
+	
 	
 
     Window();
@@ -54,6 +58,14 @@ public:
 	const int* getResolution(int i) const;
 
     int getWidth();
+	
+	void save();
+	
+	void set_fullscreen(bool f);
+	
+	void set_resNum(int r);
+	
+	void set_vSync(bool v);
 
 	void swapDisplayMode();
 	

@@ -5,6 +5,8 @@
  *      Author: Clayton
  */
 
+#include <basetsd.h>
+
 #include "Window.h"
 
 #include "SDL.h"
@@ -47,11 +49,6 @@ bool Window::init(){
             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
             init = true;
-
-            /*
-            //XXX test code
-            texture = SDL_CreateTextureFromSurface(renderer, SDL_GetWindowSurface(window));
-             */
         }
     }
 
@@ -98,17 +95,40 @@ int Window::getWidth(){
     }
 }
 
-void Window::swapDisplayMode(){
-    fullscreen = !fullscreen;
+void Window::save(){
+    //TODO
     
-    SDL_SetWindowFullscreen(window, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+    return;
+}
+
+void Window::set_fullscreen(bool f){
+    fullscreen = f;
+    
+    return;
+}
+
+void Window::set_resNum(int r){
+    resNum = r;
+    
+    return;
+}
+
+void Window::set_vSync(bool v){
+    vSync = v;
+    
+    return;
+}
+
+void Window::swapDisplayMode(){
+    Uint32 hold = SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN;
+    SDL_SetWindowFullscreen(window, hold ? 0 : SDL_WINDOW_FULLSCREEN);
+    
+    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
     
     return;
 }
 
 void Window::swapResolution(int res){
-    resNum = res;
-    
     SDL_SetWindowSize(window, resolutions[res][0], resolutions[res][1]);
     
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -117,9 +137,7 @@ void Window::swapResolution(int res){
 }
 
 void Window::swapVSync(){
-    vSync = !vSync;
-
-    SDL_SetHint(SDL_HINT_RENDER_VSYNC, (vSync ? "1" : "0"));
+    SDL_SetHint(SDL_HINT_RENDER_VSYNC, (SDL_GetHintBoolean(SDL_HINT_RENDER_VSYNC, SDL_TRUE) ? "0" : "1"));
     
     return;
 }
