@@ -10,12 +10,6 @@
 
 #include <iostream>
 
-const int resolutions[25][2] = {{ 120,   90}, { 144,  108}, { 240,  180}, { 360,  270}, { 480,  360},
-								{ 640,  360}, { 640,  480}, { 720,  480}, { 800,  450}, { 800,  600},
-								{ 960,  540}, { 960,  720}, {1024,  576}, {1024,  768}, {1280,  720},
-								{1280,  960}, {1366,  768}, {1600,  900}, {1920,  810}, {1920, 1080},
-								{2560, 1080}, {2560, 1440}, {3440, 1440}, {3840, 2160}, {5120, 2160} };
-
 class SDL_Texture;
 class SDL_Renderer;
 class SDL_Window;
@@ -30,18 +24,22 @@ private:
 	bool vSync;
 
 public:
+	static const int totalResNum;
+	
+	static const int resolutions[][2];
+	
+	static const char videoConfig[];
+	
+	static const char videoDefault[];
+	
+	
+	
     //TODO make private?
     SDL_Renderer* renderer;
 	
-	const int totalResNum = 25;
-	
-	std::string videoConfig = "videoConfig.txt";
-	
-	std::string videoDefault = "videoConfigDefault.txt";
-	
 	
 
-    Window();
+    Window(int res = 14, bool f = false, bool v = false);
 
     virtual ~Window();
 
@@ -54,8 +52,6 @@ public:
 	bool get_vSync();
 
     int getHeight();
-	
-	const int* getResolution(int i) const;
 
     int getWidth();
 	

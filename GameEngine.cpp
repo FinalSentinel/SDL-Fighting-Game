@@ -22,8 +22,19 @@
 #include "MenuState.h"
 #include <typeinfo>
 
-GameEngine::GameEngine(): quit(false), gameWindow(Window()){
-    //TODO grab window dimensions from settings file
+GameEngine::GameEngine(): quit(false){
+    fileI.open(gameWindow.videoConfig);
+    if(!fileI.is_open()){
+        std::cerr<<"ERROR unable to open video config file"<<std::endl;
+        exit(2);
+    }
+    else{
+        int r, f, v;
+        
+        fileI>>std::dec>>r>>f>>v;
+        
+        gameWindow = Window(r, f, v);
+    }
 }
 
 GameEngine::~GameEngine(){

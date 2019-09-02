@@ -18,7 +18,7 @@ VideoMenu::VideoMenu(): prompt(false), keep(false), isback(false){
     dials[FULLSCREEN] = (int)game->gameWindow.get_fullscreen();
     dials[VSYNC] = (int)game->gameWindow.get_vSync();
     
-    resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+    resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
     
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
@@ -47,7 +47,6 @@ VideoMenu::VideoMenu(): prompt(false), keep(false), isback(false){
     }
     
     resPrompt = new Texture();
-    resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
 }
 
 VideoMenu::~VideoMenu(){
@@ -122,7 +121,7 @@ void VideoMenu::controllerButtonHandler(){
                 dials[FULLSCREEN] = game->gameWindow.get_fullscreen();
                 dials[VSYNC] = game->gameWindow.get_vSync();
 
-                resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+                resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
 
                 game->gameWindow.swapResolution(dials[RESOLUTION]);
                 game->gameWindow.swapDisplayMode(dials[FULLSCREEN]);
@@ -152,7 +151,7 @@ void VideoMenu::controllerButtonHandler(){
                 game->gameWindow.set_fullscreen(dials[FULLSCREEN]);
                 game->gameWindow.set_vSync(dials[VSYNC]);
                 
-                resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+                resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
                 
                 //TODO
                 game->fileO.open(game->gameWindow.videoConfig);
@@ -207,7 +206,7 @@ void VideoMenu::controllerButtonHandler(){
                         else{
                             dials[RESOLUTION] = (game->gameWindow.totalResNum + dials[RESOLUTION] + 1) % game->gameWindow.totalResNum;
                         }
-                        resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+                        resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
 
                         std::get<TEXT>(options[selection]) = "Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]);
 
@@ -288,6 +287,8 @@ void VideoMenu::Resolution(){
     
         prompt = true;
         
+        resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
+
         for(int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
@@ -301,10 +302,12 @@ void VideoMenu::Fullscreen(){
     if((bool)dials[FULLSCREEN] != game->gameWindow.get_fullscreen()){
         game->gameWindow.swapDisplayMode(dials[RESOLUTION]);
         
-        resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+        resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
     
         prompt = true;
         
+        resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
+
         for(int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
@@ -319,6 +322,8 @@ void VideoMenu::VSync(){
         
         prompt = true;
         
+        resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
+
         for(int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
@@ -337,11 +342,13 @@ void VideoMenu::Default(){
         game->fileI>>std::dec>>dials[FULLSCREEN];
         game->fileI>>std::dec>>dials[VSYNC];
             
-        resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+        resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
         
         reload();
         
         prompt = true;
+        
+        resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
         
         for(int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);

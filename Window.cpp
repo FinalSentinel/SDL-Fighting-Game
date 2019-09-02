@@ -11,11 +11,24 @@
 
 #include "SDL.h"
 
-Window::Window(): window(nullptr), renderer(nullptr){
-    //TODO Load resNum/fullscreen/vsync from settings file
-    resNum = 14;
-    fullscreen = false;
-    vSync = false;
+const int Window::totalResNum = 25;
+        
+const int Window::resolutions[totalResNum][2] = 
+            {{ 120,   90}, { 144,  108}, { 240,  180}, { 360,  270}, { 480,  360},
+             { 640,  360}, { 640,  480}, { 720,  480}, { 800,  450}, { 800,  600},
+             { 960,  540}, { 960,  720}, {1024,  576}, {1024,  768}, {1280,  720},
+             {1280,  960}, {1366,  768}, {1600,  900}, {1920,  810}, {1920, 1080},
+             {2560, 1080}, {2560, 1440}, {3440, 1440}, {3840, 2160}, {5120, 2160} };
+	
+const char Window::videoConfig[] = "videoConfig.txt";
+
+const char Window::videoDefault[] = "videoConfigDefault.txt";
+
+
+
+Window::Window(int res, bool f, bool v): window(nullptr), renderer(nullptr),
+                                         resNum(res), fullscreen(f), vSync(v){
+    //NOTHING
 }
 
 Window::~Window(){
@@ -77,10 +90,6 @@ int Window::getHeight(){
 //    else{
 //        return resolutions[resNum][1];
 //    }
-}
-
-const int* Window::getResolution(int i) const{
-    return resolutions[i];
 }
 
 int Window::getWidth(){
