@@ -66,6 +66,18 @@ std::string VideoMenu::name(){
     return "VideoMenu";
 }
 
+void VideoMenu::reload(){
+    std::get<TEXT>(options[0]) = "Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]);
+    std::get<TEXT>(options[1]) = "Fullscreen: " + std::string(dials[FULLSCREEN] ? "ON" : "OFF");
+    std::get<TEXT>(options[2]) = "VSync: " + std::string(dials[VSYNC] ? "ON" : "OFF");
+    
+    for(int i = 0; i < 3; i++){
+        std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
+    }
+    
+    return;
+}
+
 void VideoMenu::update(){
     
     return;
@@ -197,13 +209,29 @@ void VideoMenu::VSync(){
 }
 
 void VideoMenu::Default(){
-    //TODO load default settings
+    //TODO changes prompt
+    
+    game->fileI.open(videoDefault);
+    if(!game->fileI.is_open()){
+        std::cerr<<"ERROR unable to open video default file"<<std::endl;
+    }
+    else{
+        game->fileI>>std::dec>>dials[RESOLUTION];
+        game->fileI>>std::dec>>dials[FULLSCREEN];
+        game->fileI>>std::dec>>dials[VSYNC];
+            
+        resolution = game->gameWindow.getResolution(dials[RESOLUTION]);
+        
+        reload();
+    }
+    game->fileI.close();
+    
     return;
 }
 
 void VideoMenu::back(){
     //TODO save options to file.
-    std::cout<<"test"<<std::endl;
+    
     MenuState::back();
 
     return;

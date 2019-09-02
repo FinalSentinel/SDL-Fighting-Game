@@ -41,10 +41,10 @@ public:
 	virtual ~ControlsMenu();
 	
 	
-	
-	void loadButtons();
 
 	std::string name();
+	
+	void reload();
 	
 	void render();
 	

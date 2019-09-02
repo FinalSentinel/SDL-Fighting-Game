@@ -29,6 +29,10 @@ private:
 	int dials[numDials];
 	
 	const int* resolution;
+	
+	std::string videoConfig = "videoConfig.txt";
+	
+	std::string videoDefault = "videoConfigDefault.txt";
 
 protected:
 
@@ -43,7 +47,9 @@ public:
 	
 	std::string name();
 	
-	virtual void update();
+	void reload();
+	
+	void update();
 	
 	
 	

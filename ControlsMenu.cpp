@@ -73,7 +73,11 @@ ControlsMenu::ControlsMenu(const ControlsMenu& orig){
 ControlsMenu::~ControlsMenu(){
 }
 
-void ControlsMenu::loadButtons(){
+std::string ControlsMenu::name(){
+    return "ControlsMenu";
+}
+
+void ControlsMenu::reload(){
     //TODO DO BETTER
     int i = 1;
     game->fileI.open(controlFormat);
@@ -118,10 +122,6 @@ void ControlsMenu::loadButtons(){
     }
 
     return;
-}
-
-std::string ControlsMenu::name(){
-    return "ControlsMenu";
 }
 
 void ControlsMenu::render(){
@@ -288,7 +288,7 @@ void ControlsMenu::Default(){
         game->fileO.close();
         game->fileI.close();
 
-        loadButtons();
+        reload();
     }
 
     return;
