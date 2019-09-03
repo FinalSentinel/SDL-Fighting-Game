@@ -15,28 +15,37 @@
 #define CONTROLSMENU_H
 
 #include "MenuState.h"
+#include "Player.h"
 
 
 
 class ControlsMenu: public MenuState{
 private:
-        char hold[32];
+    char hold[32];
+	
+	std::string newCont[versusControlsNum];
 
 protected:
-	bool config;
+//	int altSelection[game->MAX_PLAYERS];
+//	
+//	int altIndex[game->MAX_PLAYERS];
+//	
+//	//Tuple of menu option Text, Graphic, and Function
+//	std::vector<std::tuple<std::string, Texture*, std::function<void()>>> altOptions[game->MAX_PLAYERS];
 	
-	int configNum;
+	bool config[MAX_PLAYERS];
 	
-	Texture configPrompt;
+	int configNum[MAX_PLAYERS];
 	
-	const std::string controlFormat = "controlFormat.txt";
-	const std::string controlConfig = "controlConfig.txt";
-	const std::string controlDefault = "controlConfigDefault.txt";
+	Texture prompt[MAX_PLAYERS];
 
 public:
+	static const char controlDefault[];
+	
+	static const char controlFormat[];
+	
+	
 	ControlsMenu();
-
-	ControlsMenu(const ControlsMenu& orig);
 
 	virtual ~ControlsMenu();
 	

@@ -41,6 +41,10 @@ private:
 protected:
 
 public:
+	static const char videoDefault[];
+	
+	
+	
 	VideoMenu();
 
 	virtual ~VideoMenu();

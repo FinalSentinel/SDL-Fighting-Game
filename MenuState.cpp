@@ -38,7 +38,7 @@ void MenuState::close(){
 }
 
 void MenuState::load(){
-    std::cout << "MENU STATE: ";
+    std::cout << "MENU STATE: " << name() << std::endl;
 
     for(int i = 0; i < options.size(); i++){
         std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
@@ -60,7 +60,7 @@ void MenuState::pause(){
 void MenuState::render(){
     //Menu x position is always at 3/5 of window width.
     int x = game->gameWindow.getWidth() / 5;
-    //Menu height is the number of window height divided by numOptions + 2,
+    //Menu height is the window height divided by numOptions + 2,
     //therefore equal blank space above and below.  Will implement scrolling.
     int h = game->gameWindow.getHeight() / (std::min((int)options.size(), MAX_MENU_SIZE) + 2);
 

@@ -35,6 +35,7 @@ GameEngine::GameEngine(): quit(false){
         
         gameWindow = Window(r, f, v);
     }
+    fileI.close();
 }
 
 GameEngine::~GameEngine(){
@@ -139,7 +140,7 @@ void GameEngine::eventHandler(){
 
                     //If not already a player.
                     if(!player){
-                        addPlayer(new Player(SDL_GameControllerFromInstanceID(e.caxis.which)));
+                        addPlayer(new Player(players.size(), SDL_GameControllerFromInstanceID(e.caxis.which)));
                     }
                 }
 
@@ -175,7 +176,7 @@ void GameEngine::eventHandler(){
                     if(n != -1){
                         players[n]->controller = SDL_GameControllerFromInstanceID(e.cbutton.which);
                     }else{
-                        addPlayer(new Player(SDL_GameControllerFromInstanceID(e.cbutton.which)));
+                        addPlayer(new Player(players.size(), SDL_GameControllerFromInstanceID(e.cbutton.which)));
                     }
                 }
 
@@ -304,8 +305,8 @@ bool GameEngine::init(){
 
                             GameState::game = this;
 
-                            players.emplace_back(new Player());
-                            players.emplace_back(new Player());
+                            players.emplace_back(new Player(players.size()));
+                            players.emplace_back(new Player(players.size()));
                         }
                     }
                 }

@@ -26,8 +26,7 @@ private:
 
 public:
 
-    Texture() : width(0), height(0), texture(nullptr) {
-    };
+    Texture() : width(0), height(0), texture(nullptr){};
 
     virtual ~Texture();
 

@@ -23,7 +23,7 @@ build/Debug/MinGW64-Windows/OptionsMenu.o: OptionsMenu.cpp OptionsMenu.h \
  c:/SDL64/include/SDL_shape.h c:/SDL64/include/SDL_system.h \
  c:/SDL64/include/SDL_timer.h c:/SDL64/include/SDL_version.h GameEngine.h \
  Window.h Texture.h c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h \
- AudioMenu.h ControlsMenu.h VideoMenu.h
+ AudioMenu.h ControlsMenu.h Player.h VideoMenu.h
 
 OptionsMenu.h:
 
@@ -134,5 +134,7 @@ c:/SDL64/include/SDL.h:
 AudioMenu.h:
 
 ControlsMenu.h:
+
+Player.h:
 
 VideoMenu.h:

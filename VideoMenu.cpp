@@ -13,6 +13,12 @@
 
 #include "VideoMenu.h"
 
+
+
+const char VideoMenu::videoDefault[] = "videoConfigDefault.txt";
+
+
+
 VideoMenu::VideoMenu(): prompt(false), keep(false), isback(false){
     dials[RESOLUTION] = game->gameWindow.get_resNum();
     dials[FULLSCREEN] = (int)game->gameWindow.get_fullscreen();
@@ -333,7 +339,7 @@ void VideoMenu::VSync(){
 }
 
 void VideoMenu::Default(){
-    game->fileI.open(game->gameWindow.videoDefault);
+    game->fileI.open(videoDefault);
     if(!game->fileI.is_open()){
         std::cerr<<"ERROR unable to open video default file"<<std::endl;
     }

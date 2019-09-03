@@ -30,8 +30,6 @@ public:
 	
 	static const char videoConfig[];
 	
-	static const char videoDefault[];
-	
 	
 	
     //TODO make private?

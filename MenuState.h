@@ -34,18 +34,9 @@ protected:
     int selection = 0;
 	
 	int index = 0;
-	
-	//XXX
-	int numSelections;
 
 	//Tuple of menu option Text, Graphic, and Function
 	std::vector<std::tuple<std::string, Texture*, std::function<void()>>> options;
-	
-//  std::vector<std::string> options;
-//	
-//	std::vector<std::function<void()> > actions;
-//	
-//	std::vector<Texture*> buttons;
 
 public:
     MenuState();

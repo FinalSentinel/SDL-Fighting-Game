@@ -38,6 +38,8 @@ private:
 protected:
 
 public:
+    Window gameWindow;
+	
 	std::ifstream fileI;
 	std::ofstream fileO;
 	
@@ -48,12 +50,6 @@ public:
     GameEngine();
 
     virtual ~GameEngine();
-
-    Window gameWindow;
-
-
-
-    //static GameEngine* instance();
 
 
 

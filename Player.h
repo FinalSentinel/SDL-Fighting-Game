@@ -8,8 +8,31 @@
 #ifndef GAMEOBJECTS_PLAYER_H_
 #define GAMEOBJECTS_PLAYER_H_
 
-//TODO forward decl?
+#include <string>
+
 #include "SDL.h"
+
+enum versusControls{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	PUNCH,
+	KICK,
+	HEAVY,
+	SPECIAL,
+	TAUNT,
+	PK,
+	PS,
+	KH,
+	PKH,
+	PKHS,
+	RECORD,
+	PLAY,
+	RESET,
+	PAUSE,
+	versusControlsNum
+};
 
 class Character;
 
@@ -17,20 +40,34 @@ class Player {
 private:
 
 public:
+	static const char controlConfig[];
+	
+	static const char controlDefault[];
+	
     //TODO private?
+	int playerNum;
     //Controller ID
     SDL_GameController* controller;
     //Character selection
     Character* character;
+	
+	std::string controls[versusControlsNum];
 
     //TODO Bool for Controller/Keyboard
+	
+	
 
-    Player(SDL_GameController* co = nullptr, Character* ch = nullptr) : controller(co), character(ch) {
-    };
+    Player(int num, SDL_GameController* co = nullptr, Character* ch = nullptr);
 
     virtual ~Player();
 
     //TODO Change character function
+	
+	
+	
+	void saveControls();
+	
+	void setControls(std::string* c);
 };
 
 #endif /* GAMEOBJECTS_PLAYER_H_ */

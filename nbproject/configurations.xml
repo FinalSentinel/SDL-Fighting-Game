@@ -17,6 +17,8 @@
         <itemPath>controlConfig.txt</itemPath>
         <itemPath>controlConfigDefault.txt</itemPath>
         <itemPath>controlFormat.txt</itemPath>
+        <itemPath>keyboardConfig.txt</itemPath>
+        <itemPath>keyboardConfigDefault.txt</itemPath>
         <itemPath>videoConfig.txt</itemPath>
         <itemPath>videoConfigDefault.txt</itemPath>
       </logicalFolder>
@@ -227,6 +229,10 @@
       </item>
       <item path="default.png" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="keyboardConfig.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="keyboardConfigDefault.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="videoConfig.txt" ex="false" tool="3" flavor2="0">
@@ -359,6 +365,10 @@
       <item path="controlFormat.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="default.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="keyboardConfig.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="keyboardConfigDefault.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

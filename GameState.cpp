@@ -9,9 +9,6 @@
 
 #include "Player.h"
 
-//template<typename State>
-//State GameState<State>::state;
-
 //FIXME something about this seems wrong
 GameEngine* GameState::game;
 

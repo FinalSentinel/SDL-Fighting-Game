@@ -30,19 +30,11 @@ protected:
 
     virtual ~GameState(){};
 
-public:
-//	static State* instance(){
-//		static State state;
-//		return &state;
-//	}
-
-
-	
+public:	
 	virtual bool get_seen();
 	
     virtual void load() = 0;
 	
-	//FIXME ISO char* string
 	virtual std::string name() = 0;
 
     virtual void pause(/*TODO*/) = 0;

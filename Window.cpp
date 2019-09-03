@@ -22,8 +22,6 @@ const int Window::resolutions[totalResNum][2] =
 	
 const char Window::videoConfig[] = "videoConfig.txt";
 
-const char Window::videoDefault[] = "videoConfigDefault.txt";
-
 
 
 Window::Window(int res, bool f, bool v): window(nullptr), renderer(nullptr),
