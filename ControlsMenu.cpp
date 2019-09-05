@@ -117,6 +117,26 @@ void ControlsMenu::render(){
     return;
 }
 
+void ControlsMenu::setButton(Player* p, int n, std::string button){
+    if(n < versusControlsNum){
+        for(int i = 0; i < versusControlsNum; i++){
+            if(i == n){
+                i++;
+            }
+            if(button == p->controls[i] && button != "-"){
+                p->controls[i] = p->controls[n];
+            }
+        }
+
+        p->controls[n] = button;
+    }
+    else{
+        std::cerr << "ERROR setButton position out of bounds" << std::endl;
+    }
+
+    return;
+}
+
 void ControlsMenu::update(){
     //NONE
 
@@ -126,11 +146,11 @@ void ControlsMenu::update(){
 void ControlsMenu::controllerAxisHandler(){
     //TODO player differentiation
     //TODO menu mapping
-    if(selection >= 1 && selection <= versusControlsNum && game->e.caxis.value == 32767){
-        if(selection >= 5 && selection <= 17){
+    if(selection >= 1 && selection < versusControlsNum && game->e.caxis.value > 30000){
+        if(selection >= PUNCH + 1 && selection <= versusControlsNum){
             std::cout << "Set Button" << std::endl;
 
-            game->getPlayersList()[0]->controls[selection - 1] = SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis));
+            setButton(game->getPlayersList()[0], selection - 1, SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis)));
             game->getPlayersList()[0]->saveControls();
 
             reload();
@@ -138,9 +158,9 @@ void ControlsMenu::controllerAxisHandler(){
     }
     
     else if(config[0]){
-        if(game->e.caxis.value == 32767){
+        if(game->e.caxis.value > 30000){
             if(game->e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || game->e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
-                game->getPlayersList()[0]->controls[configNum[0]] = SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis));
+                setButton(game->getPlayersList()[0], configNum[0], SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis)));
 
                 configNum[0]++;
                 
@@ -190,10 +210,10 @@ void ControlsMenu::controllerButtonHandler(){
             }
             
             case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:{
-                if(selection >= 5 && selection <= 17){
+                if(selection >= PUNCH + 1 && selection < versusControlsNum){
                     std::cout << "Set Button" << std::endl;
                     
-                    game->getPlayersList()[0]->controls[selection - 1] = "-";
+                    setButton(game->getPlayersList()[0], selection - 1, "-");
                     game->getPlayersList()[0]->saveControls();
                     
                     reload();
@@ -202,10 +222,10 @@ void ControlsMenu::controllerButtonHandler(){
             }
 
             default:{
-                if(selection >= 5 && selection <= 17){
+                if(selection >= PUNCH + 1 && selection < versusControlsNum){
                     std::cout << "Set Button" << std::endl;
                     
-                    game->getPlayersList()[0]->controls[selection - 1] = SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button));
+                    setButton(game->getPlayersList()[0], selection - 1, SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button)));
                     game->getPlayersList()[0]->saveControls();
                     
                     reload();
@@ -219,7 +239,7 @@ void ControlsMenu::controllerButtonHandler(){
                 game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_UP && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_DOWN &&
                 game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_LEFT && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_RIGHT){
             if(game->e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
-                game->getPlayersList()[0]->controls[configNum[0]] = SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button));
+                setButton(game->getPlayersList()[0], configNum[0], SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button)));
                 
                 configNum[0]++;
                 
@@ -229,7 +249,7 @@ void ControlsMenu::controllerButtonHandler(){
                     }
                     configNum[0] = RECORD;
                 }
-                else if(configNum[0] == versusControlsNum){
+                else if(configNum[0] == versusControlsNum - 1){
                     config[0] = false;
 
                     game->fileI.close();

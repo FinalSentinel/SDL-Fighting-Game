@@ -49,6 +49,8 @@ public:
 	
 	
 
+	void setButton(Player* p, int n, std::string button);
+	
 	std::string name();
 	
 	void reload();
