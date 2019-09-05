@@ -7,12 +7,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/NetBeansProjects/FG%20test/VideoMenu.cpp</file>
-            <file>file:/D:/Documents/NetBeansProjects/FG%20test/AudioMenu.cpp</file>
-            <file>file:/D:/Documents/NetBeansProjects/FG%20test/videoConfigDefault.txt</file>
-            <file>file:/D:/Documents/NetBeansProjects/FG%20test/Texture.cpp</file>
-            <file>file:/D:/Documents/NetBeansProjects/FG%20test/VideoMenu.h</file>
-            <file>file:/D:/Documents/NetBeansProjects/FG%20test/videoConfig.txt</file>
+            <file>file:/D:/Documents/NetBeansProjects/FG%20test/Player.cpp</file>
+            <file>file:/D:/Documents/NetBeansProjects/FG%20test/Player.h</file>
+            <file>file:/D:/Documents/NetBeansProjects/FG%20test/ControlsMenu.cpp</file>
+            <file>file:/D:/Documents/NetBeansProjects/FG%20test/ControlsMenu.h</file>
+            <file>file:/D:/Documents/NetBeansProjects/FG%20test/controlConfig.txt</file>
         </group>
     </open-files>
 </project-private>

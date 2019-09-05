@@ -22,8 +22,6 @@
 class ControlsMenu: public MenuState{
 private:
     char hold[32];
-	
-	std::string newCont[versusControlsNum];
 
 protected:
 //	int altSelection[game->MAX_PLAYERS];
@@ -70,7 +68,7 @@ public:
 	/*MENU FUNCTIONS*/
 	void Quick_config();
 	void Default();
-	void back();
+	//void back();
 	void none();
 };
 

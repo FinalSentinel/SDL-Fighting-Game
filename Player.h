@@ -12,6 +12,8 @@
 
 #include "SDL.h"
 
+const int CRLF = 2;
+
 enum versusControls{
 	UP,
 	DOWN,
@@ -66,8 +68,6 @@ public:
 	
 	
 	void saveControls();
-	
-	void setControls(std::string* c);
 };
 
 #endif /* GAMEOBJECTS_PLAYER_H_ */
