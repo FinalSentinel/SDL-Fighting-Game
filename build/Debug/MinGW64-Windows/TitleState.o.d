@@ -22,8 +22,8 @@ build/Debug/MinGW64-Windows/TitleState.o: TitleState.cpp TitleState.h \
  c:/SDL64/include/SDL_sensor.h c:/SDL64/include/SDL_shape.h \
  c:/SDL64/include/SDL_system.h c:/SDL64/include/SDL_timer.h \
  c:/SDL64/include/SDL_version.h c:/SDL64/include/SDL_ttf.h \
- c:/SDL64/include/SDL.h GameState.h GameEngine.h Window.h MainMenu.h \
- MenuState.h
+ c:/SDL64/include/SDL.h GameState.h c:/SDL64/include/SDL_mixer.h \
+ GameEngine.h Audio.h Window.h MainMenu.h MenuState.h
 
 TitleState.h:
 
@@ -125,7 +125,11 @@ c:/SDL64/include/SDL.h:
 
 GameState.h:
 
+c:/SDL64/include/SDL_mixer.h:
+
 GameEngine.h:
+
+Audio.h:
 
 Window.h:
 

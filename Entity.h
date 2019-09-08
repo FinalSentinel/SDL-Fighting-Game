@@ -30,8 +30,7 @@ protected:
 
 public:
 
-    Entity(int x = 0, int y = 0, bool left = true, int p = 0) : x(x), y(y), left(left), palette(p) {
-    };
+    Entity(int x = 0, int y = 0, bool left = true, int p = 0);
 
     virtual ~Entity();
 

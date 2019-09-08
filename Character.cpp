@@ -9,7 +9,16 @@
 
 #include "Box.h"
 
+Character::Character(int x, int y, bool l, int p, CharacterID id, int hp, int sp):
+Entity(x, y, l, p), charID(id), health(hp), meter(sp){
+    //NONE
+}
+
 Character::~Character(){
+    for(int i = 0; i < collisionBoxes.size(); i++){
+        delete collisionBoxes[i];
+        collisionBoxes.pop_back();
+    }
 }
 
 void Character::addColBox(int ax, int ay, int w, int h){

@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "Audio.h"
 #include "SDL.h"
 #include "Window.h"
 
@@ -38,6 +39,8 @@ private:
 protected:
 
 public:
+	Audio gameAudio;
+	
     Window gameWindow;
 	
 	std::ifstream fileI;
@@ -57,7 +60,7 @@ public:
 
     void changeState(GameState* state);
 
-    bool close();
+    void close();
 
     void eventHandler();
 

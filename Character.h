@@ -25,7 +25,7 @@ enum CharacterID {
 class Box;
 class SDL_Renderer;
 
-class Character : public Entity {
+class Character: public Entity{
 private:
     //TODO character dependent collision boxes
     //Vector holding boxes for character collision
@@ -44,9 +44,7 @@ private:
 
 public:
 
-    Character(int x = 0, int y = 0, bool l = true, int p = 0, CharacterID id = ERROR_CHARACTER, int hp = 0, int sp = 0) :
-    Entity(x, y, l, p), charID(id), health(hp), meter(sp) {
-    };
+    Character(int x = 0, int y = 0, bool l = true, int p = 0, CharacterID id = ERROR_CHARACTER, int hp = 0, int sp = 0);
 
     virtual ~Character();
 

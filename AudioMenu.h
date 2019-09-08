@@ -26,8 +26,6 @@ protected:
 public:
 	AudioMenu();
 
-	AudioMenu(const AudioMenu& orig);
-
 	virtual ~AudioMenu();
 	
 	
@@ -37,7 +35,11 @@ public:
 	
 	
 	/*MENU FUNCTIONS*/
-	void back();
+	void Master();
+	void Music();
+	void Voice();
+	void Effects();
+	void Default();
 };
 
 #endif /* AUDIOMENU_H */

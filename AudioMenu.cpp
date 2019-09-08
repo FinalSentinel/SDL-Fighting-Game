@@ -21,10 +21,22 @@ AudioMenu::AudioMenu(){
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Master Volume", new Texture(), std::bind(Master, this)));
+    
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Music Volume", new Texture(), std::bind(Music, this)));
+    
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Voice Volume", new Texture(), std::bind(Voice, this)));
+    
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Effects Volume", new Texture(), std::bind(Effects, this)));
+    
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+    ("Default", new Texture(), std::bind(Default, this)));
+    
+    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Back", new Texture(), std::bind(back, this)));
-}
-
-AudioMenu::AudioMenu(const AudioMenu& orig){
 }
 
 AudioMenu::~AudioMenu(){
@@ -39,10 +51,32 @@ std::string AudioMenu::name(){
 
 
 /*MENU FUNCTIONS*/
-void AudioMenu::back(){
-    //TODO save options to file
-    
-    MenuState::back();
+void AudioMenu::Master(){
+
+
+    return;
+}
+
+void AudioMenu::Music(){
+
+
+    return;
+}
+
+void AudioMenu::Voice(){
+
+
+    return;
+}
+
+void AudioMenu::Effects(){
+
+
+    return;
+}
+
+void AudioMenu::Default(){
+
 
     return;
 }

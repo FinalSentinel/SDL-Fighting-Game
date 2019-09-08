@@ -1,5 +1,5 @@
 build/Debug/MinGW64-Windows/GameEngine.o: GameEngine.cpp GameEngine.h \
- c:/SDL64/include/SDL.h c:/SDL64/include/SDL_main.h \
+ Audio.h c:/SDL64/include/SDL.h c:/SDL64/include/SDL_main.h \
  c:/SDL64/include/SDL_stdinc.h c:/SDL64/include/SDL_config.h \
  c:/SDL64/include/SDL_platform.h c:/SDL64/include/begin_code.h \
  c:/SDL64/include/close_code.h c:/SDL64/include/SDL_assert.h \
@@ -27,6 +27,8 @@ build/Debug/MinGW64-Windows/GameEngine.o: GameEngine.cpp GameEngine.h \
  MainMenu.h MenuState.h
 
 GameEngine.h:
+
+Audio.h:
 
 c:/SDL64/include/SDL.h:
 

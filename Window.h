@@ -40,6 +40,8 @@ public:
     Window(int res = 14, bool f = false, bool v = false);
 
     virtual ~Window();
+	
+	
 
     bool init();
 	

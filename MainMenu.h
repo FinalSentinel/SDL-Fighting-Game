@@ -26,6 +26,9 @@ enum Main_Options{
 
 class MainMenu: public MenuState{
 private:
+	static const char mainMenuMusic[];
+	
+	Mix_Music* mainMenuMix;
 
 protected:
 
@@ -44,6 +47,7 @@ public:
 	
 	void render();
 	
+	void unload();
 	
 	
 	virtual void controllerButtonHandler();

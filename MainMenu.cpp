@@ -18,12 +18,23 @@
 #include "GalleryMenu.h"
 #include "StoryMenu.h"
 
+
+
+const char MainMenu::mainMenuMusic[] = "AEUHHH.mp3";
+
+
+
 MainMenu::MainMenu(){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("", new Texture(), std::bind(, this)));
     
     */
+    
+    mainMenuMix = Mix_LoadMUS(mainMenuMusic);
+    if(!mainMenuMix){
+        std::cerr << "ERROR loading main menu music: " << Mix_GetError() << std::endl;
+    }
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Battle", new Texture(), std::bind(Battle, this)));
@@ -42,6 +53,8 @@ MainMenu::MainMenu(){
 }
 
 MainMenu::~MainMenu(){
+    Mix_FreeMusic(mainMenuMix);
+    mainMenuMix = nullptr;
 };
 
 //MainMenu* MainMenu::instance();
@@ -50,6 +63,8 @@ void MainMenu::load(){
     MenuState::load();
 
     std::cout << "MAIN MENU" << std::endl;
+    
+    Mix_FadeInMusicPos(mainMenuMix, -1, 30, 0);
 
     return;
 }
@@ -64,6 +79,16 @@ void MainMenu::render(){
 
     return;
 }
+
+void MainMenu::unload(){
+    Mix_FadeOutMusic(30);
+    
+    MenuState::unload();
+    
+    return;
+}
+
+
 
 void MainMenu::controllerButtonHandler(){
     if(game->e.cbutton.button != SDL_CONTROLLER_BUTTON_START){

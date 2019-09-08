@@ -12,6 +12,10 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
+Texture::Texture(): width(0), height(0), texture(nullptr){
+    //NONE
+}
+
 Texture::~Texture(){
     if(texture != nullptr){
         SDL_DestroyTexture(texture);
@@ -129,6 +133,7 @@ void Texture::setRGBA(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha){
         SDL_SetTextureColorMod(texture, red, green, blue);
         SDL_SetTextureAlphaMod(texture, alpha);
 }
+
 /*
 void LTexture::setAlpha(Uint8 alpha){
         //Modulate texture alpha

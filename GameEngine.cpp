@@ -23,10 +23,24 @@
 #include <typeinfo>
 
 GameEngine::GameEngine(): quit(false){
+    fileI.open(gameAudio.audioConfig);
+    if(!fileI.is_open()){
+        std::cerr<<"ERROR unable to open audio config file"<<std::endl;
+        exit(2);
+    }
+    else{
+        int ma, mu, vo, ef;
+        
+        fileI>>std::dec>>ma, mu, vo, ef;
+        
+        gameAudio = Audio(ma, mu, vo, ef);
+    }
+    fileI.close();
+    
     fileI.open(gameWindow.videoConfig);
     if(!fileI.is_open()){
         std::cerr<<"ERROR unable to open video config file"<<std::endl;
-        exit(2);
+        exit(3);
     }
     else{
         int r, f, v;
@@ -39,8 +53,15 @@ GameEngine::GameEngine(): quit(false){
 }
 
 GameEngine::~GameEngine(){
-    players.clear();
-    stateStack.clear();
+    for(int i = 0; i < players.size(); i++){
+        delete players[i];
+        players.pop_back();
+    }
+    
+    for(int i = 0; i < stateStack.size(); i++){
+        delete stateStack[i];
+        stateStack.pop_back();
+    }
 }
 
 
@@ -87,6 +108,7 @@ void GameEngine::changeState(GameState* state){
         found = (stateStack.back()->name() == state->name());
         if(!found){
             stateStack.back()->unload();
+            delete stateStack.back();
             stateStack.pop_back();
         }
     }
@@ -103,17 +125,19 @@ void GameEngine::changeState(GameState* state){
     return;
 }
 
-bool GameEngine::close(){
-    bool close = false;
-
+void GameEngine::close(){
     quit = true;
 
-    //TODO other close stuff
-    if(/*TODO close stuff*/true){
-        close = true;
+    while(Mix_Init(0)){
+        Mix_Quit();
     }
 
-    return close;
+    IMG_Quit();
+    TTF_Quit();
+    
+    SDL_Quit();
+
+    return;
 }
 
 void GameEngine::eventHandler(){
@@ -273,41 +297,34 @@ bool GameEngine::init(){
 
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
         std::cerr << "Error initializing SDL: " << SDL_GetError() << std::endl;
-    }else{
+    }
+    else{
         if(!gameWindow.init()){
             std::cerr << "Error initializing game window." << std::endl;
-        }else{
+        }
+        else{
             if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)){
                 std::cerr << "Error initializing SDL_image: " << IMG_GetError() << std::endl;
-            }else{
+            }
+            else{
                 //Initialize SDL_mixer
                 if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0){
                     std::cerr << "Error initializing SDL_mixer: " << Mix_GetError() << std::endl;
-                }else{
+                }
+                else{
                     if(TTF_Init() == -1){
                         std::cerr << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
-                    }else{
-                        if(true){
-                            /*
-                            //Check number of controllers
-                            if(SDL_NumJoysticks() < 0){
-                                    std::cerr<<"ERROR NumJoysticks: "<<SDL_GetError()<<std::endl;
-                            }
-                            else{
-                                    //Open all connected controllers at game start.
-                                    for(int i = 0; i < SDL_NumJoysticks(); i++){
-                                            SDL_GameControllerOpen(i);
-                                    }
-                            }
-                             */
-                            //Init succeeded
-                            init = true;
+                    }
+                    else{
+                        //Init succeeded
+                        init = true;
 
-                            GameState::game = this;
+                        GameState::game = this;
+                        
+                        Mix_AllocateChannels(16);
 
-                            players.emplace_back(new Player(players.size()));
-                            players.emplace_back(new Player(players.size()));
-                        }
+                        players.emplace_back(new Player(players.size()));
+                        players.emplace_back(new Player(players.size()));
                     }
                 }
             }
@@ -321,6 +338,7 @@ void GameEngine::popState(){
     //Unload and remove current state
     if(!stateStack.empty()){
         stateStack.back()->unload();
+        delete stateStack.back();
         stateStack.pop_back();
     }
 

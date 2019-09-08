@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     if(!game->init()){
         std::cerr << "ERROR engine not initialized properly." << std::endl;
         //TODO better init error catching?
-        return 1;
+        exit(1);
     }
     else{
         game->pushState(new TitleState());
@@ -30,11 +30,7 @@ int main(int argc, char* argv[]){
         }
     }
 
-    if(!game->close()){
-        std::cerr << "ERROR engine not closed properly." << std::endl;
-        //TODO better close error catching?
-        return -1;
-    }
+    game->close();
 
     return 0;
 }

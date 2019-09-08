@@ -28,6 +28,10 @@ enum Option_Structure{
 const int MAX_MENU_SIZE = 10;
 
 class MenuState : public GameState{
+private:
+	static const char menuClick[];
+	static Mix_Chunk* menuClickChunk;
+	
 protected:
 	int flag = -1;
 	

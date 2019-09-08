@@ -28,9 +28,7 @@ protected:
 
 public:
 
-    Box(int x = 0, int y = 0, int ax = 0, int ay = 0, int w = 0, int h = 0, SDL_Color color = {0xFF, 0xFF, 0xFF}) :
-    ax(ax), ay(ay), rect({x + ax, y + ay, w, h}), color(color) {
-    };
+    Box(int x = 0, int y = 0, int ax = 0, int ay = 0, int w = 0, int h = 0, SDL_Color color = {0xFF, 0xFF, 0xFF});
 
     virtual ~Box();
 

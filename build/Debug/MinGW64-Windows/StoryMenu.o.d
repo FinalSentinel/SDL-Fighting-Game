@@ -21,8 +21,9 @@ build/Debug/MinGW64-Windows/StoryMenu.o: StoryMenu.cpp StoryMenu.h \
  c:/SDL64/include/SDL_messagebox.h c:/SDL64/include/SDL_power.h \
  c:/SDL64/include/SDL_render.h c:/SDL64/include/SDL_sensor.h \
  c:/SDL64/include/SDL_shape.h c:/SDL64/include/SDL_system.h \
- c:/SDL64/include/SDL_timer.h c:/SDL64/include/SDL_version.h GameEngine.h \
- Window.h Texture.h c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h
+ c:/SDL64/include/SDL_timer.h c:/SDL64/include/SDL_version.h \
+ c:/SDL64/include/SDL_mixer.h GameEngine.h Audio.h Window.h Texture.h \
+ c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h
 
 StoryMenu.h:
 
@@ -120,7 +121,11 @@ c:/SDL64/include/SDL_timer.h:
 
 c:/SDL64/include/SDL_version.h:
 
+c:/SDL64/include/SDL_mixer.h:
+
 GameEngine.h:
+
+Audio.h:
 
 Window.h:
 

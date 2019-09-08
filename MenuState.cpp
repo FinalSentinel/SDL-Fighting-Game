@@ -9,10 +9,25 @@
 
 #include "Texture.h"
 
+
+
+const char MenuState::menuClick[] = "grunt.ogg";
+Mix_Chunk* MenuState::menuClickChunk = nullptr;
+
+
+
 MenuState::MenuState(){
+    if(menuClickChunk == nullptr){
+        menuClickChunk = Mix_LoadWAV(menuClick);
+        if(!menuClickChunk){
+            std::cerr << "ERROR loading menu click file: " << Mix_GetError() << std::endl;
+        }
+    }
 }
 
 MenuState::~MenuState(){
+    Mix_FreeChunk(menuClickChunk);
+    menuClickChunk = nullptr;
 }
 
 void MenuState::back(){
@@ -184,6 +199,8 @@ void MenuState::controllerButtonHandler(){
                 std::get<GRAPHIC>(options[selection])->setRGBA();
                 selection = (options.size() + selection - 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                
+                Mix_PlayChannel(0, menuClickChunk, 0);
 
                 break;
             }
@@ -199,6 +216,9 @@ void MenuState::controllerButtonHandler(){
                 std::get<GRAPHIC>(options[selection])->setRGBA();
                 selection = (options.size() + selection + 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                
+                //Mix_HaltChannel(0);
+                Mix_PlayChannel(0, menuClickChunk, 0);
 
                 break;
             }

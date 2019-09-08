@@ -13,13 +13,15 @@
 Uint8 Box::aIn = 0x20;
 Uint8 Box::aOut = 0xA0;
 
-Box::~Box(){
+Box::Box(int x, int y, int ax, int ay, int w, int h, SDL_Color color):
+ax(ax), ay(ay), rect({x + ax, y + ay, w, h}), color(color){
+    //NONE
+    
 }
 
-/*
-Box::Box(const Box& other){
+Box::~Box(){
+    //NONE
 }
- */
 
 
 

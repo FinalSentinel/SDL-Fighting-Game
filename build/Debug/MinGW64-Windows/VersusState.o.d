@@ -21,9 +21,10 @@ build/Debug/MinGW64-Windows/VersusState.o: VersusState.cpp VersusState.h \
  c:/SDL64/include/SDL_power.h c:/SDL64/include/SDL_render.h \
  c:/SDL64/include/SDL_sensor.h c:/SDL64/include/SDL_shape.h \
  c:/SDL64/include/SDL_system.h c:/SDL64/include/SDL_timer.h \
- c:/SDL64/include/SDL_version.h GameEngine.h Window.h VersusMenu.h \
- MenuState.h Texture.h c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h \
- Box.h Character.h Entity.h Player.h
+ c:/SDL64/include/SDL_version.h c:/SDL64/include/SDL_mixer.h GameEngine.h \
+ Audio.h Window.h VersusMenu.h MenuState.h Texture.h \
+ c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h Box.h Character.h \
+ Entity.h Player.h
 
 VersusState.h:
 
@@ -119,7 +120,11 @@ c:/SDL64/include/SDL_timer.h:
 
 c:/SDL64/include/SDL_version.h:
 
+c:/SDL64/include/SDL_mixer.h:
+
 GameEngine.h:
+
+Audio.h:
 
 Window.h:
 

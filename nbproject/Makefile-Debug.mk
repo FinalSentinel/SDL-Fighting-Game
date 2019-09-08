@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Audio.o \
 	${OBJECTDIR}/AudioMenu.o \
 	${OBJECTDIR}/BattleMenu.o \
 	${OBJECTDIR}/Box.o \
@@ -83,6 +84,11 @@ LDLIBSOPTIONS=-L/C/SDL64/lib
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fg_test.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fg_test ${OBJECTFILES} ${LDLIBSOPTIONS} -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+
+${OBJECTDIR}/Audio.o: Audio.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Audio.o Audio.cpp
 
 ${OBJECTDIR}/AudioMenu.o: AudioMenu.cpp
 	${MKDIR} -p ${OBJECTDIR}
