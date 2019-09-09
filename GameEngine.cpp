@@ -9,7 +9,6 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
-#include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
 #include "GameState.h"
@@ -28,11 +27,11 @@ GameEngine::GameEngine(): quit(false){
         std::cerr<<"ERROR unable to open audio config file"<<std::endl;
         exit(2);
     }
-    else{
+    else{        
         int ma, mu, vo, ef;
-        
-        fileI>>std::dec>>ma, mu, vo, ef;
-        
+
+        fileI >> std::dec >> ma >> mu >> vo >> ef;
+                
         gameAudio = Audio(ma, mu, vo, ef);
     }
     fileI.close();
@@ -312,19 +311,22 @@ bool GameEngine::init(){
                     std::cerr << "Error initializing SDL_mixer: " << Mix_GetError() << std::endl;
                 }
                 else{
-                    if(TTF_Init() == -1){
-                        std::cerr << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+                    if(!gameAudio.init()){
+                        std::cerr << "Error initializing game audio." << std::endl;
                     }
                     else{
-                        //Init succeeded
-                        init = true;
+                        if(TTF_Init() == -1){
+                            std::cerr << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+                        }
+                        else{
+                            //Init succeeded
+                            init = true;
 
-                        GameState::game = this;
-                        
-                        Mix_AllocateChannels(16);
+                            GameState::game = this;
 
-                        players.emplace_back(new Player(players.size()));
-                        players.emplace_back(new Player(players.size()));
+                            players.emplace_back(new Player(players.size()));
+                            players.emplace_back(new Player(players.size()));
+                        }
                     }
                 }
             }

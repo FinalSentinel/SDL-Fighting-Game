@@ -51,6 +51,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/MenuState.o \
 	${OBJECTDIR}/OptionsMenu.o \
 	${OBJECTDIR}/Player.o \
+	${OBJECTDIR}/SFX.o \
+	${OBJECTDIR}/Song.o \
 	${OBJECTDIR}/StoryMenu.o \
 	${OBJECTDIR}/Texture.o \
 	${OBJECTDIR}/TitleState.o \
@@ -164,6 +166,16 @@ ${OBJECTDIR}/Player.o: Player.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Player.o Player.cpp
+
+${OBJECTDIR}/SFX.o: SFX.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SFX.o SFX.cpp
+
+${OBJECTDIR}/Song.o: Song.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Song.o Song.cpp
 
 ${OBJECTDIR}/StoryMenu.o: StoryMenu.cpp
 	${MKDIR} -p ${OBJECTDIR}

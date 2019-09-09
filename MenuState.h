@@ -27,10 +27,14 @@ enum Option_Structure{
 
 const int MAX_MENU_SIZE = 10;
 
-class MenuState : public GameState{
+
+
+class SFX;
+
+class MenuState: public GameState{
 private:
 	static const char menuClick[];
-	static Mix_Chunk* menuClickChunk;
+	static SFX* menuClickSFX;
 	
 protected:
 	int flag = -1;
@@ -46,8 +50,6 @@ public:
     MenuState();
 	
     virtual ~MenuState();
-
-    //MenuState* instance();
 
 	
 	

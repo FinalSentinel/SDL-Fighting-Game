@@ -65,6 +65,10 @@
         <itemPath>GameEngine.h</itemPath>
         <itemPath>GameState.cpp</itemPath>
         <itemPath>GameState.h</itemPath>
+        <itemPath>SFX.cpp</itemPath>
+        <itemPath>SFX.h</itemPath>
+        <itemPath>Song.cpp</itemPath>
+        <itemPath>Song.h</itemPath>
         <itemPath>Texture.cpp</itemPath>
         <itemPath>Texture.h</itemPath>
         <itemPath>Window.cpp</itemPath>
@@ -193,6 +197,14 @@
       <item path="Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Song.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Song.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="StoryMenu.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -336,6 +348,14 @@
       <item path="Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Song.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Song.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="StoryMenu.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -17,6 +17,7 @@
 #include "OptionsMenu.h"
 #include "GalleryMenu.h"
 #include "StoryMenu.h"
+#include "Song.h"
 
 
 
@@ -31,9 +32,9 @@ MainMenu::MainMenu(){
     
     */
     
-    mainMenuMix = Mix_LoadMUS(mainMenuMusic);
-    if(!mainMenuMix){
-        std::cerr << "ERROR loading main menu music: " << Mix_GetError() << std::endl;
+    mainMenuSong = game->gameAudio.loadSong(mainMenuMusic);
+    if(!mainMenuSong->get_song()){
+        std::cerr << "ERROR loading main menu music"  << std::endl;
     }
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
@@ -53,18 +54,21 @@ MainMenu::MainMenu(){
 }
 
 MainMenu::~MainMenu(){
-    Mix_FreeMusic(mainMenuMix);
-    mainMenuMix = nullptr;
+    game->gameAudio.unloadSong(mainMenuSong);
+    if(mainMenuSong != nullptr){
+        std::cerr << "ERROR menu song not unloaded correctly" <<std::endl;
+    }
 };
 
-//MainMenu* MainMenu::instance();
+
 
 void MainMenu::load(){
     MenuState::load();
 
     std::cout << "MAIN MENU" << std::endl;
     
-    Mix_FadeInMusicPos(mainMenuMix, -1, 30, 0);
+    //TODO song play function Audio class
+    Mix_FadeInMusicPos(mainMenuSong->get_song(), -1, 30, 0);
 
     return;
 }

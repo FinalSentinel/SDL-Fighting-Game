@@ -24,7 +24,7 @@ build/Debug/MinGW64-Windows/MainMenu.o: MainMenu.cpp MainMenu.h \
  c:/SDL64/include/SDL_timer.h c:/SDL64/include/SDL_version.h \
  c:/SDL64/include/SDL_mixer.h GameEngine.h Audio.h Window.h Texture.h \
  c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h BattleMenu.h \
- OptionsMenu.h GalleryMenu.h StoryMenu.h
+ OptionsMenu.h GalleryMenu.h StoryMenu.h Song.h
 
 MainMenu.h:
 
@@ -143,3 +143,5 @@ OptionsMenu.h:
 GalleryMenu.h:
 
 StoryMenu.h:
+
+Song.h:

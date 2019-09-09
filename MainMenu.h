@@ -24,11 +24,13 @@ enum Main_Options{
 	RETURN_TO_TITLE
 };
 
+class Song;
+
 class MainMenu: public MenuState{
 private:
 	static const char mainMenuMusic[];
 	
-	Mix_Music* mainMenuMix;
+	Song* mainMenuSong;
 
 protected:
 

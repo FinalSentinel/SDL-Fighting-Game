@@ -23,7 +23,7 @@ build/Debug/MinGW64-Windows/MenuState.o: MenuState.cpp MenuState.h \
  c:/SDL64/include/SDL_system.h c:/SDL64/include/SDL_timer.h \
  c:/SDL64/include/SDL_version.h c:/SDL64/include/SDL_mixer.h GameEngine.h \
  Audio.h Window.h Texture.h c:/SDL64/include/SDL_ttf.h \
- c:/SDL64/include/SDL.h
+ c:/SDL64/include/SDL.h SFX.h
 
 MenuState.h:
 
@@ -132,3 +132,5 @@ Texture.h:
 c:/SDL64/include/SDL_ttf.h:
 
 c:/SDL64/include/SDL.h:
+
+SFX.h:

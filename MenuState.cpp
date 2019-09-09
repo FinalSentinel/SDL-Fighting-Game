@@ -8,26 +8,30 @@
 #include "MenuState.h"
 
 #include "Texture.h"
+#include "SFX.h"
 
 
 
 const char MenuState::menuClick[] = "grunt.ogg";
-Mix_Chunk* MenuState::menuClickChunk = nullptr;
+SFX* MenuState::menuClickSFX = nullptr;
 
 
 
 MenuState::MenuState(){
-    if(menuClickChunk == nullptr){
-        menuClickChunk = Mix_LoadWAV(menuClick);
-        if(!menuClickChunk){
-            std::cerr << "ERROR loading menu click file: " << Mix_GetError() << std::endl;
+    if(menuClickSFX == nullptr){
+        std::cout<<"Loading menu click"<<std::endl;
+        menuClickSFX = game->gameAudio.loadEffect(menuClick);
+        if(!menuClickSFX){
+            std::cerr << "ERROR loading menu click file" << std::endl;
         }
     }
 }
 
 MenuState::~MenuState(){
-    Mix_FreeChunk(menuClickChunk);
-    menuClickChunk = nullptr;
+    game->gameAudio.unloadEffect(menuClickSFX);
+    if(menuClickSFX != nullptr){
+        std::cerr<<"ERROR menu click not unloaded properly"<<std::endl;
+    }
 }
 
 void MenuState::back(){
@@ -200,7 +204,8 @@ void MenuState::controllerButtonHandler(){
                 selection = (options.size() + selection - 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
-                Mix_PlayChannel(0, menuClickChunk, 0);
+                //TODO play function in Audio class
+                Mix_PlayChannel(Mix_GroupAvailable(SYSTEM_SFX), menuClickSFX->get_effect(), 0);
 
                 break;
             }
@@ -217,8 +222,8 @@ void MenuState::controllerButtonHandler(){
                 selection = (options.size() + selection + 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
-                //Mix_HaltChannel(0);
-                Mix_PlayChannel(0, menuClickChunk, 0);
+                //TODO play function
+                Mix_PlayChannel(Mix_GroupAvailable(SYSTEM_SFX), menuClickSFX->get_effect(), 0);
 
                 break;
             }

@@ -1,12 +1,13 @@
 build/Debug/MinGW64-Windows/GameEngine.o: GameEngine.cpp GameEngine.h \
- Audio.h c:/SDL64/include/SDL.h c:/SDL64/include/SDL_main.h \
- c:/SDL64/include/SDL_stdinc.h c:/SDL64/include/SDL_config.h \
- c:/SDL64/include/SDL_platform.h c:/SDL64/include/begin_code.h \
- c:/SDL64/include/close_code.h c:/SDL64/include/SDL_assert.h \
- c:/SDL64/include/SDL_atomic.h c:/SDL64/include/SDL_audio.h \
- c:/SDL64/include/SDL_error.h c:/SDL64/include/SDL_endian.h \
+ Audio.h c:/SDL64/include/SDL_mixer.h c:/SDL64/include/SDL_stdinc.h \
+ c:/SDL64/include/SDL_config.h c:/SDL64/include/SDL_platform.h \
+ c:/SDL64/include/begin_code.h c:/SDL64/include/close_code.h \
+ c:/SDL64/include/SDL_rwops.h c:/SDL64/include/SDL_error.h \
+ c:/SDL64/include/SDL_audio.h c:/SDL64/include/SDL_endian.h \
  c:/SDL64/include/SDL_mutex.h c:/SDL64/include/SDL_thread.h \
- c:/SDL64/include/SDL_rwops.h c:/SDL64/include/SDL_clipboard.h \
+ c:/SDL64/include/SDL_atomic.h c:/SDL64/include/SDL_version.h \
+ c:/SDL64/include/SDL.h c:/SDL64/include/SDL_main.h \
+ c:/SDL64/include/SDL_assert.h c:/SDL64/include/SDL_clipboard.h \
  c:/SDL64/include/SDL_cpuinfo.h c:/SDL64/include/SDL_events.h \
  c:/SDL64/include/SDL_video.h c:/SDL64/include/SDL_pixels.h \
  c:/SDL64/include/SDL_rect.h c:/SDL64/include/SDL_surface.h \
@@ -20,9 +21,8 @@ build/Debug/MinGW64-Windows/GameEngine.o: GameEngine.cpp GameEngine.h \
  c:/SDL64/include/SDL_log.h c:/SDL64/include/SDL_messagebox.h \
  c:/SDL64/include/SDL_power.h c:/SDL64/include/SDL_render.h \
  c:/SDL64/include/SDL_sensor.h c:/SDL64/include/SDL_shape.h \
- c:/SDL64/include/SDL_system.h c:/SDL64/include/SDL_timer.h \
- c:/SDL64/include/SDL_version.h Window.h c:/SDL64/include/SDL_image.h \
- c:/SDL64/include/SDL.h c:/SDL64/include/SDL_mixer.h \
+ c:/SDL64/include/SDL_system.h c:/SDL64/include/SDL_timer.h Window.h \
+ c:/SDL64/include/SDL_image.h c:/SDL64/include/SDL.h \
  c:/SDL64/include/SDL_ttf.h GameState.h Player.h TitleState.h Texture.h \
  MainMenu.h MenuState.h
 
@@ -30,9 +30,7 @@ GameEngine.h:
 
 Audio.h:
 
-c:/SDL64/include/SDL.h:
-
-c:/SDL64/include/SDL_main.h:
+c:/SDL64/include/SDL_mixer.h:
 
 c:/SDL64/include/SDL_stdinc.h:
 
@@ -44,13 +42,11 @@ c:/SDL64/include/begin_code.h:
 
 c:/SDL64/include/close_code.h:
 
-c:/SDL64/include/SDL_assert.h:
-
-c:/SDL64/include/SDL_atomic.h:
-
-c:/SDL64/include/SDL_audio.h:
+c:/SDL64/include/SDL_rwops.h:
 
 c:/SDL64/include/SDL_error.h:
+
+c:/SDL64/include/SDL_audio.h:
 
 c:/SDL64/include/SDL_endian.h:
 
@@ -58,7 +54,15 @@ c:/SDL64/include/SDL_mutex.h:
 
 c:/SDL64/include/SDL_thread.h:
 
-c:/SDL64/include/SDL_rwops.h:
+c:/SDL64/include/SDL_atomic.h:
+
+c:/SDL64/include/SDL_version.h:
+
+c:/SDL64/include/SDL.h:
+
+c:/SDL64/include/SDL_main.h:
+
+c:/SDL64/include/SDL_assert.h:
 
 c:/SDL64/include/SDL_clipboard.h:
 
@@ -118,15 +122,11 @@ c:/SDL64/include/SDL_system.h:
 
 c:/SDL64/include/SDL_timer.h:
 
-c:/SDL64/include/SDL_version.h:
-
 Window.h:
 
 c:/SDL64/include/SDL_image.h:
 
 c:/SDL64/include/SDL.h:
-
-c:/SDL64/include/SDL_mixer.h:
 
 c:/SDL64/include/SDL_ttf.h:
 
