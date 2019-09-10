@@ -82,9 +82,13 @@ public:
 	
 	Song* loadSong(const char* file, double loop = 0);
 	
-	//TODO Song/SFX play functions
+	void play(SFX* sfx, int group, int loop = 0, int milli = 0);
+	
+	void play(Song* song, int loop = -1, int fade = 0, double position = 0.0);
 	
 	//TODO Song loop function here, or in Song class?
+	
+	void saveSettings();
 	
 	void set_effects(int ma);
 	

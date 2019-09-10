@@ -19,7 +19,6 @@ SFX* MenuState::menuClickSFX = nullptr;
 
 MenuState::MenuState(){
     if(menuClickSFX == nullptr){
-        std::cout<<"Loading menu click"<<std::endl;
         menuClickSFX = game->gameAudio.loadEffect(menuClick);
         if(!menuClickSFX){
             std::cerr << "ERROR loading menu click file" << std::endl;
@@ -204,8 +203,7 @@ void MenuState::controllerButtonHandler(){
                 selection = (options.size() + selection - 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
-                //TODO play function in Audio class
-                Mix_PlayChannel(Mix_GroupAvailable(SYSTEM_SFX), menuClickSFX->get_effect(), 0);
+                game->gameAudio.play(menuClickSFX, SYSTEM_SFX);
 
                 break;
             }
@@ -222,8 +220,7 @@ void MenuState::controllerButtonHandler(){
                 selection = (options.size() + selection + 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
-                //TODO play function
-                Mix_PlayChannel(Mix_GroupAvailable(SYSTEM_SFX), menuClickSFX->get_effect(), 0);
+                game->gameAudio.play(menuClickSFX, SYSTEM_SFX);
 
                 break;
             }

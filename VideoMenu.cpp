@@ -56,6 +56,7 @@ VideoMenu::VideoMenu(): prompt(false), keep(false), isback(false){
 }
 
 VideoMenu::~VideoMenu(){
+    //NONE
 }
 
 
@@ -159,7 +160,7 @@ void VideoMenu::controllerButtonHandler(){
                 
                 resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
                 
-                //TODO
+                //TODO move to Window class
                 game->fileO.open(game->gameWindow.videoConfig);
                 if(!game->fileO.is_open()){
                     std::cerr<<"ERROR unable to open config file.";
@@ -344,9 +345,7 @@ void VideoMenu::Default(){
         std::cerr<<"ERROR unable to open video default file"<<std::endl;
     }
     else{
-        game->fileI>>std::dec>>dials[RESOLUTION];
-        game->fileI>>std::dec>>dials[FULLSCREEN];
-        game->fileI>>std::dec>>dials[VSYNC];
+        game->fileI>>std::dec>>dials[RESOLUTION]>>dials[FULLSCREEN]>>dials[VSYNC];
             
         resolution = game->gameWindow.resolutions[dials[RESOLUTION]];
         

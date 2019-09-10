@@ -33,10 +33,11 @@ class SFX;
 
 class MenuState: public GameState{
 private:
+	
+protected:
 	static const char menuClick[];
 	static SFX* menuClickSFX;
 	
-protected:
 	int flag = -1;
 	
     int selection = 0;

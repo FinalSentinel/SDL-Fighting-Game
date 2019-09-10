@@ -21,7 +21,7 @@
 
 
 
-const char MainMenu::mainMenuMusic[] = "AEUHHH.mp3";
+const char MainMenu::mainMenuMusic[] = "AEUHHH.wav";
 
 
 
@@ -67,8 +67,7 @@ void MainMenu::load(){
 
     std::cout << "MAIN MENU" << std::endl;
     
-    //TODO song play function Audio class
-    Mix_FadeInMusicPos(mainMenuSong->get_song(), -1, 30, 0);
+    game->gameAudio.play(mainMenuSong);
 
     return;
 }
@@ -81,6 +80,7 @@ void MainMenu::render(){
     SDL_RenderClear(game->gameWindow.renderer);
     MenuState::render();
 
+    if(mainMenuSong->get_song())
     return;
 }
 

@@ -13,6 +13,7 @@
 
 #include "Audio.h"
 
+#include <fstream>
 #include <iostream>
 
 #include "Song.h"
@@ -104,10 +105,44 @@ Song* Audio::loadSong(const char* file, double loop){
     return new Song(file, loop);
 }
 
+void Audio::play(SFX* sfx, int group, int loop, int milli){
+    Mix_PlayChannelTimed(Mix_GroupAvailable(group), sfx->get_effect(), loop, milli);
+    
+    return;
+}
+
+void Audio::play(Song* song, int loop, int fade, double position){
+    Mix_FadeInMusicPos(song->get_song(), loop, fade, position);
+    
+    //TODO alternate file format loops
+    
+    return;
+}
+
+void Audio::saveSettings(){
+    //TODO
+    std::ofstream ofs;
+
+    ofs.open(audioConfig);
+    if(!ofs.is_open()){
+        std::cerr << "ERROR unable to open audio config file" << std::endl;
+    }
+    else{
+        std::string temp = std::to_string(master) + '\n' +
+                           std::to_string(music)  + '\n' +
+                           std::to_string(voice)  + '\n' +
+                           std::to_string(effects);
+
+        ofs << temp;
+    }
+    ofs.close();
+
+    return;
+}
+
 void Audio::set_effects(int ef){
     effects = ef;
-        std::cout << "effect " << master << ":" << (master / 100.0) << " " << effects << ":" << (effects / 100.0) << std::endl;
-    
+
     for(int i = 3; i < 16; i++){
         Mix_Volume(i, (master / 100.0) * (effects / 100.0) * MIX_MAX_VOLUME + 0.5);
     }
@@ -117,7 +152,7 @@ void Audio::set_effects(int ef){
 
 void Audio::set_master(int ma){
     master = ma;
-    
+
     set_effects(effects);
     set_music(music);
     set_voice(voice);
@@ -127,10 +162,9 @@ void Audio::set_master(int ma){
 
 void Audio::set_music(int mu){
     music = mu;
-std::cout << "music " << master << ":" << (master / 100.0) << " " << music << ":" << (music / 100.0) << std::endl;
-    
+
     for(int i = 0; i < 3; i++){
-        Mix_VolumeMusic((master / 100.0) * (voice / 100.0) * MIX_MAX_VOLUME + 0.5);
+        Mix_VolumeMusic((master / 100.0) * (music / 100.0) * MIX_MAX_VOLUME + 0.5);
     }
     
     return;
@@ -138,8 +172,7 @@ std::cout << "music " << master << ":" << (master / 100.0) << " " << music << ":
 
 void Audio::set_voice(int vo){
     voice = vo;
-std::cout << "voice " << master << ":" << (master / 100.0) << " " << voice << ":" << (voice / 100.0) << std::endl;
-    
+
     for(int i = 0; i < 3; i++){
         Mix_Volume(i, (master / 100.0) * (voice / 100.0) * MIX_MAX_VOLUME + 0.5);
     }

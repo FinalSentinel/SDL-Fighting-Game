@@ -24,6 +24,10 @@ private:
 protected:
 
 public:
+	static const char audioDefault[];
+	
+	
+	
 	AudioMenu();
 
 	virtual ~AudioMenu();
@@ -31,6 +35,12 @@ public:
 	
 
 	std::string name();
+	
+	void reload();
+	
+	
+	
+	void controllerButtonHandler();
 	
 	
 	
