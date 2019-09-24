@@ -10,6 +10,15 @@
 
 #include "GameState.h"
 
+enum Versus_Types{
+	VERSUS,
+	ONLINE,
+	TRAINING,
+	COMBO,
+	TUTORIAL,
+	ARCADE
+};
+
 //Max players in a single game.
 const unsigned int ACTIVE_PLAYERS = 2;
 
@@ -22,26 +31,19 @@ class SDL_Rect;
 
 class VersusState : public GameState{
 private:
-    //static VersusState state;
-
+	int mode;
+	
     SDL_Rect* camera;
 
     Player* active[ACTIVE_PLAYERS];
 	
-	
 
 protected:
 
-//    VersusState() : camera(nullptr) {
-//    };
-//
-//    virtual ~VersusState() {
-//        delete camera;
-//        camera = nullptr;
-//    };
-
 public:
-    //static VersusState* instance();
+    VersusState(int vMode);
+
+    virtual ~VersusState();
 
 
 

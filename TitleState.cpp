@@ -11,16 +11,9 @@
 
 #include "SDL.h"
 
-/*
-TitleState TitleState::state;
 
-TitleState* TitleState::instance(){
-    return &state;
-}
- */
 
 void TitleState::load(){
-    //XXX
     std::cout << "TITLE STATE" << std::endl;
 
     //Load title texture
@@ -28,7 +21,9 @@ void TitleState::load(){
 
     //Load title text
     titleText.loadText(game->gameWindow.renderer, "TITLE TEXT", 200);
-
+    
+    Mix_FadeOutMusic(30);
+    
     return;
 }
 
@@ -58,7 +53,8 @@ void TitleState::render(){
 }
 
 void TitleState::resume(){
-    //TODO
+    Mix_FadeOutMusic(30);
+    
     GameState::set_seen(true);
     
     return;

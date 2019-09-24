@@ -84,9 +84,15 @@ void MainMenu::render(){
     return;
 }
 
-void MainMenu::unload(){
-    Mix_FadeOutMusic(30);
+void MainMenu::resume(){
+    game->gameAudio.play(mainMenuSong);
     
+    MenuState::resume();
+    
+    return;
+}
+
+void MainMenu::unload(){
     MenuState::unload();
     
     return;

@@ -15,28 +15,17 @@ enum Versus_Options{
 	RESUME
 };
 
-enum Versus_Types{
-	VERSUS,
-	ARCADE,
-	TRAINING,
-	TUTORIAL,
-	COMBO,
-	ONLINE
-};
-
 class VersusMenu: public MenuState{
 private:
+	int mode;
 
 protected:
 	bool hide;
 
 public:
-	VersusMenu();
+	VersusMenu(int vMode);
 
-	virtual ~VersusMenu(){
-	};
-
-	//static VersusMenu* instance();
+	virtual ~VersusMenu();
 	
 	
 	

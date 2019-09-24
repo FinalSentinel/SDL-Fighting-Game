@@ -24,8 +24,6 @@ protected:
 public:
 	BattleMenu();
 
-	BattleMenu(const BattleMenu& orig);
-
 	virtual ~BattleMenu();
 	
 	

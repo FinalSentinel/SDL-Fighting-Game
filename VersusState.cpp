@@ -14,16 +14,19 @@
 #include "Player.h"
 
 
-/*
-VersusState VersusState::state;
 
-VersusState* VersusState::instance(){
-    return &state;
+VersusState::VersusState(int vMode): mode(vMode), camera(nullptr){
+    
 }
-*/
 
-//TODO Change to Character Frame based
+VersusState::~VersusState(){
+    delete camera;
+    camera = nullptr;
+};
 
+
+
+//TODO switch to Character passed
 void VersusState::decollide(Player* p1, Player* p2){
     //Decollides horizontally.
     //TODO camera based walls
@@ -160,6 +163,8 @@ void VersusState::load(){
         //TODO dynamic starting position
         active[i]->character->addColBox(-50, 0, 100, 100 - 10 * i);
     }
+    
+    Mix_FadeOutMusic(30);
 
     return;
 }
@@ -298,7 +303,7 @@ void VersusState::controllerButtonHandler(){
 
         case SDL_CONTROLLER_BUTTON_START:
             if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
-                game->pushState(new VersusMenu());
+                game->pushState(new VersusMenu(mode));
             }
             break;
 

@@ -49,6 +49,8 @@ public:
 	
 	void render();
 	
+	void resume();
+	
 	void unload();
 	
 	

@@ -35,6 +35,8 @@
             <itemPath>AudioMenu.h</itemPath>
             <itemPath>BattleMenu.cpp</itemPath>
             <itemPath>BattleMenu.h</itemPath>
+            <itemPath>CharacterSelectMenu.cpp</itemPath>
+            <itemPath>CharacterSelectMenu.h</itemPath>
             <itemPath>CommandMenu.cpp</itemPath>
             <itemPath>CommandMenu.h</itemPath>
             <itemPath>ControlsMenu.cpp</itemPath>
@@ -52,6 +54,8 @@
             <itemPath>VideoMenu.cpp</itemPath>
             <itemPath>VideoMenu.h</itemPath>
           </logicalFolder>
+          <itemPath>CharacterSelectState.cpp</itemPath>
+          <itemPath>CharacterSelectState.h</itemPath>
           <itemPath>MenuState.cpp</itemPath>
           <itemPath>MenuState.h</itemPath>
           <itemPath>TitleState.cpp</itemPath>
@@ -59,12 +63,28 @@
           <itemPath>VersusState.cpp</itemPath>
           <itemPath>VersusState.h</itemPath>
         </logicalFolder>
-        <itemPath>Audio.cpp</itemPath>
-        <itemPath>Audio.h</itemPath>
         <itemPath>GameEngine.cpp</itemPath>
         <itemPath>GameEngine.h</itemPath>
         <itemPath>GameState.cpp</itemPath>
         <itemPath>GameState.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="GameObjects" projectFiles="true">
+        <logicalFolder name="f3" displayName="Entities" projectFiles="true">
+          <logicalFolder name="f2" displayName="Characters" projectFiles="true">
+          </logicalFolder>
+          <itemPath>Character.cpp</itemPath>
+          <itemPath>Character.h</itemPath>
+        </logicalFolder>
+        <itemPath>Audio.cpp</itemPath>
+        <itemPath>Audio.h</itemPath>
+        <itemPath>Box.cpp</itemPath>
+        <itemPath>Box.h</itemPath>
+        <itemPath>Entity.cpp</itemPath>
+        <itemPath>Entity.h</itemPath>
+        <itemPath>Frame.cpp</itemPath>
+        <itemPath>Frame.h</itemPath>
+        <itemPath>Player.cpp</itemPath>
+        <itemPath>Player.h</itemPath>
         <itemPath>SFX.cpp</itemPath>
         <itemPath>SFX.h</itemPath>
         <itemPath>Song.cpp</itemPath>
@@ -73,22 +93,6 @@
         <itemPath>Texture.h</itemPath>
         <itemPath>Window.cpp</itemPath>
         <itemPath>Window.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="GameObjects" projectFiles="true">
-        <logicalFolder name="f3" displayName="Entities" projectFiles="true">
-          <logicalFolder name="f2" displayName="Characters" projectFiles="true">
-          </logicalFolder>
-          <itemPath>Box.cpp</itemPath>
-          <itemPath>Box.h</itemPath>
-          <itemPath>Character.cpp</itemPath>
-          <itemPath>Character.h</itemPath>
-          <itemPath>Frame.cpp</itemPath>
-          <itemPath>Frame.h</itemPath>
-        </logicalFolder>
-        <itemPath>Entity.cpp</itemPath>
-        <itemPath>Entity.h</itemPath>
-        <itemPath>Player.cpp</itemPath>
-        <itemPath>Player.h</itemPath>
       </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -101,6 +105,7 @@
                    displayName="Important Files"
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>.gitignore</itemPath>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -151,6 +156,14 @@
       <item path="Character.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Character.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CharacterSelectMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CharacterSelectMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CharacterSelectState.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CharacterSelectState.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Cirno.ttf" ex="false" tool="3" flavor2="0">
       </item>
@@ -302,6 +315,14 @@
       <item path="Character.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Character.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CharacterSelectMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CharacterSelectMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CharacterSelectState.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CharacterSelectState.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Cirno.ttf" ex="false" tool="3" flavor2="0">
       </item>

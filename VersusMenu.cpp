@@ -18,31 +18,58 @@
 //    return &menu;
 //}
 
-VersusMenu::VersusMenu(){
-    hide = false;
+VersusMenu::VersusMenu(int vMode): mode(vMode), hide(false){
 
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(TEMP, this)));
     
     */
 
-    //TODO divide into sections
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Resume", new Texture(), std::bind(back, this)));
 
+    if(mode == COMBO){
+        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+        ("Combo List", new Texture(), std::bind(TEMP, this)));
+    }
+
+    if(mode == COMBO){
+        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+        ("Demo", new Texture(), std::bind(TEMP, this)));
+    }
+    
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Command List", new Texture(), std::bind(Command_list, this)));
+
+    if(mode == TRAINING){
+        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+        ("Training Options", new Texture(), std::bind(TEMP, this)));
+    }
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Options", new Texture(), std::bind(Options, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Hide Menu", new Texture(), std::bind(Hide_menu, this)));
-
+    
+    if(mode == ONLINE){
+        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+        ("Return to Lobby", new Texture(), std::bind(TEMP, this)));
+    }
+    
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Return To Main Menu", new Texture(), std::bind(Return_to_menu, this)));
+    
+    //TODO Where to put display options?
+    //TODO Character Select
 }
+
+VersusMenu::~VersusMenu(){
+    //NONE
+};
+
+
 
 void VersusMenu::load(){
     MenuState::load();
@@ -168,8 +195,7 @@ void VersusMenu::controllerButtonHandler(){
 }
 
 /*MENU FUNCTIONS*/
-void VersusMenu::Return_to_menu(){
-    //TODO take in string?
+void VersusMenu::Return_to_menu(){    
     game->changeState(new MainMenu());
 
     return;

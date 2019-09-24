@@ -12,8 +12,7 @@
 #include "Entity.h"
 
 enum CharacterID {
-    ERROR_CHARACTER = -1,
-    TEST_CHARACTER,
+    ERROR_CHARACTER, 
     A,
     B,
     C,

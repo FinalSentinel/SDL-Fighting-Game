@@ -27,14 +27,11 @@ MenuState::MenuState(){
 }
 
 MenuState::~MenuState(){
-    game->gameAudio.unloadEffect(menuClickSFX);
-    if(menuClickSFX != nullptr){
-        std::cerr<<"ERROR menu click not unloaded properly"<<std::endl;
-    }
 }
 
 void MenuState::back(){
     game->popState();
+    
     std::cout<<game->get_back()->name()<<std::endl;
     
     return;
@@ -243,5 +240,14 @@ void MenuState::keyHandler(){
 
 void MenuState::windowHandler(){
     
+    return;
+}
+
+
+
+/*MENU FUNCTION TEMP*/
+void MenuState::TEMP(){
+    std::cerr << "WARNING TEMP menu function call" << std::endl;
+
     return;
 }

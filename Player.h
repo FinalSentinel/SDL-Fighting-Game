@@ -12,8 +12,6 @@
 
 #include "SDL.h"
 
-const int CRLF = 2;
-
 enum versusControls{
 	UP,
 	DOWN,

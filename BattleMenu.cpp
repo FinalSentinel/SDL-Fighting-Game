@@ -41,9 +41,6 @@ BattleMenu::BattleMenu(){
     ("Back", new Texture(), std::bind(back, this)));
 }
 
-BattleMenu::BattleMenu(const BattleMenu& orig){
-}
-
 BattleMenu::~BattleMenu(){
 }
 
@@ -58,35 +55,35 @@ std::string BattleMenu::name(){
 /*MENU FUNCTIONS*/
 void BattleMenu::Versus(){
     std::cout<<"Versus"<<std::endl;
-    game->pushState(new VersusState(/*TODO Flags*/));
+    game->pushState(new VersusState(VERSUS));
 
     return;
 }
 
 void BattleMenu::Online(){
     std::cout<<"Versus"<<std::endl;
-    game->pushState(new VersusState(/*TODO Flags*/));
+    game->pushState(new VersusState(ONLINE));
 
     return;
 }
 
 void BattleMenu::Training(){
     std::cout<<"Training"<<std::endl;
-    game->pushState(new VersusState(/*TODO Flags*/));
+    game->pushState(new VersusState(TRAINING));
 
     return;
 }
 
 void BattleMenu::Combos(){
     std::cout<<"Combos"<<std::endl;
-    game->pushState(new VersusState(/*TODO Flags*/));
+    game->pushState(new VersusState(COMBO));
 
     return;
 }
 
 void BattleMenu::Tutorial(){
     std::cout<<"Tutorial"<<std::endl;
-    game->pushState(new VersusState(/*TODO Flags*/));
+    game->pushState(new VersusState(TUTORIAL));
 
     return;
 }

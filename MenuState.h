@@ -88,6 +88,11 @@ public:
 
     //TODO generalized window handler???
     virtual void windowHandler();
+	
+	
+	
+	/*MENU FUNCTION TEMP*/
+	void TEMP();
 };
 
 #endif /* GAMEENGINE_GAMESTATES_MENUSTATE_H_ */

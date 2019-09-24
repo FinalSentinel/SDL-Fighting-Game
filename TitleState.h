@@ -13,8 +13,6 @@
 
 class TitleState : public GameState{
 private:
-    //static TitleState state;
-
     Texture titleText;
     Texture titleTexture;
 
@@ -27,10 +25,6 @@ protected:
 //    };
 
 public:
-    //static TitleState* instance();
-
-
-
     void load();
 	
 	std::string name();

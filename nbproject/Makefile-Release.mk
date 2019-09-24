@@ -40,6 +40,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/BattleMenu.o \
 	${OBJECTDIR}/Box.o \
 	${OBJECTDIR}/Character.o \
+	${OBJECTDIR}/CharacterSelectMenu.o \
+	${OBJECTDIR}/CharacterSelectState.o \
 	${OBJECTDIR}/CommandMenu.o \
 	${OBJECTDIR}/ControlsMenu.o \
 	${OBJECTDIR}/Entity.o \
@@ -111,6 +113,16 @@ ${OBJECTDIR}/Character.o: Character.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Character.o Character.cpp
+
+${OBJECTDIR}/CharacterSelectMenu.o: CharacterSelectMenu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CharacterSelectMenu.o CharacterSelectMenu.cpp
+
+${OBJECTDIR}/CharacterSelectState.o: CharacterSelectState.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CharacterSelectState.o CharacterSelectState.cpp
 
 ${OBJECTDIR}/CommandMenu.o: CommandMenu.cpp
 	${MKDIR} -p ${OBJECTDIR}
