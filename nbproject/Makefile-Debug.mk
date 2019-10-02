@@ -49,6 +49,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/GalleryMenu.o \
 	${OBJECTDIR}/GameEngine.o \
 	${OBJECTDIR}/GameState.o \
+	${OBJECTDIR}/LevelSelectMenu.o \
 	${OBJECTDIR}/MainMenu.o \
 	${OBJECTDIR}/MenuState.o \
 	${OBJECTDIR}/OptionsMenu.o \
@@ -158,6 +159,11 @@ ${OBJECTDIR}/GameState.o: GameState.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GameState.o GameState.cpp
+
+${OBJECTDIR}/LevelSelectMenu.o: LevelSelectMenu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/C/SDL64/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LevelSelectMenu.o LevelSelectMenu.cpp
 
 ${OBJECTDIR}/MainMenu.o: MainMenu.cpp
 	${MKDIR} -p ${OBJECTDIR}

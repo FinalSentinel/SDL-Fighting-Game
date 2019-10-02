@@ -37,12 +37,25 @@ public:
 
 	std::string name();
 	
+	void pause(){};
+	
+	void render(){};
+	
 	void resume();
 	
+	void unload(){};
+	
+	void update(){};
 	
 	
-	/*MENU FUNCTIONS*/
+	
+	void controllerAxisHandler(){};
+	
+	void controllerButtonHandler(){};
 
+	void keyHandler(){};
+	
+	void windowHandler(){};
 };
 
 #endif /* CHARACTERSELECTSTATE_H */

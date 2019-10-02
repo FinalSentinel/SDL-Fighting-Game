@@ -23,7 +23,7 @@ build/Debug/MinGW64-Windows/BattleMenu.o: BattleMenu.cpp BattleMenu.h \
  c:/SDL64/include/SDL_shape.h c:/SDL64/include/SDL_system.h \
  c:/SDL64/include/SDL_timer.h c:/SDL64/include/SDL_version.h \
  c:/SDL64/include/SDL_mixer.h GameEngine.h Audio.h Window.h Texture.h \
- c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h VersusState.h
+ c:/SDL64/include/SDL_ttf.h c:/SDL64/include/SDL.h CharacterSelectState.h
 
 BattleMenu.h:
 
@@ -135,4 +135,4 @@ c:/SDL64/include/SDL_ttf.h:
 
 c:/SDL64/include/SDL.h:
 
-VersusState.h:
+CharacterSelectState.h:

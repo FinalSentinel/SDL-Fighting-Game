@@ -68,7 +68,7 @@ public:
 	
 	GameState* get_back();
 
-    std::vector<Player*> getPlayersList() const;
+    std::vector<Player*> getPlayersList();
 	
 	bool get_quit();
 

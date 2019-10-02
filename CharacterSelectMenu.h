@@ -29,11 +29,7 @@ private:
 protected:
 	int mode;
 	
-	int selected[2];
-	int stageSetting[2];
-	
-	bool level;
-	bool music;
+	bool selected[2];
 
 public:
 	CharacterSelectMenu(int vMode);
@@ -42,7 +38,11 @@ public:
 	
 	
 	
+	void load();
+	
 	std::string name();
+	
+	void resume();
 	
 	void update();
 	

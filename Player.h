@@ -50,6 +50,7 @@ public:
     SDL_GameController* controller;
     //Character selection
     Character* character;
+	int charID;
 	
 	std::string controls[versusControlsNum];
 
@@ -61,11 +62,14 @@ public:
 
     virtual ~Player();
 
+	
+	
     //TODO Change character function
-	
-	
+	int get_character();
 	
 	void saveControls();
+	
+	void set_character(int ch);
 };
 
 #endif /* GAMEOBJECTS_PLAYER_H_ */

@@ -12,17 +12,12 @@
  */
 
 #include "CharacterSelectMenu.h"
+
 #include "VersusState.h"
 
+#include "Player.h"
+
 CharacterSelectMenu::CharacterSelectMenu(int vMode): mode(vMode){
-    selected[0] = 0;
-    //XXX
-    selected[1] = 3;
-    
-    stageSetting[LEVEL] = -1;
-    //XXX
-    stageSetting[MUSIC] = -1;
-    
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("", new Texture(), std::bind(, this)));
@@ -44,26 +39,29 @@ CharacterSelectMenu::~CharacterSelectMenu(){
 
 
 
+void CharacterSelectMenu::load(){
+    selected[0] = false;
+    //XXX
+    selected[1] = true;
+    
+    MenuState::load();
+}
+
 std::string CharacterSelectMenu::name(){
     return "CharacterSelectMenu";
 }
 
-void render(){
-    //TODO level/music render stuff
+void CharacterSelectMenu::resume(){
+    load();
     
     return;
 }
 
 void CharacterSelectMenu::update(){
-    if(selected[0] == 1 || selected[1] == 1){
-        level = true;
-    }
-    if(selected[0] == 2 || selected[1] == 2){
-        music = true;
-    }
-    if(selected[0] == 3 && selected[1] == 3){
-        //TODO pass level and music
-        game->pushState(new VersusState(mode));
+    //TODO mode based loading for level/music?
+    if(selected[0] == true && selected[1] == true){
+        //TODO change to level select
+        game->pushState(new LevelSelectMenu(mode));
     }
 }
 
@@ -71,10 +69,12 @@ void CharacterSelectMenu::update(){
 
 /*MENU FUNCTIONS*/
 void CharacterSelectMenu::Set_character(){
-    //TODO Set Player character choice
+    std::cout<<"set character: "<<selection<<std::endl;
     
+    //TODO Set Player character choice
     //TODO player based logic
-    selected[0]++;
+    game->getPlayersList()[0]->set_character(selection);
+    selected[0] = true;
     
     return;
 }

@@ -12,7 +12,7 @@
 #include "Entity.h"
 
 enum CharacterID {
-    ERROR_CHARACTER, 
+    ERROR_CHARACTER = -1, 
     A,
     B,
     C,
@@ -32,7 +32,7 @@ private:
     //TODO change to array of 3 types of Box
     std::vector<Box*> collisionBoxes;
 
-    CharacterID charID;
+    int charID;
 
     int health;
     int meter;
@@ -43,7 +43,7 @@ private:
 
 public:
 
-    Character(int x = 0, int y = 0, bool l = true, int p = 0, CharacterID id = ERROR_CHARACTER, int hp = 0, int sp = 0);
+    Character(int id = ERROR_CHARACTER, int x = 0, int y = 0, bool l = true, int p = 0, int hp = 0, int sp = 0);
 
     virtual ~Character();
 
@@ -59,6 +59,8 @@ public:
     int get_dx();
 
     int get_dy();
+	
+	int get_id();
 
     std::vector<Box*> getColBoxes();
 

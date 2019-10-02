@@ -19,6 +19,7 @@
 
 
 CharacterSelectState::CharacterSelectState(int vMode): mode(vMode){
+    seen = false;
 }
 
 CharacterSelectState::~CharacterSelectState(){

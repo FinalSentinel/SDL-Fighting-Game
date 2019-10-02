@@ -341,18 +341,6 @@ void ControlsMenu::Default(){
     return;
 }
 
-//void ControlsMenu::back(){
-//    for(int i = 0; i < game->getPlayersList().size(); i++){
-//        game->getPlayersList()[i]->saveControls();
-
-//        reload();
-//    }
-//
-//    MenuState::back();
-//
-//    return;
-//}
-
 void ControlsMenu::none(){
     return;
 }

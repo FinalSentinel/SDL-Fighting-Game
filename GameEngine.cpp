@@ -277,7 +277,7 @@ GameState* GameEngine::get_back(){
     return stateStack.back();
 }
 
-std::vector<Player*> GameEngine::getPlayersList() const{
+std::vector<Player*> GameEngine::getPlayersList(){
     return players;
 }
 

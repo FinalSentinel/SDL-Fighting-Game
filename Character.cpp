@@ -9,8 +9,8 @@
 
 #include "Box.h"
 
-Character::Character(int x, int y, bool l, int p, CharacterID id, int hp, int sp):
-Entity(x, y, l, p), charID(id), health(hp), meter(sp){
+Character::Character(int id, int x, int y, bool l, int p, int hp, int sp):
+charID(id), Entity(x, y, l, p), health(hp), meter(sp){
     //NONE
 }
 
@@ -41,6 +41,10 @@ int Character::get_dx(){
 
 int Character::get_dy(){
     return dy;
+}
+	
+int Character::get_id(){
+    return charID;
 }
 
 std::vector<Box*> Character::getColBoxes(){

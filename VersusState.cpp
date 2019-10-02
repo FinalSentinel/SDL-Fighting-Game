@@ -27,6 +27,7 @@ VersusState::~VersusState(){
 
 
 //TODO switch to Character passed
+//TODO fix wall based turning
 void VersusState::decollide(Player* p1, Player* p2){
     //Decollides horizontally.
     //TODO camera based walls
@@ -155,13 +156,17 @@ void VersusState::load(){
         active[i] = game->getPlayersList()[i];
         if(i < (ACTIVE_PLAYERS + 1) / 2){
             //First half of players start facing left.
-            active[i]->character = new Character((i + 1) * STAGE_WIDTH / (ACTIVE_PLAYERS + 1), STAGE_HEIGHT);
+            active[i]->character = new Character(game->getPlayersList()[i]->get_character(),
+                                                 (i + 1) * STAGE_WIDTH / (ACTIVE_PLAYERS + 1), STAGE_HEIGHT);
         }else{
             //Last half of players start facing right.
-            active[i]->character = new Character((i + 1) * STAGE_WIDTH / (ACTIVE_PLAYERS + 1), STAGE_HEIGHT);
+            active[i]->character = new Character(game->getPlayersList()[i]->get_character(),
+                                                 (i + 1) * STAGE_WIDTH / (ACTIVE_PLAYERS + 1), STAGE_HEIGHT);
         }
         //TODO dynamic starting position
-        active[i]->character->addColBox(-50, 0, 100, 100 - 10 * i);
+        //TODO proper box loading
+        active[i]->character->addColBox(-50, 0, 130 - (10 * game->getPlayersList()[i]->get_character()),
+                                                 70 + (10 * game->getPlayersList()[i]->get_character()));
     }
     
     Mix_FadeOutMusic(30);

@@ -13,7 +13,7 @@
 
 #include "BattleMenu.h"
 
-#include "VersusState.h"
+#include "CharacterSelectState.h"
 
 BattleMenu::BattleMenu(){
     /*
@@ -23,19 +23,19 @@ BattleMenu::BattleMenu(){
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Versus", new Texture(), std::bind(Versus, this)));
+    ("Versus", new Texture(), std::bind(Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Online", new Texture(), std::bind(Online, this)));
+    ("Online", new Texture(), std::bind(Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Training", new Texture(), std::bind(Training, this)));
+    ("Training", new Texture(), std::bind(Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Combos", new Texture(), std::bind(Combos, this)));
+    ("Combos", new Texture(), std::bind(Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Tutorial", new Texture(), std::bind(Tutorial, this)));
+    ("Tutorial", new Texture(), std::bind(Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Back", new Texture(), std::bind(back, this)));
@@ -53,37 +53,9 @@ std::string BattleMenu::name(){
 
 
 /*MENU FUNCTIONS*/
-void BattleMenu::Versus(){
-    std::cout<<"Versus"<<std::endl;
-    game->pushState(new VersusState(VERSUS));
-
-    return;
-}
-
-void BattleMenu::Online(){
-    std::cout<<"Versus"<<std::endl;
-    game->pushState(new VersusState(ONLINE));
-
-    return;
-}
-
-void BattleMenu::Training(){
-    std::cout<<"Training"<<std::endl;
-    game->pushState(new VersusState(TRAINING));
-
-    return;
-}
-
-void BattleMenu::Combos(){
-    std::cout<<"Combos"<<std::endl;
-    game->pushState(new VersusState(COMBO));
-
-    return;
-}
-
-void BattleMenu::Tutorial(){
-    std::cout<<"Tutorial"<<std::endl;
-    game->pushState(new VersusState(TUTORIAL));
+void BattleMenu::Char_select(){
+    game->pushState(new CharacterSelectState(selection));
+    std::cout<<game->get_back()->name()<<std::endl;
 
     return;
 }

@@ -30,6 +30,8 @@ Player::Player(int num, SDL_GameController* co, Character* ch):
         std::getline(conIF, controls[i]);
     }
     conIF.close();
+    
+    charID = -1;
 }
         
 Player::~Player(){
@@ -38,6 +40,11 @@ Player::~Player(){
 
 
 
+int Player::get_character(){
+    return charID;
+}
+
+//TODO move to controls menu
 void Player::saveControls(){
     std::ifstream ifs;
     ifs.open(controlConfig);
@@ -80,6 +87,15 @@ void Player::saveControls(){
             }
             ofs.close();
         }
+    }
+    
+    return;
+}
+	
+void Player::set_character(int ch){
+    //TODO load character from number
+    if(ch >= 0){
+        charID = ch;
     }
     
     return;

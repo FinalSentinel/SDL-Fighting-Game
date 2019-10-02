@@ -33,11 +33,7 @@ public:
 	
 	
 	/*MENU FUNCTIONS*/
-	void Versus();
-	void Online();
-	void Training();
-	void Combos();
-	void Tutorial();
+	void Char_select();
 	//   Back = MenuState::back()
 };
 
