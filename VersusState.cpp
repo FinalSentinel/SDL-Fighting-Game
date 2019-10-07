@@ -15,7 +15,7 @@
 
 
 
-VersusState::VersusState(int vMode): mode(vMode), camera(nullptr){
+VersusState::VersusState(int vMode, int vLevel, int vMusic): mode(vMode), level(vLevel), music(vMusic), camera(nullptr){
     
 }
 

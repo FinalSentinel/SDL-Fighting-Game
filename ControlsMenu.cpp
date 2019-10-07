@@ -25,6 +25,10 @@ const char ControlsMenu::controlFormat[] = "controlFormat.txt";
 const char ControlsMenu::controlDefault[] = "controlConfigDefault.txt";
 
 ControlsMenu::ControlsMenu(){
+    for(int i = 0; i < MAX_PLAYERS; i++){
+        config[i] = false;
+    }
+    
     //    for(int i = 0; i < game->MAX_PLAYERS; i++){
     //        altSelection[i] = 0;
     //        altIndex[i] = 0;
