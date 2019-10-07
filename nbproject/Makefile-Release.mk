@@ -52,7 +52,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/LevelSelectMenu.o \
 	${OBJECTDIR}/MainMenu.o \
 	${OBJECTDIR}/MenuState.o \
-	${OBJECTDIR}/MusicSelectMenu.o \
 	${OBJECTDIR}/OptionsMenu.o \
 	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/SFX.o \
@@ -175,11 +174,6 @@ ${OBJECTDIR}/MenuState.o: MenuState.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MenuState.o MenuState.cpp
-
-${OBJECTDIR}/MusicSelectMenu.o: MusicSelectMenu.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MusicSelectMenu.o MusicSelectMenu.cpp
 
 ${OBJECTDIR}/OptionsMenu.o: OptionsMenu.cpp
 	${MKDIR} -p ${OBJECTDIR}

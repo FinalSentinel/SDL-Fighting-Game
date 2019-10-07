@@ -13,11 +13,9 @@
 
 #include "CharacterSelectMenu.h"
 
-#include "LevelSelectMenu.h"
+#include "VersusState.h"
 
 #include "Player.h"
-
-
 
 CharacterSelectMenu::CharacterSelectMenu(int vMode): mode(vMode){
     /*
@@ -26,9 +24,9 @@ CharacterSelectMenu::CharacterSelectMenu(int vMode): mode(vMode){
     
     */
     
-    for(int i = 0; i < charNum; i++){
+    for(int i = 0; i < 6 /*change to enum list num*/; i++){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        (CHARACTER_LIST[i], new Texture(), std::bind(Set_character, this)));
+        ("Char " + std::to_string(i), new Texture(), std::bind(Set_character, this)));
     }
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
@@ -56,8 +54,6 @@ std::string CharacterSelectMenu::name(){
 void CharacterSelectMenu::resume(){
     load();
     
-    MenuState::resume();
-    
     return;
 }
 
@@ -73,7 +69,7 @@ void CharacterSelectMenu::update(){
 
 /*MENU FUNCTIONS*/
 void CharacterSelectMenu::Set_character(){
-    std::cout<<"set character: "<<CHARACTER_LIST[selection]<<std::endl;
+    std::cout<<"set character: "<<selection<<std::endl;
     
     //TODO Set Player character choice
     //TODO player based logic
