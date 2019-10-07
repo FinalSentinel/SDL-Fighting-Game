@@ -16,11 +16,24 @@
 
 #include "MenuState.h"
 
+enum CharacterList{
+	error_character = -1,
+	CHAR_1,
+	CHAR_2,
+	CHAR_3,
+	CHAR_4,
+	CHAR_5,
+	LAMBDA,
+	charNum
+};
 
-
-enum StageSetting{
-	LEVEL,
-	MUSIC
+const std::string CHARACTER_LIST[charNum] = {
+	"Character 1",
+	"Character 2",
+	"Character 3",
+	"Character 4",
+	"Character 5",
+	"Lambda"
 };
 
 class CharacterSelectMenu: public MenuState{

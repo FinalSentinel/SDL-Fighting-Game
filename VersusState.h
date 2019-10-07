@@ -31,7 +31,7 @@ class SDL_Rect;
 
 class VersusState : public GameState{
 private:
-	int mode;
+	int mode, level, music;
 	
     SDL_Rect* camera;
 
@@ -41,7 +41,7 @@ private:
 protected:
 
 public:
-    VersusState(int vMode);
+    VersusState(int vMode, int vLevel, int vMusic);
 
     virtual ~VersusState();
 
