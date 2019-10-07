@@ -28,13 +28,6 @@ ControlsMenu::ControlsMenu(){
     for(int i = 0; i < MAX_PLAYERS; i++){
         config[i] = false;
     }
-    
-    //    for(int i = 0; i < game->MAX_PLAYERS; i++){
-    //        altSelection[i] = 0;
-    //        altIndex[i] = 0;
-    //        config[i] = false;
-    //        configNum[i] = 0;
-    //    
 
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
