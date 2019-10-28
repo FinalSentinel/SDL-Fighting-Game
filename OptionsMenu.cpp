@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   OptionsMenu.cpp
  * Author: Clayton
@@ -17,42 +11,36 @@
 #include "ControlsMenu.h"
 #include "VideoMenu.h"
 
-OptionsMenu::OptionsMenu(){
+OptionsMenu::OptionsMenu(void){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Change Controls", new Texture(), std::bind(Change_controls, this)));
+    ("Change Controls", new Texture(), std::bind(&OptionsMenu::Change_controls, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Video Settings", new Texture(), std::bind(Video_settings, this)));
+    ("Video Settings", new Texture(), std::bind(&OptionsMenu::Video_settings, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Audio Settings", new Texture(), std::bind(Audio_settings, this)));
+    ("Audio Settings", new Texture(), std::bind(&OptionsMenu::Audio_settings, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-OptionsMenu::OptionsMenu(const OptionsMenu& orig){
+OptionsMenu::~OptionsMenu(void){
+	//NONE
 }
 
-OptionsMenu::~OptionsMenu(){
-}
-
-
-
-std::string OptionsMenu::name(){
+std::string OptionsMenu::name(void) const{
     return "OptionsMenu";
 }
 
-
-
 /*MENU FUNCTIONS*/
-void OptionsMenu::Change_controls(){
+void OptionsMenu::Change_controls(void){
     //TODO
     std::cout<<"Controls"<<std::endl;
     game->pushState(new ControlsMenu());
@@ -60,7 +48,7 @@ void OptionsMenu::Change_controls(){
     return;
 }
 
-void OptionsMenu::Video_settings(){
+void OptionsMenu::Video_settings(void){
     //TODO 
     std::cout<<"Video"<<std::endl;
     game->pushState(new VideoMenu());
@@ -68,7 +56,7 @@ void OptionsMenu::Video_settings(){
     return;
 }
 
-void OptionsMenu::Audio_settings(){
+void OptionsMenu::Audio_settings(void){
     //TODO 
     std::cout<<"Audio"<<std::endl;
     game->pushState(new AudioMenu());

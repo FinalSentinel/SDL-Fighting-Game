@@ -5,55 +5,56 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEOBJECTS_WINDOW_H_
-#define GAMEOBJECTS_WINDOW_H_
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <iostream>
 
-class SDL_Texture;
-class SDL_Renderer;
-class SDL_Window;
+struct SDL_Texture;
+struct SDL_Renderer;
+struct SDL_Window;
 
-class Window {
+class Window{
 private:
     SDL_Window* window;
 	
 	int resNum;
 	
 	bool fullscreen;
+
 	bool vSync;
+
+protected:
+	//NONE
 
 public:
 	static const int totalResNum;
 	
+	//2 resolution values (width, height).
 	static const int resolutions[][2];
 	
 	static const char videoConfig[];
 	
-	
-	
     //TODO make private?
     SDL_Renderer* renderer;
-	
-	
+
+
 
     Window(int res = 14, bool f = false, bool v = false);
 
     virtual ~Window();
-	
-	
 
     bool init();
 	
-	bool get_fullscreen();
+	bool get_fullscreen() const;
 	
-	int get_resNum();
+	int get_resNum() const;
 	
-	bool get_vSync();
+	bool get_vSync() const;
 
-    int getHeight();
+    int getHeight() const;
 
-    int getWidth();
+    int getWidth() const;
 	
 	void set_fullscreen(bool f);
 	
@@ -66,6 +67,7 @@ public:
 	void swapResolution(int res);
 	
 	void swapVSync(bool v);
+
 };
 
-#endif /* GAMEOBJECTS_WINDOW_H_ */
+#endif /* WINDOW_H */

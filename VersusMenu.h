@@ -5,8 +5,8 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEOBJECTS_MENUS_VERSUSMENU_H_
-#define GAMEOBJECTS_MENUS_VERSUSMENU_H_
+#ifndef VERSUSMENU_H_
+#define VERSUSMENU_H_
 
 #include "MenuState.h"
 
@@ -25,28 +25,23 @@ protected:
 public:
 	VersusMenu(int vMode);
 
-	virtual ~VersusMenu();
+	virtual ~VersusMenu(void);
 	
+	void load(void);
 	
+	std::string name(void) const;
 	
-	void load();
+	void render(void) const;
 	
-	std::string name();
-	
-	void render();
-	
-	
-	
-	virtual void controllerButtonHandler();
-	
-
+	virtual void controllerButtonHandler(void);
 	
 	/*MENU FUNCTIONS*/
-	//   Resume = MenuState::back()
-	void Command_list();
-	void Options();
-	void Hide_menu();
-	void Return_to_menu();
+	//   Resume = MenuState::back(void){
+	void Command_list(void);
+	void Options(void);
+	void Hide_menu(void);
+	void Return_to_menu(void);
+
 };
 
-#endif /* GAMEOBJECTS_MENUS_VERSUSMENU_H_ */
+#endif /* VERSUSMENU_H_ */

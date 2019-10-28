@@ -5,9 +5,10 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEENGINE_GAMEENGINE_H_
-#define GAMEENGINE_GAMEENGINE_H_
+#ifndef GAMEENGINE_H
+#define GAMEENGINE_H
 
+#include <algorithm>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -26,7 +27,7 @@ class Player;
 
 class GameEngine {
 private:
-	//TODO background thread for loading and holding states.
+	//TODO background thread for loading and holding states?
 	
     bool quit;
 	
@@ -37,6 +38,7 @@ private:
     //TODO Add active back in?
 
 protected:
+	//NONE
 
 public:
 	Audio gameAudio;
@@ -54,8 +56,6 @@ public:
 
     virtual ~GameEngine();
 
-
-
     void addPlayer(Player* p);
 
     void changeState(GameState* state);
@@ -66,11 +66,11 @@ public:
 
     bool init();
 	
-	GameState* get_back();
+	GameState* get_back() const;
 
-    std::vector<Player*> getPlayersList();
+    std::vector<Player*> getPlayersList() const;
 	
-	bool get_quit();
+	bool get_quit() const;
 
     void popState();
 
@@ -83,8 +83,9 @@ public:
 	void set_quit(bool q);
 
     void update();
+
 };
 
-#endif /* GAMEENGINE_GAMEENGINE_H_ */
+#endif /* GAMEENGINE_H */
 
 

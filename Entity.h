@@ -5,43 +5,73 @@
  *      Author: Clayton
  */
 
-#ifndef ENTITY_H_
-#define ENTITY_H_
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #include <vector>
 
-class Entity {
+#include "Box.h"
+
+ //Entity class containing information on position, boxes, and colors and associated function.
+class Entity{
+private:
+	//NONE
+
 protected:
-    //Position.
-    int x, y;
-    //Momentum always starts at 0.  Use setters on spawn to have initial momentum.
-    int dx = 0, dy = 0;
+	//Position.
+	int x, y;
+	//Momentum.
+	int dx, dy;
 
-    bool left;
+	bool left;
 
-    //TODO add animation lists
+	//TODO add animation lists
 
-    //TODO add palettes
-    int palette;
+	//TODO add frame vector
 
-    //TODO add frame vector
+	//TODO move to Frame class
+	//NOTE make sure stuff doesn't disappear out of scope.
+	std::vector<Box> boxes[num_BoxType];
 
-    //TODO add Entity states
+	//TODO add palettes
+	int palette;
 
 public:
+	Entity(int x = 0, int y = 0, int dx = 0, int dy = 0, bool left = true, int p = 0);
 
-    Entity(int x = 0, int y = 0, bool left = true, int p = 0);
+	virtual ~Entity();
 
-    virtual ~Entity();
+	//Adds a Box to chosen Box type vector, with relative offset x,y anchored to Entity's position and with width/height w,h.
+	virtual void addBox(BoxType type, int rx, int ry, int w, int h);
 
+	int get_x() const;
 
-    virtual bool get_left();
+	int get_y() const;
 
-    virtual void set_left(bool l);
+	int get_dx() const;
 
-    virtual void move(int x, int y) = 0;
+	int get_dy() const;
 
-    virtual void update() = 0;
+	bool get_left() const;
+
+	virtual std::vector<Box> getBoxes(BoxType type) const;
+
+	//Special case of position function.
+	//Runs repeatedly to shift position of Entity based on current momentum TODO: (and time-step).
+	//TODO time-step based movement
+	virtual void move();
+
+	//Moves Enitity to position x,y and updates boxes accordingly.
+	virtual void position(int nx, int ny);
+
+	virtual void render(SDL_Renderer* rend) const;
+
+	void set_dx(int ndx);
+
+	void set_dy(int ndy);
+
+	void set_left(bool l);
+
 };
 
 #endif /* ENTITY_H_ */

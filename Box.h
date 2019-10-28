@@ -7,55 +7,67 @@
 
 //Generic display Box class
 //TODO should different box type be separate subclasses or all just Box classes?
-#ifndef BOX_H_
-#define BOX_H_
+#ifndef BOX_H
+#define BOX_H
 
+//TODO remove?
 #include "SDL.h"
 
-class Box {
+enum BoxType{
+	COLLISION,
+	HURT,
+	HIT,
+	num_BoxType
+};
+
+class Box{
+private:
+	//Universal alphas for when rendering a Box.
+	static int aIn;
+	static int aOut;
+
+	//Point of Entity relative to anchor.
+	const int rx, ry;
+
+	//TODO variable for relative position of box?
+
+	//Absolute position and width/height of box
+	SDL_Rect rect;
+
+	SDL_Color color;
+
 protected:
-    //Universal alphas for when rendering a Box.
-    static Uint8 aIn;
-    static Uint8 aOut;
-
-    //Anchors box position relative to Entity.
-    const int ax, ay;
-
-    SDL_Rect rect;
-
-    SDL_Color color;
-
+	//NONE
 
 public:
+	//TODO change anchor to pointer to Entity to get anchor values directly?
+	Box(int ax = 0, int ay = 0, int rx = 0, int ry = 0, int w = 0, int h = 0, SDL_Color color = {0xFF, 0xFF, 0xFF});
 
-    Box(int x = 0, int y = 0, int ax = 0, int ay = 0, int w = 0, int h = 0, SDL_Color color = {0xFF, 0xFF, 0xFF});
+	virtual ~Box();
 
-    virtual ~Box();
+	bool collides(Box b) const;
 
-    /* TODO box copy constructor
-    Box(const Box& other);
-     */
+	//Returns relative x position to anchor.
+	int get_rx() const;
 
-    //collision detection
-    bool collide(Box* b) const;
+	//Returns relative y position to anchor.
+	int get_ry() const;
 
-    int get_x() const;
+	//Returns absolute x position.
+	int get_x() const;
 
-    int get_y() const;
+	//Returns absolute y position.
+	int get_y() const;
 
-    int get_w() const;
+	int get_w() const;
 
-    int get_h() const;
+	int get_h() const;
 
-    int get_ax() const;
+	//Moves the box to nx,ny position offset to anchor point.
+	void position(int nx, int ny);
 
-    int get_ay() const;
-
-    //Set Box XY position
-    void move(int x, int y);
-
-    void render(SDL_Renderer* renderer) const;
+	void render(SDL_Renderer* rend) const;
 
 };
 
-#endif /* BOX_H_ */
+#endif /* BOX_H */

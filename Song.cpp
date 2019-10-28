@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Song.cpp
  * Author: Clayton
@@ -15,30 +9,29 @@
 
 #include <iostream>
 
-Song::Song(const char* f, double l): file(f), loop(l){
+Song::Song(const char* f, const double l): file(f), loop(l){
     song = Mix_LoadMUS(file);
+
     if(song == nullptr){
         std::cerr << "ERROR unable to load song - " << file << ": " << Mix_GetError() << std::endl;
     }
 }
 
-Song::~Song(){
+Song::~Song(void){
     if(song != nullptr){
         Mix_FreeMusic(song);
         song = nullptr;
     }
 }
 
-
-
-const char* Song::get_file(){
+const char* Song::get_file(void) const{
     return file;
 }
 
-double Song::get_loop(){
+double Song::get_loop(void) const{
     return loop;
 }
 
-Mix_Music* Song::get_song(){
+Mix_Music* Song::get_song(void) const{
     return song;
 }

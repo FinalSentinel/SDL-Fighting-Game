@@ -5,50 +5,48 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEENGINE_STATES_TITLESTATE_H_
-#define GAMEENGINE_STATES_TITLESTATE_H_
+#ifndef TITLESTATE_H
+#define TITLESTATE_H
 
 #include "Texture.h"
 #include "GameState.h"
 
-class TitleState : public GameState{
+class TitleState: public GameState{
 private:
     Texture titleText;
     Texture titleTexture;
 
 protected:
-
-//    TitleState() {
-//    };
-//
-//    virtual ~TitleState() {
-//    };
+	//NONE
 
 public:
-    void load();
+	TitleState(void);
+
+	~TitleState(void);
+
+    void load(void);
 	
-	std::string name();
+	std::string name(void) const;
 
-    void pause(/*TODO*/);
+    void pause(void);
 
-    void render();
+    void render(void) const;
 
-    void resume(/*TODO*/);
+    void resume(void);
 
-    void unload(/*TODO*/);
+    void unload(void);
 
-    void update();
-
-
+    void update(void);
 
     //TODO event handler
-    void controllerAxisHandler();
+    void controllerAxisHandler(void);
 
-    void controllerButtonHandler();
+    void controllerButtonHandler(void);
 
-    void keyHandler();
+    void keyHandler(void);
 
-    void windowHandler();
+    void windowHandler(void);
+
 };
 
-#endif /* GAMEENGINE_STATES_TITLESTATE_H_ */
+#endif /* TITLESTATE_H */

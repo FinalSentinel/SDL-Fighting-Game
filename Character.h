@@ -5,78 +5,55 @@
  *      Author: Clayton
  */
 
-//Generic character base
-#ifndef ENTITIES_CHARACTER_H_
-#define ENTITIES_CHARACTER_H_
+#ifndef CHARACTER_H
+#define CHARACTER_H
 
 #include "Entity.h"
 
 enum CharacterID {
     ERROR_CHARACTER = -1, 
-    A,
-    B,
-    C,
-    D,
-    E,
-    F
-};
+    CHARACTER_1,
+	CHARACTER_2,
+	CHARACTER_3,
+	CHARACTER_4,
+	CHARACTER_5,
+	CHARACTER_6
 
-class Box;
-class SDL_Renderer;
+};
 
 class Character: public Entity{
 private:
     //TODO character dependent collision boxes
     //Vector holding boxes for character collision
-    //TODO move to Frame class
-    //TODO change to array of 3 types of Box
-    std::vector<Box*> collisionBoxes;
 
-    int charID;
+    CharacterID charID;
 
     int health;
+
     int meter;
+
+	bool wall;
 
     //TODO animation stuff
 
     //TODO add Entity states
 
-public:
+protected:
+	//NONE
 
-    Character(int id = ERROR_CHARACTER, int x = 0, int y = 0, bool l = true, int p = 0, int hp = 0, int sp = 0);
+public:
+    Character(CharacterID id = ERROR_CHARACTER, int x = 0, int y = 0, bool l = true, int p = 0, int hp = 0, int sp = 0);
 
     virtual ~Character();
-
-
-
-    //Adds a box to character's collision vector
-    void addColBox(int ax, int ay, int w, int h);
-
-    int get_x();
-
-    int get_y();
-
-    int get_dx();
-
-    int get_dy();
 	
-	int get_id();
+	CharacterID get_id() const;
 
-    std::vector<Box*> getColBoxes();
+	bool get_wall(void) const;
 
-    //Moves character to specified position.
-    void move(int nx, int ny);
+	void handleEvent(SDL_Event* e);
 
-    //TODO render sprites
-    //Renders character's collision boxes
-    void render(SDL_Renderer* renderer) const;
+	void set_wall(bool w);
 
-    void set_dx(int i);
-
-    void set_dy(int i);
-
-    //Moves character position based on current Entity position and velocity
-    void update(void);
 };
 
-#endif /* ENTITIES_CHARACTER_H_ */
+#endif /* CHARACTER_H */

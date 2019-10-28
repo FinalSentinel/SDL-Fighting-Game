@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   AudioMenu.h
  * Author: Clayton
@@ -16,40 +10,35 @@
 
 #include "MenuState.h"
 
-
-
 class AudioMenu: public MenuState{
 private:
+	//NONE
 
 protected:
+	//NONE
 
 public:
 	static const char audioDefault[];
 	
 	
 	
-	AudioMenu();
+	AudioMenu(void);
 
-	virtual ~AudioMenu();
+	virtual ~AudioMenu(void);
 	
+	std::string name(void) const;
 	
-
-	std::string name();
+	void reload(void);
 	
-	void reload();
-	
-	
-	
-	void controllerButtonHandler();
-	
-	
+	void controllerButtonHandler(void);
 	
 	/*MENU FUNCTIONS*/
-	void Master();
-	void Music();
-	void Voice();
-	void Effects();
-	void Default();
+	void Master(void);
+	void Music(void);
+	void Voice(void);
+	void Effects(void);
+	void Default(void);
+
 };
 
 #endif /* AUDIOMENU_H */

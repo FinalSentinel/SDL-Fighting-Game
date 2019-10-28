@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   VideoMenu.cpp
  * Author: Clayton
@@ -12,8 +6,6 @@
  */
 
 #include "VideoMenu.h"
-
-
 
 const char VideoMenu::videoDefault[] = "videoConfigDefault.txt";
 
@@ -28,24 +20,24 @@ VideoMenu::VideoMenu(): prompt(false), keep(false), isback(false){
     
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]), new Texture(), std::bind(Resolution, this)));
+    ("Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]), new Texture(), std::bind(&VideoMenu::Resolution, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Fullscreen: " + std::string(dials[FULLSCREEN] ? "ON" : "OFF"), new Texture(), std::bind(Fullscreen, this)));
+    ("Fullscreen: " + std::string(dials[FULLSCREEN] ? "ON" : "OFF"), new Texture(), std::bind(&VideoMenu::Fullscreen, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("VSync: " + std::string(dials[VSYNC] ? "ON" : "OFF"), new Texture(), std::bind(VSync, this)));
+    ("VSync: " + std::string(dials[VSYNC] ? "ON" : "OFF"), new Texture(), std::bind(&VideoMenu::VSync, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Default", new Texture(), std::bind(Default, this)));
+    ("Default", new Texture(), std::bind(&VideoMenu::Default, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
     
     if(dials[FULLSCREEN]){
         selection = 1;
@@ -55,13 +47,11 @@ VideoMenu::VideoMenu(): prompt(false), keep(false), isback(false){
     resPrompt = new Texture();
 }
 
-VideoMenu::~VideoMenu(){
+VideoMenu::~VideoMenu(void){
     //NONE
 }
 
-
-
-void VideoMenu::load(){
+void VideoMenu::load(void){
     MenuState::load();
     
     if(dials[FULLSCREEN]){
@@ -71,11 +61,11 @@ void VideoMenu::load(){
     return;
 }
 
-std::string VideoMenu::name(){
+std::string VideoMenu::name(void) const{
     return "VideoMenu";
 }
 
-void VideoMenu::reload(){
+void VideoMenu::reload(void){
     std::get<TEXT>(options[0]) = "Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]);
     std::get<TEXT>(options[1]) = "Fullscreen: " + std::string(dials[FULLSCREEN] ? "ON" : "OFF");
     std::get<TEXT>(options[2]) = "VSync: " + std::string(dials[VSYNC] ? "ON" : "OFF");
@@ -87,7 +77,7 @@ void VideoMenu::reload(){
     return;
 }
 
-void VideoMenu::render(){
+void VideoMenu::render(void) const{
     MenuState::render();
     
     if(prompt){
@@ -103,14 +93,12 @@ void VideoMenu::render(){
     return;
 }
 
-void VideoMenu::update(){
+void VideoMenu::update(void){
     
     return;
 }
 
-
-
-void VideoMenu::controllerButtonHandler(){
+void VideoMenu::controllerButtonHandler(void){
     if(prompt){
         if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
             if(game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP ||
@@ -142,7 +130,7 @@ void VideoMenu::controllerButtonHandler(){
                 
                     reload();
 
-                    for(int i = 0; i < options.size(); i++){
+                    for(unsigned int i = 0; i < options.size(); i++){
                         std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
                     std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
@@ -180,7 +168,7 @@ void VideoMenu::controllerButtonHandler(){
                 else{
                     prompt = false;
 
-                    for(int i = 0; i < options.size(); i++){
+                    for(unsigned int i = 0; i < options.size(); i++){
                         std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
                     std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
@@ -285,10 +273,8 @@ void VideoMenu::controllerButtonHandler(){
     return;
 }
 
-
-
 /*MENU FUNCTIONS*/
-void VideoMenu::Resolution(){
+void VideoMenu::Resolution(void){
     if(!game->gameWindow.get_fullscreen() && dials[RESOLUTION] != game->gameWindow.get_resNum()){
         game->gameWindow.swapResolution(dials[RESOLUTION]);
     
@@ -296,7 +282,7 @@ void VideoMenu::Resolution(){
         
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
 
-        for(int i = 0; i < options.size(); i++){
+        for(unsigned int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
@@ -304,7 +290,7 @@ void VideoMenu::Resolution(){
     return;
 }
 
-void VideoMenu::Fullscreen(){
+void VideoMenu::Fullscreen(void){
     //FIXME strange behavior coming out of fullscreen
     if((bool)dials[FULLSCREEN] != game->gameWindow.get_fullscreen()){
         game->gameWindow.swapDisplayMode(dials[RESOLUTION]);
@@ -315,7 +301,7 @@ void VideoMenu::Fullscreen(){
         
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
 
-        for(int i = 0; i < options.size(); i++){
+        for(unsigned int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
@@ -323,7 +309,7 @@ void VideoMenu::Fullscreen(){
     return;
 }
 
-void VideoMenu::VSync(){
+void VideoMenu::VSync(void){
     if((bool)dials[VSYNC] != game->gameWindow.get_vSync()){
         game->gameWindow.swapVSync(dials[VSYNC]);
         
@@ -331,7 +317,7 @@ void VideoMenu::VSync(){
         
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
 
-        for(int i = 0; i < options.size(); i++){
+        for(unsigned int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
@@ -339,7 +325,7 @@ void VideoMenu::VSync(){
     return;
 }
 
-void VideoMenu::Default(){
+void VideoMenu::Default(void){
     game->fileI.open(videoDefault);
     if(!game->fileI.is_open()){
         std::cerr<<"ERROR unable to open video default file"<<std::endl;
@@ -355,7 +341,7 @@ void VideoMenu::Default(){
         
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
         
-        for(int i = 0; i < options.size(); i++){
+        for(unsigned int i = 0; i < options.size(); i++){
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
@@ -364,7 +350,7 @@ void VideoMenu::Default(){
     return;
 }
 
-void VideoMenu::back(){
+void VideoMenu::back(void){
     if(!game->gameWindow.get_fullscreen() && dials[RESOLUTION] != game->gameWindow.get_resNum() ||
             (bool)dials[FULLSCREEN] != game->gameWindow.get_fullscreen()                        ||
             (bool)dials[VSYNC] != game->gameWindow.get_vSync())                                   {

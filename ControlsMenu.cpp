@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   ControlsMenu.cpp
  * Author: Clayton
@@ -24,26 +18,24 @@ const char ControlsMenu::controlFormat[] = "controlFormat.txt";
 
 const char ControlsMenu::controlDefault[] = "controlConfigDefault.txt";
 
-ControlsMenu::ControlsMenu(){
-    for(int i = 0; i < MAX_PLAYERS; i++){
-        config[i] = false;
-    }
-    
-    //    for(int i = 0; i < game->MAX_PLAYERS; i++){
-    //        altSelection[i] = 0;
-    //        altIndex[i] = 0;
-    //        config[i] = false;
-    //        configNum[i] = 0;
-    //    
 
+
+ControlsMenu::ControlsMenu(void){
+	for(int i = 0; i < MAX_PLAYERS; i++){
+		config[i] = false;
+	}
+	for(int i = 0; i < MAX_PLAYERS; i++){
+		configNum[i] = 0;
+	}
+    
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
      */
 
     options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Quick Config", new Texture(), std::bind(Quick_config, this)));
+            ("Quick Config", new Texture(), std::bind(&ControlsMenu::Quick_config, this)));
 
     //TODO do better
     game->fileI.open(controlFormat);
@@ -54,7 +46,7 @@ ControlsMenu::ControlsMenu(){
         int i = 0;
         while(game->fileI.getline(hold, 32)){
             options.emplace_back(std::tuple < std::string, Texture*, std::function<void()>>
-                    (std::string(hold) + ": " + game->getPlayersList()[0]->controls[i], new Texture(), std::bind(none, this)));
+                    (std::string(hold) + ": " + game->getPlayersList()[0]->controls[i], new Texture(), std::bind(&ControlsMenu::none, this)));
             i++;
         }
     }
@@ -62,20 +54,20 @@ ControlsMenu::ControlsMenu(){
     //TODO setup keyboard stuff
 
     options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Default", new Texture(), std::bind(Default, this)));
+            ("Default", new Texture(), std::bind(&ControlsMenu::Default, this)));
 
     options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Back", new Texture(), std::bind(back, this)));
+            ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-ControlsMenu::~ControlsMenu(){
+ControlsMenu::~ControlsMenu(void){
 }
 
-std::string ControlsMenu::name(){
+std::string ControlsMenu::name(void) const{
     return "ControlsMenu";
 }
 
-void ControlsMenu::reload(){
+void ControlsMenu::reload(void){
     //TODO DO BETTER
     int n = 1;
     game->fileI.open(controlFormat);
@@ -107,7 +99,7 @@ void ControlsMenu::reload(){
     return;
 }
 
-void ControlsMenu::render(){
+void ControlsMenu::render(void) const{
     MenuState::render();
 
     if(config[0]){
@@ -121,7 +113,7 @@ void ControlsMenu::render(){
     return;
 }
 
-void ControlsMenu::setButton(Player* p, int n, std::string button){
+void ControlsMenu::setButton(Player* p, const int n, const std::string button){
     if(n < versusControlsNum){
         for(int i = 0; i < versusControlsNum; i++){
             if(i == n){
@@ -141,13 +133,13 @@ void ControlsMenu::setButton(Player* p, int n, std::string button){
     return;
 }
 
-void ControlsMenu::update(){
+void ControlsMenu::update(void){
     //NONE
 
     return;
 }
 
-void ControlsMenu::controllerAxisHandler(){
+void ControlsMenu::controllerAxisHandler(void){
     //TODO player differentiation
     //TODO menu mapping
     if(selection >= 1 && selection < versusControlsNum && game->e.caxis.value > 30000){
@@ -183,7 +175,7 @@ void ControlsMenu::controllerAxisHandler(){
 
                     reload();
 
-                    for(int i = 0; i < options.size(); i++){
+                    for(unsigned int i = 0; i < options.size(); i++){
                         //TODO get RGBA
                         std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
@@ -202,7 +194,7 @@ void ControlsMenu::controllerAxisHandler(){
     return;
 }
 
-void ControlsMenu::controllerButtonHandler(){
+void ControlsMenu::controllerButtonHandler(void){
     //TODO player differentiation
     if(selection >= 1 && selection <= versusControlsNum && game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN &&
             game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_UP && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_DOWN){
@@ -262,7 +254,7 @@ void ControlsMenu::controllerButtonHandler(){
 
                     reload();
 
-                    for(int i = 0; i < options.size(); i++){
+                    for(unsigned int i = 0; i < options.size(); i++){
                         //TODO get RGBA
                         std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
@@ -277,7 +269,7 @@ void ControlsMenu::controllerButtonHandler(){
 
                 game->fileI.close();
 
-                for(int i = 0; i < options.size(); i++){
+                for(unsigned int i = 0; i < options.size(); i++){
                     //TODO get RGBA
                     std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                 }
@@ -293,7 +285,7 @@ void ControlsMenu::controllerButtonHandler(){
 }
 
 /*MENU FUNCTIONS*/
-void ControlsMenu::Quick_config(){
+void ControlsMenu::Quick_config(void){
     std::cout << "Quick Config" << std::endl;
 
     game->fileI.open(controlFormat);
@@ -301,7 +293,7 @@ void ControlsMenu::Quick_config(){
         config[0] = true;
         configNum[0] = PUNCH;
 
-        for(int i = 0; i < options.size(); i++){
+        for(unsigned int i = 0; i < options.size(); i++){
             //TODO get RGBA
             std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
@@ -318,7 +310,7 @@ void ControlsMenu::Quick_config(){
     return;
 }
 
-void ControlsMenu::Default(){
+void ControlsMenu::Default(void){
     std::cout << "Default" << std::endl;
 
     game->fileI.open(controlDefault);
@@ -345,6 +337,6 @@ void ControlsMenu::Default(){
     return;
 }
 
-void ControlsMenu::none(){
+void ControlsMenu::none(void) const{
     return;
 }

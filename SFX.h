@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   SFX.h
  * Author: Clayton
@@ -16,8 +10,6 @@
 
 #include "SDL_mixer.h"
 
-
-
 class SFX{
 private:
 	const char* file;
@@ -25,17 +17,17 @@ private:
 	Mix_Chunk* effect;
 
 protected:
+	//NONE
 
 public:
 	SFX(const char* f = "grunt.ogg");
 
-	virtual ~SFX();
+	virtual ~SFX(void);
 	
+	Mix_Chunk* get_effect(void) const;
 	
-	
-	Mix_Chunk* get_effect();
-	
-	const char* get_file();
+	const char* get_file(void) const;
+
 };
 
 #endif /* SFX_H */

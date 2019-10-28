@@ -9,17 +9,11 @@
 
 #include "Box.h"
 
-Frame::Frame(){
+Frame::Frame(/*TODO*/){
     // TODO Auto-generated constructor stub
 
 }
 
-Frame::~Frame(){
+Frame::~Frame(void){
     // TODO Auto-generated destructor stub
 }
-
-Frame::Frame(const Frame& other){
-    // TODO Auto-generated constructor stub
-
-}
-

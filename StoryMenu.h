@@ -18,25 +18,22 @@
 
 class StoryMenu: public MenuState{
 private:
+	//NONE
 
 protected:
+	//NONE
 
 public:
-	StoryMenu();
+	StoryMenu(void);
 
-	StoryMenu(const StoryMenu& orig);
-
-	virtual ~StoryMenu();
+	virtual ~StoryMenu(void);
 	
-	
-	
-	std::string name();
-	
-	
+	std::string name(void) const;
 	
 	/*MENU FUNCTIONS*/
-	void Hold();
-	//   Back = MenuState::back()
+	void Hold(void);
+	//   Back = MenuState::back(void);
+
 };
 
 #endif /* STORYMENU_H */

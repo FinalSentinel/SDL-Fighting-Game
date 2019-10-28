@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   BattleMenu.cpp
  * Author: Clayton
@@ -15,45 +9,42 @@
 
 #include "CharacterSelectState.h"
 
-BattleMenu::BattleMenu(){
+BattleMenu::BattleMenu(void){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Versus", new Texture(), std::bind(Char_select, this)));
+    ("Versus", new Texture(), std::bind(&BattleMenu::Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Online", new Texture(), std::bind(Char_select, this)));
+    ("Online", new Texture(), std::bind(&BattleMenu::Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Training", new Texture(), std::bind(Char_select, this)));
+    ("Training", new Texture(), std::bind(&BattleMenu::Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Combos", new Texture(), std::bind(Char_select, this)));
+    ("Combos", new Texture(), std::bind(&BattleMenu::Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Tutorial", new Texture(), std::bind(Char_select, this)));
+    ("Tutorial", new Texture(), std::bind(&BattleMenu::Char_select, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-BattleMenu::~BattleMenu(){
+BattleMenu::~BattleMenu(void){
+	//NONE
 }
 
-
-
-std::string BattleMenu::name(){
+std::string BattleMenu::name(void) const{
     return "BattleMenu";
 }
 
-
-
 /*MENU FUNCTIONS*/
-void BattleMenu::Char_select(){
+void BattleMenu::Char_select(void){
     game->pushState(new CharacterSelectState(selection));
     std::cout<<game->get_back()->name()<<std::endl;
 

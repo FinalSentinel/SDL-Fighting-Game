@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   MainMenu.cpp
  * Author: Clayton
@@ -19,16 +13,14 @@
 #include "StoryMenu.h"
 #include "Song.h"
 
-
-
 const char MainMenu::mainMenuMusic[] = "AEUHHH.wav";
 
 
 
-MainMenu::MainMenu(){
+MainMenu::MainMenu(void){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
@@ -38,31 +30,29 @@ MainMenu::MainMenu(){
     }
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Battle", new Texture(), std::bind(Battle, this)));
+    ("Battle", new Texture(), std::bind(&MainMenu::Battle, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Story", new Texture(), std::bind(Story, this)));
+    ("Story", new Texture(), std::bind(&MainMenu::Story, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Gallery", new Texture(), std::bind(Gallery, this)));
+    ("Gallery", new Texture(), std::bind(&MainMenu::Gallery, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Options", new Texture(), std::bind(Options, this)));
+    ("Options", new Texture(), std::bind(&MainMenu::Options, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Return to Title", new Texture(), std::bind(back, this)));
+    ("Return to Title", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-MainMenu::~MainMenu(){
+MainMenu::~MainMenu(void){
     game->gameAudio.unloadSong(mainMenuSong);
     if(mainMenuSong != nullptr){
         std::cerr << "ERROR menu song not unloaded correctly" <<std::endl;
     }
 };
 
-
-
-void MainMenu::load(){
+void MainMenu::load(void){
     MenuState::load();
 
     std::cout << "MAIN MENU" << std::endl;
@@ -72,11 +62,11 @@ void MainMenu::load(){
     return;
 }
 
-std::string MainMenu::name(){
+std::string MainMenu::name(void) const{
     return "MainMenu";
 }
 
-void MainMenu::render(){
+void MainMenu::render(void) const{
     SDL_RenderClear(game->gameWindow.renderer);
     MenuState::render();
 
@@ -84,7 +74,7 @@ void MainMenu::render(){
     return;
 }
 
-void MainMenu::resume(){
+void MainMenu::resume(void){
     game->gameAudio.play(mainMenuSong);
     
     MenuState::resume();
@@ -92,15 +82,13 @@ void MainMenu::resume(){
     return;
 }
 
-void MainMenu::unload(){
+void MainMenu::unload(void){
     MenuState::unload();
     
     return;
 }
 
-
-
-void MainMenu::controllerButtonHandler(){
+void MainMenu::controllerButtonHandler(void){
     if(game->e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
         MenuState::controllerButtonHandler();
     }
@@ -110,17 +98,15 @@ void MainMenu::controllerButtonHandler(){
     return;
 }
 
-
-
 /*Menu functions*/
-void MainMenu::Battle(){
+void MainMenu::Battle(void){
     std::cout << "Battle" << std::endl;
     game->pushState(new BattleMenu());
 
     return;
 }
 
-void MainMenu::Story(){
+void MainMenu::Story(void){
     //TODO
     std::cout << "Story" << std::endl;
     game->pushState(new StoryMenu());
@@ -128,7 +114,7 @@ void MainMenu::Story(){
     return;
 }
 
-void MainMenu::Gallery(){
+void MainMenu::Gallery(void){
     //TODO
     std::cout << "Gallery" << std::endl;
     game->pushState(new GalleryMenu());
@@ -136,7 +122,7 @@ void MainMenu::Gallery(){
     return;
 }
 
-void MainMenu::Options(){
+void MainMenu::Options(void){
     //TODO
     std::cout << "Options" << std::endl;
     game->pushState(new OptionsMenu());

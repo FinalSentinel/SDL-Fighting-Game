@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   OptionsMenu.h
  * Author: Clayton
@@ -18,27 +12,24 @@
 
 class OptionsMenu: public MenuState{
 private:
+	//NONE
 
 protected:
+	//NONE
 
 public:
-	OptionsMenu();
+	OptionsMenu(void);
 
-	OptionsMenu(const OptionsMenu& orig);
-
-	virtual ~OptionsMenu();
+	virtual ~OptionsMenu(void);
 	
-	
-	
-	std::string name();
-	
-
+	std::string name(void) const;
 	
 	/*MENU FUNCTIONS*/
-	void Change_controls();
-	void Video_settings();
-	void Audio_settings();
-	//   Back = MenuState::back()
+	void Change_controls(void);
+	void Video_settings(void);
+	void Audio_settings(void);
+	//   Back = MenuState::back(void);
+
 };
 
 #endif /* OPTIONSMENU_H */

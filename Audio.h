@@ -16,8 +16,6 @@
 
 #include "SDL_mixer.h"
 
-
-
 enum AUDIO_GROUPS{
 	VOICES,
 	SYSTEM_SFX,
@@ -46,16 +44,15 @@ enum PLAYER_SFX_SLOTS{
 	placeholder_player_sfx0 = 10
 };
 
-
-
 class Song;
 class SFX;
 
 class Audio{
 private:
+	int master, music, voice, effects;
 
 protected:
-	int master, music, voice, effects;
+	//NONE
 
 public:
 	static const char audioConfig[];
@@ -65,16 +62,14 @@ public:
 	Audio(int ma = 80, int mu = 80, int vo = 80, int ef = 80);
 
 	virtual ~Audio();
-
 	
+	int get_effects() const;
 	
-	int get_effects();
+	int get_master() const;
 	
-	int get_master();
+	int get_music() const;
 	
-	int get_music();
-	
-	int get_voice();
+	int get_voice() const;
 	
 	bool init();
 	
@@ -82,9 +77,9 @@ public:
 	
 	Song* loadSong(const char* file, double loop = 0);
 	
-	void play(SFX* sfx, int group, int loop = 0, int milli = 0);
+	void play(SFX* sfx, int group, int loop = 0, int milli = 0) const;
 	
-	void play(Song* song, int loop = -1, int fade = 0, double position = 0.0);
+	void play(Song* song, int loop = -1, int fade = 0, double position = 0.0) const;
 	
 	//TODO Song loop function here, or in Song class?
 	
@@ -101,6 +96,7 @@ public:
 	void unloadEffect(SFX* sound);
 	
 	void unloadSong(Song* song);
+
 };
 
 #endif /* AUDIO_H */

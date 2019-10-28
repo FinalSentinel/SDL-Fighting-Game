@@ -5,9 +5,10 @@
  *      Author: Clayton
  */
 
-#include <basetsd.h>
-
 #include "Window.h"
+
+//XXX ?
+#include <basetsd.h>
 
 #include "SDL.h"
 
@@ -24,12 +25,12 @@ const char Window::videoConfig[] = "videoConfig.txt";
 
 
 
-Window::Window(int res, bool f, bool v): window(nullptr), renderer(nullptr),
-                                         resNum(res), fullscreen(f), vSync(v){
+Window::Window(const int res, const bool f, const bool v):
+				window(nullptr), renderer(nullptr), resNum(res), fullscreen(f), vSync(v){
     //NOTHING
 }
 
-Window::~Window(){
+Window::~Window(void){
     if(renderer != nullptr){
         SDL_DestroyRenderer(renderer);
         renderer = nullptr;
@@ -41,7 +42,7 @@ Window::~Window(){
     }
 }
 
-bool Window::init(){
+bool Window::init(void){
     bool init = false;
 
     //TODO load flags from user chosen settings
@@ -66,19 +67,19 @@ bool Window::init(){
     return init;
 }
 
-bool Window::get_fullscreen(){
+bool Window::get_fullscreen(void) const{
     return fullscreen;
 }
 
-int Window::get_resNum(){
+int Window::get_resNum(void) const{
     return resNum;
 }
 
-bool Window::get_vSync(){
+bool Window::get_vSync(void) const{
     return vSync;
 }
 
-int Window::getHeight(){
+int Window::getHeight(void) const{
     //if(fullscreen){
         SDL_DisplayMode m;
         SDL_GetWindowDisplayMode(window, &m);
@@ -90,7 +91,7 @@ int Window::getHeight(){
 //    }
 }
 
-int Window::getWidth(){
+int Window::getWidth(void) const{
     //if(fullscreen){
         SDL_DisplayMode m;
         SDL_GetWindowDisplayMode(window, &m);
@@ -102,25 +103,25 @@ int Window::getWidth(){
 //    }
 }
 
-void Window::set_fullscreen(bool f){
+void Window::set_fullscreen(const bool f){
     fullscreen = f;
     
     return;
 }
 
-void Window::set_resNum(int r){
+void Window::set_resNum(const int r){
     resNum = r;
     
     return;
 }
 
-void Window::set_vSync(bool v){
+void Window::set_vSync(const bool v){
     vSync = v;
     
     return;
 }
 
-void Window::swapDisplayMode(bool f){
+void Window::swapDisplayMode(const bool f){
     SDL_SetWindowFullscreen(window, f ? SDL_WINDOW_FULLSCREEN : 0);
     
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -128,7 +129,7 @@ void Window::swapDisplayMode(bool f){
     return;
 }
 
-void Window::swapResolution(int res){
+void Window::swapResolution(const int res){
     SDL_SetWindowSize(window, resolutions[res][0], resolutions[res][1]);
     
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -136,7 +137,7 @@ void Window::swapResolution(int res){
     return;
 }
 
-void Window::swapVSync(bool v){
+void Window::swapVSync(const bool v){
     SDL_SetHint(SDL_HINT_RENDER_VSYNC, v ? "1" : "0");
     
     return;

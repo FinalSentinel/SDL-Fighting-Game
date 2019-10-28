@@ -13,34 +13,29 @@
 
 #include "StoryMenu.h"
 
-StoryMenu::StoryMenu(){
+StoryMenu::StoryMenu(void){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("STORY STUFF", new Texture(), std::bind(Hold, this)));
+    ("STORY STUFF", new Texture(), std::bind(&StoryMenu::Hold, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-StoryMenu::StoryMenu(const StoryMenu& orig){
+StoryMenu::~StoryMenu(void){
 }
 
-StoryMenu::~StoryMenu(){
-}
-
-std::string StoryMenu::name(){
+std::string StoryMenu::name(void) const{
     return "StoryMenu";
 }
 
-
-
 /*MENU FUNCTIONS*/
-void StoryMenu::Hold(){
+void StoryMenu::Hold(void){
     std::cout << "TEST HOLD TEST" << std::endl;
 
     return;

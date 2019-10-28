@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   CharacterSelectMenu.h
  * Author: Clayton
@@ -38,31 +32,29 @@ const std::string CHARACTER_LIST[charNum] = {
 
 class CharacterSelectMenu: public MenuState{
 private:
-
-protected:
 	int mode;
 	
 	bool selected[2];
 
+protected:
+	//NONE
+
 public:
 	CharacterSelectMenu(int vMode);
 
-	virtual ~CharacterSelectMenu();
+	virtual ~CharacterSelectMenu(void);
 	
+	void load(void);
 	
+	std::string name(void) const;
 	
-	void load();
+	void resume(void);
 	
-	std::string name();
-	
-	void resume();
-	
-	void update();
-	
-	
+	void update(void);
 	
 	/*MENU FUNCTIONS*/
-	void Set_character();
+	void Set_character(void);
+
 };
 
 #endif /* CHARACTERSELECTMENU_H */

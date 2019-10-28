@@ -7,8 +7,8 @@
 
 //TODO reorganize menu loading/pushing/popping/etc structure
 
-#ifndef GAMEENGINE_GAMESTATES_MENUSTATE_H_
-#define GAMEENGINE_GAMESTATES_MENUSTATE_H_
+#ifndef MENUSTATE_H_
+#define MENUSTATE_H_
 
 #include <functional>
 //XXX
@@ -27,12 +27,11 @@ enum Option_Structure{
 
 const int MAX_MENU_SIZE = 10;
 
-
-
 class SFX;
 
 class MenuState: public GameState{
 private:
+	//NONE
 	
 protected:
 	static const char menuClick[];
@@ -42,57 +41,53 @@ protected:
 	
     int selection = 0;
 	
-	int index = 0;
+	unsigned int index = 0;
 
+	//TODO proper Option class.
 	//Tuple of menu option Text, Graphic, and Function
-	std::vector<std::tuple<std::string, Texture*, std::function<void()>>> options;
+	std::vector<std::tuple<std::string, Texture*, std::function<void(void)>>> options;
 
 public:
-    MenuState();
+    MenuState(void);
 	
-    virtual ~MenuState();
+    virtual ~MenuState(void);
+	
+	virtual void callAction(void) const;
+	
+	virtual void back(void);
+	
+	virtual void close(void);
+	
+    virtual void load(void);
+	
+	virtual std::string name(void) const = 0;
 
+    virtual void pause(void);
 	
-	
-	virtual void callAction();
-	
-	virtual void back();
-	
-	virtual void close();
-	
-    virtual void load();
-	
-	virtual std::string name() = 0;
+    virtual void render(void) const;
 
-    virtual void pause(/*TODO*/);
-	
-    virtual void render();
-
-    virtual void resume(/*TODO*/);
+    virtual void resume(void);
 	
 	//Returns to top of menu.
-	void returnToTop();
+	void returnToTop(void);
 
-    virtual void unload(/*TODO*/);
+    virtual void unload(void);
 
-    virtual void update();
-
-
+    virtual void update(void);
 
     //TODO event handler
-    virtual void controllerAxisHandler();
+    virtual void controllerAxisHandler(void);
 
-    virtual void controllerButtonHandler();
+    virtual void controllerButtonHandler(void);
 
-    virtual void keyHandler();
+    virtual void keyHandler(void);
 
     //TODO generalized window handler???
-    virtual void windowHandler();
-	
-	
+    virtual void windowHandler(void);
 	
 	/*MENU FUNCTION TEMP*/
-	void TEMP();
+	void TEMP(void);
+
 };
 
-#endif /* GAMEENGINE_GAMESTATES_MENUSTATE_H_ */
+#endif /* MENUSTATE_H */

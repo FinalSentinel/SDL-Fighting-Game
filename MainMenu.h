@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   MainMenu.h
  * Author: Clayton
@@ -33,37 +27,32 @@ private:
 	Song* mainMenuSong;
 
 protected:
+	//NONE
 
 public:
-	MainMenu();
+	MainMenu(void);
 
-	virtual ~MainMenu();
+	virtual ~MainMenu(void);
+	
+	void load(void);
+	
+	std::string name(void) const;
+	
+	void render(void) const;
+	
+	void resume(void);
+	
+	void unload(void);
 
-	//static MainMenu* instance();
-
-
-	
-	void load();
-	
-	std::string name();
-	
-	void render();
-	
-	void resume();
-	
-	void unload();
-	
-	
-	virtual void controllerButtonHandler();
-	
-
+	virtual void controllerButtonHandler(void);
 	
 	/*MENU FUNCTIONS*/
-	void Battle();
-	void Story();
-	void Gallery();
-	void Options();
-	//   Return_to_title = MenuState::back()
+	void Battle(void);
+	void Story(void);
+	void Gallery(void);
+	void Options(void);
+	//   Return_to_title = MenuState::back(void){
+
 };
 
 #endif /* MAINMENU_H */

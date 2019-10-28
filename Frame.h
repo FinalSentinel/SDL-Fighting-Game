@@ -5,23 +5,21 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEOBJECTS_ENTITIES_CHARACTERS_FRAME_H_
-#define GAMEOBJECTS_ENTITIES_CHARACTERS_FRAME_H_
-
-#include <vector>
-
-class Box;
+#ifndef FRAME_H
+#define FRAME_H
 
 class Frame {
 private:
-    std::vector<Box> collisionBoxes;
-    std::vector<Box> hitBoxes;
-    std::vector<Box> hurtBoxes;
+	//TODO
+
+protected:
+	//TODO
 
 public:
-    Frame();
+    Frame(/*TODO*/);
+
     virtual ~Frame();
-    Frame(const Frame& other);
+
 };
 
-#endif /* GAMEOBJECTS_ENTITIES_CHARACTERS_FRAME_H_ */
+#endif /* FRAME_H */

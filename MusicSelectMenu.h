@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   MusicSelectMenu.h
  * Author: Clayton
@@ -41,22 +35,18 @@ private:
 	int mode, level;
 
 protected:
+	//NONE
 
 public:
 	MusicSelectMenu(int vMode, int vLevel);
 
-	MusicSelectMenu(const MusicSelectMenu& orig);
-
-	virtual ~MusicSelectMenu();
+	virtual ~MusicSelectMenu(void);
 	
-	
-	
-	std::string name();
-
-
+	std::string name(void) const;
 
 	/*MENU FUNCTIONS*/
-	void Set_music();
+	void Set_music(void);
+
 };
 
 #endif /* MUSICSELECTMENU_H */

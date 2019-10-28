@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   BattleMenu.h
  * Author: Clayton
@@ -18,23 +12,22 @@
 
 class BattleMenu: public MenuState{
 private:
+	//NONE
 
 protected:
+	//NONE
 
 public:
-	BattleMenu();
+	BattleMenu(void);
 
-	virtual ~BattleMenu();
+	virtual ~BattleMenu(void);
 	
-	
-
-	std::string name();
-	
-	
+	std::string name(void) const;
 	
 	/*MENU FUNCTIONS*/
-	void Char_select();
-	//   Back = MenuState::back()
+	void Char_select(void);
+	//   Back = MenuState::back(void);
+
 };
 
 #endif /* BATTLEMENU_H */

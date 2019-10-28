@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   LevelSelectMenu.cpp
  * Author: Clayton
@@ -15,36 +9,32 @@
 
 #include "MusicSelectMenu.h"
 
-LevelSelectMenu::LevelSelectMenu(int vMode): mode(vMode){
+LevelSelectMenu::LevelSelectMenu(const int vMode): mode(vMode){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
     for(int i = 0; i < levelNum; i++){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        (LEVEL_LIST[i], new Texture(), std::bind(Set_level, this)));
+        (LEVEL_LIST[i], new Texture(), std::bind(&LevelSelectMenu::Set_level, this)));
     }
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
     
 }
 
-LevelSelectMenu::~LevelSelectMenu(){
+LevelSelectMenu::~LevelSelectMenu(void){
 }
 
-
-
-std::string LevelSelectMenu::name(){
+std::string LevelSelectMenu::name(void) const{
     return "LevelSelectMenu";
 }
 
-
-
 /*MENU FUNCTIONS*/
-void LevelSelectMenu::Set_level(){
+void LevelSelectMenu::Set_level(void){
     std::cout<<"set level: "<<LEVEL_LIST[selection]<<std::endl;
     
     game->pushState(new MusicSelectMenu(mode, selection));

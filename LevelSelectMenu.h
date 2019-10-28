@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   LevelSelectMenu.h
  * Author: Clayton
@@ -41,20 +35,18 @@ private:
 	int mode;
 
 protected:
+	//NONE
 
 public:
 	LevelSelectMenu(int vMode);
 
-	virtual ~LevelSelectMenu();
+	~LevelSelectMenu(void);
 	
-	
-	
-	std::string name();
-
-
+	std::string name(void) const;
 
 	/*MENU FUNCTIONS*/
-	void Set_level();
+	void Set_level(void);
+
 };
 
 #endif /* LEVELSELECTMENU_H */

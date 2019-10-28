@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   CharacterSelectState.cpp
  * Author: Clayton
@@ -16,33 +10,75 @@
 #include "CharacterSelectMenu.h"
 #include "VersusState.h"
 
-
-
-CharacterSelectState::CharacterSelectState(int vMode): mode(vMode){
+CharacterSelectState::CharacterSelectState(const int vMode): mode(vMode){
     seen = false;
 }
 
-CharacterSelectState::~CharacterSelectState(){
+CharacterSelectState::~CharacterSelectState(void){
 }
 
-
-
-void CharacterSelectState::load(){
+void CharacterSelectState::load(void){
     game->pushState(new CharacterSelectMenu(mode));
 
     return;
 }
 
-std::string CharacterSelectState::name(){
+std::string CharacterSelectState::name(void) const{
     return "CharacterSelectState";
 }
 
-void CharacterSelectState::resume(){
-    game->popState();
+void CharacterSelectState::pause(void){
+	//TODO
 
-    return;
+	return;
 }
 
+void CharacterSelectState::render(void) const{
+	//TODO
 
+	return;
+}
+
+void CharacterSelectState::resume(void){
+	game->popState();
+
+	return;
+}
+
+void CharacterSelectState::unload(void){
+	//TODO
+
+	return;
+}
+
+void CharacterSelectState::update(void){
+	//TODO
+
+	return;
+}
+
+void CharacterSelectState::controllerAxisHandler(void){
+	//TODO
+
+	return;
+}
+
+void CharacterSelectState::controllerButtonHandler(void){
+	//TODO
+
+	return;
+}
+
+void CharacterSelectState::keyHandler(void){
+	//TODO
+
+	return;
+}
+
+void CharacterSelectState::windowHandler(void){
+	//TODO
+
+	return;
+}
 
 /*MENU FUNCTIONS*/
