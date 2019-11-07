@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+# Other
+*.inc
+*.sln
+*.vcxproj*
+
+# Folders
+.vs/
+build/
+Debug/
+dist/
+nbproject/
