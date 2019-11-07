@@ -7,98 +7,75 @@
 
 #include "Character.h"
 
-#include "Box.h"
-
-Character::Character(int id, int x, int y, bool l, int p, int hp, int sp):
-charID(id), Entity(x, y, l, p), health(hp), meter(sp){
-    //NONE
+Character::Character(const CharacterID id, const int x, const int y, const bool l, const int p, const int hp, const int sp):
+						charID(id), Entity(x, y, 0, 0, l, p), health(hp), meter(sp){
+	wall = false;
 }
 
-Character::~Character(){
-    for(int i = 0; i < collisionBoxes.size(); i++){
-        delete collisionBoxes[i];
-        collisionBoxes.pop_back();
-    }
-}
-
-void Character::addColBox(int ax, int ay, int w, int h){
-    collisionBoxes.push_back(new Box(x, y, ax, ay, w, h,{0xFF, 0xFF, 0x00}));
-
-    return;
-}
-
-int Character::get_x(){
-    return x;
-}
-
-int Character::get_y(){
-    return y;
-}
-
-int Character::get_dx(){
-    return dx;
-}
-
-int Character::get_dy(){
-    return dy;
+Character::~Character(void){
+	//NONE
 }
 	
-int Character::get_id(){
+CharacterID Character::get_id(void) const{
     return charID;
 }
 
-std::vector<Box*> Character::getColBoxes(){
-    return collisionBoxes;
+bool Character::get_wall(void) const{
+	return wall;
 }
 
-void Character::move(int nx, int ny){
-    //Move to specified position.
-    x = nx;
-    y = ny;
+//TODO update later
+//TODO check against other input handlers
+void Character::handleEvent(SDL_Event* e){
+	if((e->type == SDL_KEYDOWN || e->type == SDL_KEYUP) && e->key.repeat == 0){
+		if(e->type == SDL_KEYDOWN){
+			//Adjust the velocity
+			switch(e->key.keysym.sym){
+				case SDLK_w:{
+					dy -= 10;
+				}break;
 
-    //NOTE Check index vs iterator differences
-    //Move boxes to new position.
-    for(unsigned int i = 0; i < collisionBoxes.size(); i++){
-        //TODO
-        collisionBoxes[i]->move(x + collisionBoxes[i]->get_ax(), y + collisionBoxes[i]->get_ay());
-    }
+				case SDLK_s:{
+					dy += 10;
+				}break;
 
-    return;
+				case SDLK_a:{
+					dx -= 10;
+				}break;
+
+				case SDLK_d:{
+					dx += 10;
+				}break;
+			}
+		}
+		//If a key was released
+		else if(e->type == SDL_KEYUP){
+			//Adjust the velocity
+			switch(e->key.keysym.sym){
+				case SDLK_w:{
+					dy += 10;
+				}break;
+
+				case SDLK_s:{
+					dy -= 10;
+				}break;
+
+				case SDLK_a:{
+					dx += 10;
+				}break;
+
+				case SDLK_d:{
+					dx -= 10;
+				}break;
+			}
+		}
+	}
+
+	return;
 }
 
-void Character::render(SDL_Renderer* renderer) const{
-    //TODO render sprites
-    for(unsigned int i = 0; i < collisionBoxes.size(); i++){
-        collisionBoxes[i]->render(renderer);
-    }
+void Character::set_wall(const bool w){
+	wall = w;
 
-    return;
-}
-
-void Character::set_dx(int i){
-    dx = i;
-
-    return;
-}
-
-void Character::set_dy(int i){
-    dy = i;
-
-    return;
-
-}
-
-void Character::update(){
-    //Else momentum based movement.
-    x += dx;
-    y += dy;
-
-    //NOTE Check index vs iterator differences
-    //Move boxes to new position.
-    for(unsigned int i = 0; i < collisionBoxes.size(); i++){
-        //TODO
-        collisionBoxes[i]->move(x + collisionBoxes[i]->get_ax(), y + collisionBoxes[i]->get_ay());
-    }
-
-    return;
+	return;
 }

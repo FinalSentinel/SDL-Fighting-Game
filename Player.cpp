@@ -13,14 +13,12 @@
 
 #include "Character.h"
 
-
-
 const char Player::controlConfig[] = "controlConfig.txt";
 
 
 
-Player::Player(int num, SDL_GameController* co, Character* ch):
-               playerNum(num), controller(co), character(ch)   {
+Player::Player(const int num, SDL_GameController* co, Character* ch): 
+				playerNum(num), controller(co), character(ch){
     std::ifstream conIF;
     std::string hold = "";
     
@@ -31,21 +29,26 @@ Player::Player(int num, SDL_GameController* co, Character* ch):
     }
     conIF.close();
     
-    charID = -1;
+    charID = ERROR_CHARACTER;
 }
         
-Player::~Player(){
-    SDL_GameControllerClose(controller);
+Player::~Player(void){
+	if(controller != nullptr){
+		SDL_GameControllerClose(controller);
+		controller = nullptr;
+	}
+	if(character != nullptr){
+		delete character;
+		controller = nullptr;
+	}
 }
 
-
-
-int Player::get_character(){
+CharacterID Player::get_character(void) const{
     return charID;
 }
 
 //TODO move to controls menu
-void Player::saveControls(){
+void Player::saveControls(void) const{
     std::ifstream ifs;
     ifs.open(controlConfig);
     if(!ifs.is_open()){
@@ -92,7 +95,7 @@ void Player::saveControls(){
     return;
 }
 	
-void Player::set_character(int ch){
+void Player::set_character(const CharacterID ch){
     //TODO load character from number
     if(ch >= 0){
         charID = ch;

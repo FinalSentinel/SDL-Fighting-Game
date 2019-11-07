@@ -10,14 +10,12 @@
 #include "Texture.h"
 #include "SFX.h"
 
-
-
-const char MenuState::menuClick[] = "grunt.ogg";
+const char MenuState::menuClick[] = "menuClick.ogg";
 SFX* MenuState::menuClickSFX = nullptr;
 
 
 
-MenuState::MenuState(){
+MenuState::MenuState(void){
     if(menuClickSFX == nullptr){
         menuClickSFX = game->gameAudio.loadEffect(menuClick);
         if(!menuClickSFX){
@@ -26,10 +24,10 @@ MenuState::MenuState(){
     }
 }
 
-MenuState::~MenuState(){
+MenuState::~MenuState(void){
 }
 
-void MenuState::back(){
+void MenuState::back(void){
     game->popState();
     
     std::cout<<game->get_back()->name()<<std::endl;
@@ -38,12 +36,12 @@ void MenuState::back(){
 }
 
 //TODO safe function calling on invalid indexes?
-void MenuState::callAction(){
+void MenuState::callAction(void) const{
     std::get<FUNCTION>(options[selection])();
     return;
 }
 
-void MenuState::close(){
+void MenuState::close(void){
     while(game->get_back()->name().substr(game->get_back()->name().length() - 4, 4) == "Menu" &&
           game->get_back()->name() != "MainMenu"){
         game->popState();
@@ -52,10 +50,10 @@ void MenuState::close(){
     return;
 }
 
-void MenuState::load(){
+void MenuState::load(void){
     std::cout << "MENU STATE: " << name() << std::endl;
 
-    for(int i = 0; i < options.size(); i++){
+    for(unsigned int i = 0; i < options.size(); i++){
         std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
     }
     if(!options.empty()){
@@ -65,35 +63,35 @@ void MenuState::load(){
     return;
 }
 
-void MenuState::pause(){
+void MenuState::pause(void){
     //TODO
     GameState::set_seen(false);
     
     return;
 } 
 
-void MenuState::render(){
+void MenuState::render(void) const{
     //Menu x position is always at 3/5 of window width.
     int x = game->gameWindow.getWidth() / 5;
     //Menu height is the window height divided by numOptions + 2,
     //therefore equal blank space above and below.  Will implement scrolling.
     int h = game->gameWindow.getHeight() / (std::min((int)options.size(), MAX_MENU_SIZE) + 2);
 
-    for(int i = 0; i < MAX_MENU_SIZE && i < options.size(); i++){
+    for(unsigned int i = 0; i < MAX_MENU_SIZE && i < options.size(); i++){
         std::get<GRAPHIC>(options[i + selection - index])->render(game->gameWindow.renderer, x, h * (i + 1), 3 * x, h);
     }
 
     return;
 }
 
-void MenuState::resume(){
+void MenuState::resume(void){
     //TODO stuff
     GameState::set_seen(true);
     
     return;
 }
 
-void MenuState::returnToTop(){
+void MenuState::returnToTop(void){
     std::get<GRAPHIC>(options[selection])->setRGBA();
 
     index = 0;
@@ -104,13 +102,13 @@ void MenuState::returnToTop(){
     return;
 }
 
-void MenuState::unload(){
+void MenuState::unload(void){
     //TODO unload stuff
 
     return;
 }
 
-void MenuState::update(){
+void MenuState::update(void){
     //TODO reverse updating menu options?
 
     //TODO if empty unload
@@ -118,7 +116,7 @@ void MenuState::update(){
     return;
 }
 
-void MenuState::controllerAxisHandler(){
+void MenuState::controllerAxisHandler(void){
     if(game->e.caxis.value > 30000){
         switch(game->e.caxis.axis){
             case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
@@ -135,7 +133,7 @@ void MenuState::controllerAxisHandler(){
     return;
 }
 
-void MenuState::controllerButtonHandler(){
+void MenuState::controllerButtonHandler(void){
     //TODO multiple control method exclusion
     //TODO player differentiation
     //TODO menu mapping
@@ -200,7 +198,7 @@ void MenuState::controllerButtonHandler(){
                 selection = (options.size() + selection - 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
-                game->gameAudio.play(menuClickSFX, SYSTEM_SFX);
+                game->gameAudio.play(menuClickSFX);
 
                 break;
             }
@@ -217,7 +215,7 @@ void MenuState::controllerButtonHandler(){
                 selection = (options.size() + selection + 1) % options.size();
                 std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
-                game->gameAudio.play(menuClickSFX, SYSTEM_SFX);
+                game->gameAudio.play(menuClickSFX);
 
                 break;
             }
@@ -233,20 +231,18 @@ void MenuState::controllerButtonHandler(){
     return;
 }
 
-void MenuState::keyHandler(){
+void MenuState::keyHandler(void){
     
     return;
 }
 
-void MenuState::windowHandler(){
+void MenuState::windowHandler(void){
     
     return;
 }
-
-
 
 /*MENU FUNCTION TEMP*/
-void MenuState::TEMP(){
+void MenuState::TEMP(void){
     std::cerr << "WARNING TEMP menu function call" << std::endl;
 
     return;

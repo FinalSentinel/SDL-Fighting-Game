@@ -5,8 +5,8 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEENGINE_STATES_VERSUSSTATE_H_
-#define GAMEENGINE_STATES_VERSUSSTATE_H_
+#ifndef VERSUSSTATE_H
+#define VERSUSSTATE_H
 
 #include "GameState.h"
 
@@ -16,63 +16,65 @@ enum Versus_Types{
 	TRAINING,
 	COMBO,
 	TUTORIAL,
-	ARCADE
+	ARCADE,
+	Versus_TypesNum
 };
 
-//Max players in a single game.
-const unsigned int ACTIVE_PLAYERS = 2;
+class Character;
+struct SDL_Rect;
+class Texture;
 
-//TODO Unit based stage/movement;
-const int STAGE_WIDTH = 1280;
-const int STAGE_HEIGHT = 720;
-
-class Player;
-class SDL_Rect;
-
-class VersusState : public GameState{
+class VersusState: public GameState{
 private:
-	int mode;
+	int mode, level, music;
+
+	bool side;
 	
     SDL_Rect* camera;
-
-    Player* active[ACTIVE_PLAYERS];
 	
+	Texture* stage;
 
+    Player* active[STAGE_ACTIVE_PLAYERS];
+	
 protected:
+	//NONE
 
 public:
-    VersusState(int vMode);
+    VersusState(int vMode, int vLevel, int vMusic);
 
-    virtual ~VersusState();
+    virtual ~VersusState(void);
 
+    void decollide(Character* c1, Character* c2);
 
+	int floorCollision(Character* c) const;
 
-    void decollide(Player* c1, Player* c2);
-
-    void load();
+    void load(void);
 	
-	std::string name();
+	void moveCamera(Character* c);
+	
+	std::string name(void) const;
 
-    void pause(/*TODO*/);
+    void pause(void);
 
-    void render();
+    void render(void) const;
 
-    void resume(/*TODO*/);
+    void resume(void);
 
-    void unload(/*TODO*/);
+    void unload(void);
 
-    void update();
+    void update(void);
 
-
+	int wallDistance(Character* c, bool left) const;
 
     //TODO event handler
-    void controllerAxisHandler();
+    void controllerAxisHandler(void);
 
-    void controllerButtonHandler();
+    void controllerButtonHandler(void);
 
-    void keyHandler();
+    void keyHandler(void);
 
-    void windowHandler();
+    void windowHandler(void);
+
 };
 
-#endif /* GAMEENGINE_STATES_VERSUSSTATE_H_ */
+#endif /* VERSUSSTATE_H */

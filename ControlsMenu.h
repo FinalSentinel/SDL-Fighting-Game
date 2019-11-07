@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   ControlsMenu.h
  * Author: Clayton
@@ -17,8 +11,6 @@
 #include "MenuState.h"
 #include "Player.h"
 
-
-
 class ControlsMenu: public MenuState{
 private:
     char hold[32];
@@ -29,7 +21,7 @@ protected:
 //	int altIndex[game->MAX_PLAYERS];
 //	
 //	//Tuple of menu option Text, Graphic, and Function
-//	std::vector<std::tuple<std::string, Texture*, std::function<void()>>> altOptions[game->MAX_PLAYERS];
+//	std::vector<std::tuple<std::string, Texture*, std::function<void(void)>>> altOptions[game->MAX_PLAYERS];
 	
 	bool config[MAX_PLAYERS];
 	
@@ -43,35 +35,31 @@ public:
 	static const char controlFormat[];
 	
 	
-	ControlsMenu();
 
-	virtual ~ControlsMenu();
-	
-	
+	ControlsMenu(void);
 
+	virtual ~ControlsMenu(void);
+	
 	void setButton(Player* p, int n, std::string button);
 	
-	std::string name();
+	std::string name(void) const;
 	
-	void reload();
+	void reload(void);
 	
-	void render();
+	void render(void) const;
 	
-	void update();
+	void update(void);
 	
+	void controllerAxisHandler(void);
 	
-	
-	void controllerAxisHandler();
-	
-	void controllerButtonHandler();
-	
-	
+	void controllerButtonHandler(void);
 	
 	/*MENU FUNCTIONS*/
-	void Quick_config();
-	void Default();
-	//void back();
-	void none();
+	void Quick_config(void);
+	void Default(void);
+	//void back(void);
+	void none(void) const;
+
 };
 
 #endif /* CONTROLSMENU_H */

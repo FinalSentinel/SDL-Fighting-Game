@@ -18,8 +18,8 @@ int Box::aOut = 0xA0;
 
 
 Box::Box(const int ax, const int ay, const int rx, const int ry, const int w, const int h, const SDL_Color color):
-			rx(rx), ry(ry), color(color){
-	rect = {ax + this->rx, ay + this->ry, w, h};
+			rx(rx), ry(ry), rect({ax + this->rx, ay + this->ry, w, h}), color(color){
+	//NONE
 }
 
 Box::~Box(void){
@@ -27,10 +27,10 @@ Box::~Box(void){
 }
 
 bool Box::collides(const Box b) const{
-	return( rect.x	 < (b.get_x() + b.get_w()) &&
-		    rect.y	 < (b.get_y() + b.get_h()) &&
-		   b.get_x() < ( rect.x	  +  rect.w  ) &&
-		   b.get_y() < ( rect.y	  +  rect.h  )	 );
+	return(	rect.x	 < (b.get_x() + b.get_w()) &&
+			rect.y	 < (b.get_y() + b.get_h()) &&
+		   b.get_x() < ( rect.x	  +	 rect.w)   &&
+		   b.get_y() < ( rect.y	  +  rect.h)	  );
 }
 
 int Box::get_rx(void) const{
@@ -64,7 +64,8 @@ void Box::position(const int nx, const int ny){
 	return;
 }
 
-void Box::render(SDL_Renderer* renderer, Window* w, const bool side) const{
+//FIXME Edge case at wall causes boxes to dim.
+void Box::render(Window* w, const bool side) const{
 	SDL_Rect rendRect = rect;
 
 	rendRect.x += STAGE_WIDTH / 2;
@@ -83,17 +84,17 @@ void Box::render(SDL_Renderer* renderer, Window* w, const bool side) const{
 	rendRect.x += WINDOW_REND_X;
 	rendRect.y += WINDOW_REND_Y;
 
-    //Set passed renderer's draw color to Box fill draw color
-    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, aIn);
+	//Set passed renderer's draw color to Box fill draw color
+	SDL_SetRenderDrawColor(w->renderer, color.r, color.g, color.b, aIn);
 
-    //Draw fill section of box
-    SDL_RenderFillRect(renderer, &rendRect);
+	//Draw fill section of box
+	SDL_RenderFillRect(w->renderer, &rendRect);
 
-    //Set passed renderer's draw color to Box outline draw color
-    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, aOut);
+	//Set passed renderer's draw color to Box outline draw color
+	SDL_SetRenderDrawColor(w->renderer, color.r, color.g, color.b, aOut);
 
-    //Draw outline
-    SDL_RenderDrawRect(renderer, &rendRect);
+	//Draw outline
+	SDL_RenderDrawRect(w->renderer, &rendRect);
 
-    return;
+	return;
 }

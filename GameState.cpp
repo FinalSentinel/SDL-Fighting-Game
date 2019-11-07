@@ -7,6 +7,8 @@
 
 #include "GameState.h"
 
+#include <locale>
+
 #include "Player.h"
 
 //FIXME something about this seems wrong
@@ -14,11 +16,19 @@ GameEngine* GameState::game;
 
 
 
-bool GameState::get_seen(){
+GameState::GameState(void): seen(true){
+	//NONE
+};
+
+GameState::~GameState(void){
+	//TODO ?
+};
+
+bool GameState::get_seen(void) const{
     return seen;
 }
 
-void GameState::eventHandler(){
+void GameState::eventHandler(void){
     //Check event type and pass to event specific handler
     switch(game->e.type){
         case SDL_CONTROLLERAXISMOTION:
@@ -131,7 +141,7 @@ void GameState::eventHandler(){
     return;
 }
 
-void GameState::set_seen(bool b){
+void GameState::set_seen(const bool b){
     seen = b;
     
     return;

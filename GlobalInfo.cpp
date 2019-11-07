@@ -34,10 +34,5 @@ void configureWindowGlobals(Window* w){
 
 	WINDOW_REND_UNIT = STAGE_WIDTH  / (w->getWidth() - 2 * WINDOW_REND_X);
 
-	/*
-	STAGE_RATIO = std::max((w->getWidth  - 2 * WINDOW_REND_X) / WINDOW_RESOLUTION_LIST[WINDOW_RESOLUTION_NUM - 1][0],
-						   (w->getHeight - 2 * WINDOW_REND_Y) / WINDOW_RESOLUTION_LIST[WINDOW_RESOLUTION_NUM - 1][1]);
-	*/
-
 	return;
 }

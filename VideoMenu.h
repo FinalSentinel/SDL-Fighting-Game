@@ -25,9 +25,9 @@ enum Dials{
 
 class VideoMenu: public MenuState{
 private:
-	//TODO pass enum size
 	int dials[numDials];
 	
+	//TODO ???
 	const int* resolution;
 	
 	bool prompt;
@@ -39,40 +39,36 @@ private:
 	Texture* resPrompt;
 
 protected:
+	//NONE
 
 public:
 	static const char videoDefault[];
 	
 	
 	
-	VideoMenu();
+	VideoMenu(void);
 
-	virtual ~VideoMenu();
+	virtual ~VideoMenu(void);
 	
+	void load(void);
 	
-
-	void load();
+	std::string name(void) const;
 	
-	std::string name();
+	void reload(void);
 	
-	void reload();
+	void render(void) const;
 	
-	void render();
+	void update(void);
 	
-	void update();
-	
-	
-	
-	virtual void controllerButtonHandler();
-	
-	
+	virtual void controllerButtonHandler(void);
 	
 	/*MENU FUNCTIONS*/
-	void Resolution();
-	void Fullscreen();
-	void VSync();
-	void Default();
-	void back();
+	void Resolution(void);
+	void Fullscreen(void);
+	void VSync(void);
+	void Default(void);
+	void back(void);
+
 };
 
 #endif /* VIDEOMENU_H */

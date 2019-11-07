@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   CommandMenu.cpp
  * Author: Clayton
@@ -13,47 +7,42 @@
 
 #include "CommandMenu.h"
 
-CommandMenu::CommandMenu(){
+CommandMenu::CommandMenu(void){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("CHARACTER NAME", new Texture(), std::bind(none, this)));
+    ("CHARACTER NAME", new Texture(), std::bind(&CommandMenu::none, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Move 1", new Texture(), std::bind(Play, this)));
+    ("Move 1", new Texture(), std::bind(&CommandMenu::Play, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Move 2", new Texture(), std::bind(Play, this)));
+    ("Move 2", new Texture(), std::bind(&CommandMenu::Play, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Move 3", new Texture(), std::bind(Play, this)));
+    ("Move 3", new Texture(), std::bind(&CommandMenu::Play, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-CommandMenu::CommandMenu(const CommandMenu& orig){
+CommandMenu::~CommandMenu(void){
 }
 
-CommandMenu::~CommandMenu(){
-}
-
-std::string CommandMenu::name(){
+std::string CommandMenu::name(void) const{
     return "CommandMenu";
 }
 
-
-
 /*MENU FUNCTIONS*/
-void CommandMenu::Play(){
+void CommandMenu::Play(void){
     //TODO
     return;
 }
 
-void CommandMenu::none(){
+void CommandMenu::none(void) const{
     return;
 }

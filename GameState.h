@@ -5,42 +5,42 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEENGINE_GAMESTATE_H_
-#define GAMEENGINE_GAMESTATE_H_
+#ifndef GAMESTATE_H
+#define GAMESTATE_H
 
 //XXX
 #include <iostream>
-
-#include "SDL.h"
-#include "SDL_mixer.h"
-
 #include <sstream>
 
 #include "GameEngine.h"
-
-
+#include "SDL.h"
+#include "SDL_mixer.h"
 
 class GameState{
+private:
+	//NONE
+
 protected:
     friend class GameEngine;
+
     static GameEngine* game;
 	
 	bool seen;
-	
-    GameState(): seen(true){};
 
-    virtual ~GameState(){};
+public:
+	GameState(void);
 
-public:	
-	virtual bool get_seen();
+	virtual ~GameState(void);
+
+	virtual bool get_seen(void) const;
 	
-    virtual void load() = 0;
+    virtual void load(void) = 0;
 	
-	virtual std::string name() = 0;
+	virtual std::string name(void) const = 0;
 
     virtual void pause(/*TODO*/) = 0;
 
-    virtual void render() = 0;
+    virtual void render(void) const = 0;
 
     virtual void resume(/*TODO*/) = 0;
 	
@@ -48,22 +48,21 @@ public:
 
     virtual void unload(/*TODO*/) = 0;
 
-    virtual void update() = 0;
-
-
+    virtual void update(void) = 0;
 	
     //TODO event handler
-    void eventHandler();
+    void eventHandler(void);
 	
-    virtual void controllerAxisHandler() = 0;
+    virtual void controllerAxisHandler(void) = 0;
 
-    virtual void controllerButtonHandler() = 0;
+    virtual void controllerButtonHandler(void) = 0;
 
-    virtual void keyHandler() = 0;
+    virtual void keyHandler(void) = 0;
 
     //TODO generalized window handler???
-    virtual void windowHandler() = 0;
+    virtual void windowHandler(void) = 0;
+
 };
 
-#endif /* GAMEENGINE_GAMESTATE_H_ */
+#endif /* GAMESTATE_H */
 

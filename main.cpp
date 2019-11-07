@@ -5,6 +5,8 @@
  *      Author: Clayton
  */
 
+//TODO restrict to 4 players
+
 #include "GameEngine.h"
 
 #include "TitleState.h"
@@ -17,6 +19,7 @@ int main(int argc, char* argv[]){
 
     if(!game->init()){
         std::cerr << "ERROR engine not initialized properly." << std::endl;
+
         //TODO better init error catching?
         exit(1);
     }
@@ -24,8 +27,10 @@ int main(int argc, char* argv[]){
         game->pushState(new TitleState());
 
         while(!game->get_quit()){
-            game->render();
+			game->render();
+
             game->eventHandler();
+
             game->update();
         }
     }

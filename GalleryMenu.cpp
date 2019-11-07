@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   GalleryMenu.cpp
  * Author: Clayton
@@ -13,34 +7,29 @@
 
 #include "GalleryMenu.h"
 
-GalleryMenu::GalleryMenu(){
+GalleryMenu::GalleryMenu(void){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
      */
 
     options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("STORY STUFF", new Texture(), std::bind(Hold, this)));
+            ("STORY STUFF", new Texture(), std::bind(&GalleryMenu::Hold, this)));
 
     options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Back", new Texture(), std::bind(back, this)));
+            ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-GalleryMenu::GalleryMenu(const GalleryMenu& orig){
+GalleryMenu::~GalleryMenu(void){
 }
 
-GalleryMenu::~GalleryMenu(){
-}
-
-std::string GalleryMenu::name(){
+std::string GalleryMenu::name(void) const{
     return "GalleryMenu";
 }
 
-
-
 /*MENU FUNCTIONS*/
-void GalleryMenu::Hold(){
+void GalleryMenu::Hold(void) const{
     std::cout << "TEST HOLD TEST" << std::endl;
 
     return;

@@ -5,11 +5,12 @@
  *      Author: Clayton
  */
 
-#ifndef GAMEOBJECTS_PLAYER_H_
-#define GAMEOBJECTS_PLAYER_H_
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <string>
 
+#include "Character.h"
 #include "SDL.h"
 
 enum versusControls{
@@ -34,10 +35,12 @@ enum versusControls{
 	versusControlsNum
 };
 
-class Character;
-
 class Player {
 private:
+	//TODO cleanup
+
+protected:
+	//NONE
 
 public:
 	static const char controlConfig[];
@@ -48,28 +51,26 @@ public:
 	int playerNum;
     //Controller ID
     SDL_GameController* controller;
+
     //Character selection
     Character* character;
-	int charID;
+	CharacterID charID;
 	
 	std::string controls[versusControlsNum];
 
     //TODO Bool for Controller/Keyboard
 	
-	
-
     Player(int num, SDL_GameController* co = nullptr, Character* ch = nullptr);
 
     virtual ~Player();
 
-	
-	
     //TODO Change character function
-	int get_character();
+	CharacterID get_character() const;
 	
-	void saveControls();
+	void saveControls() const;
 	
-	void set_character(int ch);
+	void set_character(CharacterID ch);
+
 };
 
-#endif /* GAMEOBJECTS_PLAYER_H_ */
+#endif /* PLAYER_H */

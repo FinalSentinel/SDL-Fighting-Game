@@ -5,8 +5,8 @@
  *      Author: Clayton
  */
 
-//Generic display Box class
-//TODO should different box type be separate subclasses or all just Box classes?
+ //Generic display Box class
+ //TODO should different box type be separate subclasses or all just Box classes?
 #ifndef BOX_H
 #define BOX_H
 
@@ -17,7 +17,7 @@ enum BoxType{
 	COLLISION,
 	HURT,
 	HIT,
-	num_BoxType
+	BoxTypeNum
 };
 
 class Window;
@@ -68,7 +68,7 @@ public:
 	//Moves the box to nx,ny position offset to anchor point.
 	void position(int nx, int ny);
 
-	void render(SDL_Renderer* rend, Window* w, bool side = true) const;
+	void render(Window* w, bool side = true) const;
 
 };
 

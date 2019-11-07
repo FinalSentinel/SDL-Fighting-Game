@@ -16,22 +16,22 @@ Texture::Texture(): width(0), height(0), texture(nullptr){
     //NONE
 }
 
-Texture::~Texture(){
+Texture::~Texture(void){
     if(texture != nullptr){
         SDL_DestroyTexture(texture);
         texture = nullptr;
     }
 }
 
-int Texture::get_h(){
+int Texture::get_h(void) const{
     return height;
 }
 
-int Texture::get_w(){
+int Texture::get_w(void) const{
     return width;
 }
 
-bool Texture::loadImage(SDL_Renderer* rend, std::string path){
+bool Texture::loadImage(SDL_Renderer* rend, const std::string path){
     //Get rid of preexisting texture
     if(texture != nullptr){
         SDL_DestroyTexture(texture);
@@ -75,7 +75,7 @@ bool Texture::loadImage(SDL_Renderer* rend, std::string path){
     return texture != nullptr;
 }
 
-bool Texture::loadText(SDL_Renderer* rend, std::string text, int pt, std::string path, SDL_Color color, SDL_Color back){//Get rid of preexisting texture
+bool Texture::loadText(SDL_Renderer* rend, const std::string text, const int pt, const std::string path, const SDL_Color color, const SDL_Color back){
     if(texture != nullptr){
         SDL_DestroyTexture(texture);
         texture = nullptr;
@@ -114,7 +114,7 @@ bool Texture::loadText(SDL_Renderer* rend, std::string text, int pt, std::string
     return texture != nullptr;
 }
 
-void Texture::render(SDL_Renderer* rend, int x, int y, int w, int h, SDL_Rect* clip, double angle, SDL_Point* axis, SDL_RendererFlip flip){
+void Texture::render(SDL_Renderer* rend, const int x, const int y, int w, int h, SDL_Rect* clip, const double angle, SDL_Point* axis, const SDL_RendererFlip flip) const{
     //TODO look into fixing up
     if(w < 0){
         w = width;
@@ -122,26 +122,25 @@ void Texture::render(SDL_Renderer* rend, int x, int y, int w, int h, SDL_Rect* c
     if(h < 0){
         h = height;
     }
+    //TODO map clip section to relative size automatically
+    
     //Render to screen
-    SDL_RenderCopyEx(rend, texture, clip, new SDL_Rect({x, y, w, h}), angle, axis, flip);
+    if(SDL_RenderCopyEx(rend, texture, clip, new SDL_Rect({x, y, w, h}), angle, axis, flip)){
+        std::cerr << "ERROR incorrect rendering: " << SDL_GetError() <<std::endl;
+    }
 
     return;
 }
 
-void Texture::setRGBA(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha){
+void Texture::setBlendMode(const SDL_BlendMode mode){
+	//Set blending function
+	SDL_SetTextureBlendMode(texture, mode);
+}
+
+void Texture::setRGBA(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha){
         //Modulate texture rgba
         SDL_SetTextureColorMod(texture, red, green, blue);
         SDL_SetTextureAlphaMod(texture, alpha);
-}
 
-/*
-void LTexture::setAlpha(Uint8 alpha){
-        //Modulate texture alpha
-        SDL_SetTextureAlphaMod(mTexture, alpha);
+		return;
 }
-
-void LTexture::setBlendMode(SDL_BlendMode blending){
-        //Set blending function
-        SDL_SetTextureBlendMode(mTexture, blending);
-}
- */

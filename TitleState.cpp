@@ -11,9 +11,15 @@
 
 #include "SDL.h"
 
+TitleState::TitleState(void){
+	//TODO
+}
 
+TitleState::~TitleState(void){
+	//TODO
+}
 
-void TitleState::load(){
+void TitleState::load(void){
     std::cout << "TITLE STATE" << std::endl;
 
     //Load title texture
@@ -27,18 +33,18 @@ void TitleState::load(){
     return;
 }
 
-std::string TitleState::name(){
+std::string TitleState::name(void) const{
     return "TitleState";
 }
 
-void TitleState::pause(){
+void TitleState::pause(void){
     //TODO
     GameState::set_seen(false);
     
     return;
 }
 
-void TitleState::render(){
+void TitleState::render(void) const{
     //TODO recer clear?  clear color?
     SDL_RenderClear(game->gameWindow.renderer);
 
@@ -52,7 +58,7 @@ void TitleState::render(){
     return;
 }
 
-void TitleState::resume(){
+void TitleState::resume(void){
     Mix_FadeOutMusic(30);
     
     GameState::set_seen(true);
@@ -60,18 +66,18 @@ void TitleState::resume(){
     return;
 }
 
-void TitleState::unload(){
+void TitleState::unload(void){
     //TODO
     titleTexture.~Texture();
     return;
 }
 
-void TitleState::update(){
+void TitleState::update(void){
     //TODO
     return;
 }
 
-void TitleState::controllerAxisHandler(){
+void TitleState::controllerAxisHandler(void){
     //TODO title gfx/sfx
     switch(game->e.caxis.axis){
         case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
@@ -95,7 +101,7 @@ void TitleState::controllerAxisHandler(){
     }
 }
 
-void TitleState::controllerButtonHandler(){
+void TitleState::controllerButtonHandler(void){
     //TODO multiple control method exclusion
     //TODO player differentiation
 
@@ -189,13 +195,12 @@ void TitleState::controllerButtonHandler(){
     return;
 }
 
-void TitleState::keyHandler(){
+void TitleState::keyHandler(void){
     //TODO keys to switch state
     return;
 }
 
-void TitleState::windowHandler(){
+void TitleState::windowHandler(void){
     //TODO
     return;
 }
-

@@ -51,19 +51,17 @@ GameEngine::GameEngine(): quit(false){
     fileI.close();
 }
 
-GameEngine::~GameEngine(){
-    for(int i = 0; i < players.size(); i++){
+GameEngine::~GameEngine(void){
+    for(unsigned int i = 0; i < players.size(); i++){
         delete players[i];
         players.pop_back();
     }
     
-    for(int i = 0; i < stateStack.size(); i++){
+    for(unsigned int i = 0; i < stateStack.size(); i++){
         delete stateStack[i];
         stateStack.pop_back();
     }
 }
-
-
 
 void GameEngine::addPlayer(Player* p){
     if(MAX_PLAYERS > 0){
@@ -99,7 +97,6 @@ void GameEngine::addPlayer(Player* p){
 }
 
 //TODO check for state already on stack.
-
 void GameEngine::changeState(GameState* state){
     bool found = false;
     //Unload and remove current state
@@ -124,7 +121,7 @@ void GameEngine::changeState(GameState* state){
     return;
 }
 
-void GameEngine::close(){
+void GameEngine::close(void){
     quit = true;
 
     while(Mix_Init(0)){
@@ -139,153 +136,162 @@ void GameEngine::close(){
     return;
 }
 
-void GameEngine::eventHandler(){
+void GameEngine::eventHandler(void){
     while(SDL_PollEvent(&e)){
         //Engine handles game-wide events such as adding/removing controllers, or quitting, then pass to game state
-        switch(e.type){
-            case SDL_CONTROLLERAXISMOTION:
-            {
-                //L2/R2 support
-                if(e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
-                    //Assume controller does not belong to a player.
-                    bool player = false;
+		switch(e.type){
+			case SDL_CONTROLLERAXISMOTION:
+			{
+				//L2/R2 support
+				if(e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
+					//Assume controller does not belong to a player.
+					bool player = false;
 
-                    unsigned int i = 0;
+					unsigned int i = 0;
 
-                    //Search players for matching controller
-                    while(i < players.size() && !player){
-                        if(players[i] != nullptr){
-                            //Compare button press controller with player slot controller.
-                            player = (SDL_GameControllerFromInstanceID(e.caxis.which) == players[i]->controller);
-                        }
-                        i++;
-                    }
+					//Search players for matching controller
+					while(i < players.size() && !player){
+						if(players[i] != nullptr){
+							//Compare button press controller with player slot controller.
+							player = (SDL_GameControllerFromInstanceID(e.caxis.which) == players[i]->controller);
+						}
+						i++;
+					}
 
-                    //If not already a player.
-                    if(!player){
-                        addPlayer(new Player(players.size(), SDL_GameControllerFromInstanceID(e.caxis.which)));
-                    }
-                }
+					//If not already a player.
+					if(!player){
+						addPlayer(new Player(players.size(), SDL_GameControllerFromInstanceID(e.caxis.which)));
+					}
+				}
 
-                stateStack.back()->eventHandler();
-            }
-                break;
+				stateStack.back()->eventHandler();
+			}
+			break;
 
-            case SDL_CONTROLLERBUTTONDOWN:
-            {
-                //Assume controller does not belong to a player.
-                bool player = false;
+			case SDL_CONTROLLERBUTTONDOWN:
+			{
+				//Assume controller does not belong to a player.
+				bool player = false;
 
-                unsigned int i = 0;
-                //Find first empty controller slot
-                //TODO MENU THIS SHIT
-                int n = -1;
+				unsigned int i = 0;
 
-                //Search players for matching controller
-                while(i < players.size() && !player){
-                    if(players[i] != nullptr){
-                        //Compare button press controller with player slot controller.
-                        player = (SDL_GameControllerFromInstanceID(e.cbutton.which) == players[i]->controller);
-                        if(n == -1 && players[i]->controller == nullptr){
-                            n = i;
-                        }
-                    }
-                    i++;
-                }
+				//Find first empty controller slot
+				int n = -1;
 
-                //If not already a player.
-                if(!player){
-                    //If empty controller slot.
-                    if(n != -1){
-                        players[n]->controller = SDL_GameControllerFromInstanceID(e.cbutton.which);
-                    }else{
-                        addPlayer(new Player(players.size(), SDL_GameControllerFromInstanceID(e.cbutton.which)));
-                    }
-                }
+				//Search players for matching controller
+				while(i < players.size() && !player && n == -1){
+					if(players[i] != nullptr){
+						//Compare button press controller with player slot controller.
+						player = (SDL_GameControllerFromInstanceID(e.cbutton.which) == players[i]->controller);
+						if(players[i]->controller == nullptr){
+							n = i;
+						}
+					}
+					i++;
+				}
 
-                stateStack.back()->eventHandler();
-            }
-                break;
+				//If not already a player.
+				if(!player){
+					//If empty controller slot.
+					if(n != -1){
+						players[n]->controller = SDL_GameControllerFromInstanceID(e.cbutton.which);
+					}
+					else{
+						addPlayer(new Player(players.size(), SDL_GameControllerFromInstanceID(e.cbutton.which)));
+					}
+				}
 
-            case SDL_CONTROLLERDEVICEADDED:
-            {
-                //TODO Auto added at program start?  Try remove init controller checks.
-                //Check if controller already open.
-                if(!SDL_GameControllerGetAttached(SDL_GameControllerFromInstanceID(e.cdevice.which))){
-                    //Open controller if not open.
-                    SDL_GameControllerOpen(e.cdevice.which);
-                }
+				stateStack.back()->eventHandler();
+			}
+			break;
 
-                stateStack.back()->eventHandler();
-            }
-                break;
+			case SDL_CONTROLLERDEVICEADDED:
+			{
+				//TODO Force add at program start
+				//Check if controller already open.
+				if(!SDL_GameControllerGetAttached(SDL_GameControllerFromInstanceID(e.cdevice.which))){
+					//Open controller if not open.
+					SDL_GameControllerOpen(e.cdevice.which);
+				}
 
-            case SDL_CONTROLLERDEVICEREMOVED:
-            {
-                //TODO pause game at controller loss if in versus
-                SDL_GameControllerClose(SDL_GameControllerFromInstanceID(e.cdevice.which));
+				stateStack.back()->eventHandler();
+			}
+			break;
 
-                //Assume controller is not found
-                bool found = false;
+			case SDL_CONTROLLERDEVICEREMOVED:
+			{
+				//TODO pause game at controller loss if in versus
+				SDL_GameControllerClose(SDL_GameControllerFromInstanceID(e.cdevice.which));
 
-                //Move through controllers vector
-                unsigned int i = 0;
-                while(i < players.size()){
-                    if(players[i] != nullptr){
-                        //Compare removed controller to controllers vector
-                        found = (SDL_GameControllerFromInstanceID(e.cdevice.which) == players[i]->controller);
-                    }
-                    i++;
-                }
-                if(found){
-                    if(players[i] != players.back()){
-                        //If controller not at the end of controllers vector, empty slot.
-                        players[i] = nullptr;
-                    }else{
-                        //If controller is at the end of controllers vector, remove slot.
-                        players.pop_back();
-                    }
-                }
+				//Assume controller is not found
+				bool found = false;
 
-                stateStack.back()->eventHandler();
-            }
-                break;
+				//Move through controllers vector
+				unsigned int i = 0;
+				
+				while(i < players.size() && !found){
+					if(players[i] != nullptr && players[i]->controller != nullptr){
+						//Compare removed controller to controllers vector
+						found = (SDL_GameControllerFromInstanceID(e.cdevice.which) == players[i]->controller);
+					}
+					
+					i++;
+				}
+				if(found){
+					delete players[i];
+					if(players[i] != players.back()){
+						//If controller not at the end of controllers vector, empty slot.
+						players[i] = nullptr;
+					}
+					else{
+						//If controller is at the end of controllers vector, remove slot.
+						players.pop_back();
+					}
+				}
 
-            case SDL_CONTROLLERDEVICEREMAPPED:
+				stateStack.back()->eventHandler();
+			}
+			break;
 
-                stateStack.back()->eventHandler();
+			case SDL_CONTROLLERDEVICEREMAPPED:
+			{
+				stateStack.back()->eventHandler();
+			}
+            break;
 
-                break;
+			case SDL_QUIT:
+			{
+				close();
+			}
+            break;
 
-            case SDL_QUIT:
-                close();
-                break;
-
-                //All other events handled by game state
-            default:
-                if(!stateStack.empty()){
-                    stateStack.back()->eventHandler();
-                }
-                break;
+            //All other events handled by game state
+			default:
+			{
+				if(!stateStack.empty()){
+					stateStack.back()->eventHandler();
+				}
+			}
+            break;
         }
     }
 
     return;
 }
 
-GameState* GameEngine::get_back(){
+GameState* GameEngine::get_back(void) const{
     return stateStack.back();
 }
 
-std::vector<Player*> GameEngine::getPlayersList(){
+std::vector<Player*> GameEngine::getPlayersList(void) const{
     return players;
 }
 
-bool GameEngine::get_quit(){
+bool GameEngine::get_quit(void) const{
     return quit;
 }
 
-bool GameEngine::init(){
+bool GameEngine::init(void){
     //Assumes initializing error, sets to true if everything initialized properly.
     bool init = false;
 
@@ -324,8 +330,13 @@ bool GameEngine::init(){
 
                             GameState::game = this;
 
-                            players.emplace_back(new Player(players.size()));
-                            players.emplace_back(new Player(players.size()));
+							players.emplace_back(new Player(players.size()));
+							players.emplace_back(new Player(players.size()));
+
+							//Open connected controllers
+							for(int i = 0; i < SDL_NumJoysticks(); i++){
+								SDL_GameControllerOpen(i);
+							}
                         }
                     }
                 }
@@ -336,7 +347,7 @@ bool GameEngine::init(){
     return init;
 }
 
-void GameEngine::popState(){
+void GameEngine::popState(void){
     //Unload and remove current state
     if(!stateStack.empty()){
         stateStack.back()->unload();
@@ -367,7 +378,7 @@ void GameEngine::pushState(GameState* state){
     return;
 }
 
-void GameEngine::removePlayer(unsigned int n){
+void GameEngine::removePlayer(const unsigned int n){
     //If player slot exists and is not already empty.
     if(players[n] != nullptr && n >= 0 && n < players.size()){
         //If player is last in the vector.
@@ -402,7 +413,7 @@ void GameEngine::removePlayer(unsigned int n){
     return;
 }
 
-void GameEngine::render(){
+void GameEngine::render(void){
     SDL_SetRenderDrawColor(gameWindow.renderer, 0x00, 0x00, 0x00, 0xFF);
     SDL_RenderClear(gameWindow.renderer);
 
@@ -418,18 +429,16 @@ void GameEngine::render(){
     return;
 }
 
-void GameEngine::set_quit(bool q){
+void GameEngine::set_quit(const bool q){
     quit = q;
 
     return;
 }
 
-void GameEngine::update(){
+void GameEngine::update(void){
     if(!stateStack.empty()){
         stateStack.back()->update();
     }
 
     return;
 }
-
-

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   AudioMenu.cpp
  * Author: Clayton
@@ -14,48 +8,44 @@
 #include "AudioMenu.h"
 #include "SFX.h"
 
-
-
 const char AudioMenu::audioDefault[] = "audioConfigDefault.txt";
 
 
 
-AudioMenu::AudioMenu(){
+AudioMenu::AudioMenu(void){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Master Volume: " + std::to_string(game->gameAudio.get_master()), new Texture(), std::bind(Master, this)));
+    ("Master Volume: " + std::to_string(game->gameAudio.get_master()), new Texture(), std::bind(&AudioMenu::Master, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Music Volume: " + std::to_string(game->gameAudio.get_music()), new Texture(), std::bind(Music, this)));
+    ("Music Volume: " + std::to_string(game->gameAudio.get_music()), new Texture(), std::bind(&AudioMenu::Music, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Voice Volume: " + std::to_string(game->gameAudio.get_voice()), new Texture(), std::bind(Voice, this)));
+    ("Voice Volume: " + std::to_string(game->gameAudio.get_voice()), new Texture(), std::bind(&AudioMenu::Voice, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Effects Volume: " + std::to_string(game->gameAudio.get_effects()), new Texture(), std::bind(Effects, this)));
+    ("Effects Volume: " + std::to_string(game->gameAudio.get_effects()), new Texture(), std::bind(&AudioMenu::Effects, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Default", new Texture(), std::bind(Default, this)));
+    ("Default", new Texture(), std::bind(&AudioMenu::Default, this)));
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
-AudioMenu::~AudioMenu(){
+AudioMenu::~AudioMenu(void){
 }
 
-
-
-std::string AudioMenu::name(){
+std::string AudioMenu::name(void) const{
     return "AudioMenu";
 }
 
-void AudioMenu::reload(){
+void AudioMenu::reload(void){
     std::get<TEXT>(options[0]) = "Master Volume: " + std::to_string(game->gameAudio.get_master());
     std::get<GRAPHIC>(options[0])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[0]), 100);
     
@@ -73,9 +63,7 @@ void AudioMenu::reload(){
     return;
 }
 
-
-
-void AudioMenu::controllerButtonHandler(){
+void AudioMenu::controllerButtonHandler(void){
     if(selection < 4 && game->e.button.type == SDL_CONTROLLERBUTTONDOWN &&
        (game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT       ||
         game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)       ){
@@ -90,10 +78,8 @@ void AudioMenu::controllerButtonHandler(){
     return;
 }
 
-
-
 /*MENU FUNCTIONS*/
-void AudioMenu::Master(){
+void AudioMenu::Master(void){
     switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
             if(game->gameAudio.get_master() > 0){
@@ -129,7 +115,7 @@ void AudioMenu::Master(){
     return;
 }
 
-void AudioMenu::Music(){
+void AudioMenu::Music(void){
     switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
             if(game->gameAudio.get_music() > 0){
@@ -165,7 +151,7 @@ void AudioMenu::Music(){
     return;
 }
 
-void AudioMenu::Voice(){
+void AudioMenu::Voice(void){
     switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
             if(game->gameAudio.get_voice() > 0){
@@ -201,7 +187,7 @@ void AudioMenu::Voice(){
     return;
 }
 
-void AudioMenu::Effects(){
+void AudioMenu::Effects(void){
     switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
             if(game->gameAudio.get_effects() > 0){
@@ -234,12 +220,12 @@ void AudioMenu::Effects(){
 
     reload();
     
-    game->gameAudio.play(menuClickSFX, SYSTEM_SFX);
+    game->gameAudio.play(menuClickSFX);
 
     return;
 }
 
-void AudioMenu::Default(){
+void AudioMenu::Default(void){
     std::cout<<"DEFAULT"<<std::endl;
     
     game->fileI.open(audioDefault);

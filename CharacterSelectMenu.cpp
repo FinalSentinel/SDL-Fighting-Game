@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   CharacterSelectMenu.cpp
  * Author: Clayton
@@ -13,33 +7,31 @@
 
 #include "CharacterSelectMenu.h"
 
-#include "VersusState.h"
+#include "LevelSelectMenu.h"
 
 #include "Player.h"
 
-CharacterSelectMenu::CharacterSelectMenu(int vMode): mode(vMode){
+CharacterSelectMenu::CharacterSelectMenu(const int vMode): mode(vMode){
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(, this)));
+    ("", new Texture(), std::bind(&, this)));
     
     */
     
-    for(int i = 0; i < 6 /*change to enum list num*/; i++){
+    for(int i = 0; i < charNum; i++){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Char " + std::to_string(i), new Texture(), std::bind(Set_character, this)));
+        (CHARACTER_LIST[i], new Texture(), std::bind(&CharacterSelectMenu::Set_character, this)));
     }
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(back, this)));
+    ("Back", new Texture(), std::bind(&MenuState::back, this)));
     
 }
 
-CharacterSelectMenu::~CharacterSelectMenu(){
+CharacterSelectMenu::~CharacterSelectMenu(void){
 }
 
-
-
-void CharacterSelectMenu::load(){
+void CharacterSelectMenu::load(void){
     selected[0] = false;
     //XXX
     selected[1] = true;
@@ -47,17 +39,19 @@ void CharacterSelectMenu::load(){
     MenuState::load();
 }
 
-std::string CharacterSelectMenu::name(){
+std::string CharacterSelectMenu::name(void) const{
     return "CharacterSelectMenu";
 }
 
-void CharacterSelectMenu::resume(){
+void CharacterSelectMenu::resume(void){
     load();
+    
+    MenuState::resume();
     
     return;
 }
 
-void CharacterSelectMenu::update(){
+void CharacterSelectMenu::update(void){
     //TODO mode based loading for level/music?
     if(selected[0] == true && selected[1] == true){
         //TODO change to level select
@@ -65,15 +59,13 @@ void CharacterSelectMenu::update(){
     }
 }
 
-
-
 /*MENU FUNCTIONS*/
-void CharacterSelectMenu::Set_character(){
-    std::cout<<"set character: "<<selection<<std::endl;
+void CharacterSelectMenu::Set_character(void){
+    std::cout<<"set character: "<<CHARACTER_LIST[selection]<<std::endl;
     
     //TODO Set Player character choice
     //TODO player based logic
-    game->getPlayersList()[0]->set_character(selection);
+    game->getPlayersList()[0]->set_character((CharacterID)selection);
     selected[0] = true;
     
     return;

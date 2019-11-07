@@ -14,64 +14,62 @@
 
 //VersusMenu VersusMenu::menu;
 //
-//VersusMenu* VersusMenu::instance(){
+//VersusMenu* VersusMenu::instance(void){
 //    return &menu;
 //}
 
-VersusMenu::VersusMenu(int vMode): mode(vMode), hide(false){
+VersusMenu::VersusMenu(const int vMode): mode(vMode), hide(false){
 
     /*
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(TEMP, this)));
+    ("", new Texture(), std::bind(&TEMP, this)));
     
     */
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Resume", new Texture(), std::bind(back, this)));
+    ("Resume", new Texture(), std::bind(&MenuState::back, this)));
 
     if(mode == COMBO){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Combo List", new Texture(), std::bind(TEMP, this)));
+        ("Combo List", new Texture(), std::bind(&MenuState::TEMP, this)));
     }
 
     if(mode == COMBO){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Demo", new Texture(), std::bind(TEMP, this)));
+        ("Demo", new Texture(), std::bind(&MenuState::TEMP, this)));
     }
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Command List", new Texture(), std::bind(Command_list, this)));
+    ("Command List", new Texture(), std::bind(&VersusMenu::Command_list, this)));
 
     if(mode == TRAINING){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Training Options", new Texture(), std::bind(TEMP, this)));
+        ("Training Options", new Texture(), std::bind(&MenuState::TEMP, this)));
     }
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Options", new Texture(), std::bind(Options, this)));
+    ("Options", new Texture(), std::bind(&VersusMenu::Options, this)));
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Hide Menu", new Texture(), std::bind(Hide_menu, this)));
+    ("Hide Menu", new Texture(), std::bind(&VersusMenu::Hide_menu, this)));
     
     if(mode == ONLINE){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Return to Lobby", new Texture(), std::bind(TEMP, this)));
+        ("Return to Lobby", new Texture(), std::bind(&MenuState::TEMP, this)));
     }
     
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Return To Main Menu", new Texture(), std::bind(Return_to_menu, this)));
+    ("Return To Main Menu", new Texture(), std::bind(&VersusMenu::Return_to_menu, this)));
     
     //TODO Where to put display options?
     //TODO Character Select
 }
 
-VersusMenu::~VersusMenu(){
+VersusMenu::~VersusMenu(void){
     //NONE
 };
 
-
-
-void VersusMenu::load(){
+void VersusMenu::load(void){
     MenuState::load();
 
     std::cout << "VERSUS MENU" << std::endl;
@@ -79,11 +77,11 @@ void VersusMenu::load(){
     return;
 }
 
-std::string VersusMenu::name(){
+std::string VersusMenu::name(void) const{
     return "VersusMenu";
 }
 
-void VersusMenu::render(){
+void VersusMenu::render(void) const{
     if(!hide){
         MenuState::render();
     }
@@ -91,7 +89,7 @@ void VersusMenu::render(){
     return;
 }
 
-void VersusMenu::controllerButtonHandler(){
+void VersusMenu::controllerButtonHandler(void){
     //TODO multiple control method exclusion
     //TODO player differentiation
     //TODO menu mapping
@@ -195,25 +193,25 @@ void VersusMenu::controllerButtonHandler(){
 }
 
 /*MENU FUNCTIONS*/
-void VersusMenu::Return_to_menu(){    
+void VersusMenu::Return_to_menu(void){
     game->changeState(new MainMenu());
 
     return;
 }
 
-void VersusMenu::Command_list(){
+void VersusMenu::Command_list(void){
     game->pushState(new CommandMenu());
 
     return;
 }
 
-void VersusMenu::Options(){
+void VersusMenu::Options(void){
     game->pushState(new OptionsMenu());
     
     return;
 }
 
-void VersusMenu::Hide_menu(){
+void VersusMenu::Hide_menu(void){
     hide = true;
 
     return;

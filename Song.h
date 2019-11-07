@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Song.h
  * Author: Clayton
@@ -16,8 +10,6 @@
 
 #include "SDL_mixer.h"
 
-
-
 class Song{
 private:
 	const char* file;
@@ -27,21 +19,19 @@ private:
 	Mix_Music* song;
 
 protected:
+	//NONE
 
 public:
-	Song(const char f[] = "AEUHHH.mp3", double l = 0);
+	Song(const char* f = "AEUHHH.mp3", double l = 0);
 
-	virtual ~Song();
+	virtual ~Song(void);
 	
+	const char* get_file(void) const;
 	
+	double get_loop(void) const;
 	
-	const char* get_file();
-	
-	double get_loop();
-	
-	Mix_Music* get_song();
+	Mix_Music* get_song(void) const;
 
 };
 
 #endif /* SONG_H */
-

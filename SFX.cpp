@@ -15,8 +15,6 @@
 
 #include <iostream>
 
-
-
 SFX::SFX(const char* f): file(f){
     effect = Mix_LoadWAV(file);
     if(effect == nullptr){
@@ -24,19 +22,17 @@ SFX::SFX(const char* f): file(f){
     }
 }
 
-SFX::~SFX(){
+SFX::~SFX(void){
     if(effect != nullptr){
         Mix_FreeChunk(effect);
         effect = nullptr;
     }
 }
 
-
-
-Mix_Chunk* SFX::get_effect(){
+Mix_Chunk* SFX::get_effect(void) const{
     return effect;
 }
 
-const char* SFX::get_file(){
+const char* SFX::get_file(void) const{
     return file;
 }
