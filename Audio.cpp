@@ -15,6 +15,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <string>
 
 #include "Song.h"
 #include "SFX.h"
