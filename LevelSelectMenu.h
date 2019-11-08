@@ -10,34 +10,32 @@
 
 #include "MenuState.h"
 
-enum levelList{
-	error_level = -1,
-	LEVEL_1,
-	LEVEL_2,
-	LEVEL_3,
-	LEVEL_4,
-	LEVEL_5,
-	LEVEL_6,
-	levelNum
-};
 
-const std::string LEVEL_LIST[levelNum] = {
-	"Level 1",
-	"Level 2",
-	"Level 3",
-	"Level 4",
-	"Level 5",
-	"Level 6"
-};
 
 class LevelSelectMenu: public MenuState{
 private:
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(LevelSelectMenu::* const menuActions[])(void);
+
 	int mode;
 
 protected:
 	//NONE
 
 public:
+	enum LevelSelect_Options{
+		LEVEL_1,
+		LEVEL_2,
+		LEVEL_3,
+		LEVEL_4,
+		LEVEL_5,
+		LEVEL_6,
+		BACK,
+		numOptions
+	};
+
 	LevelSelectMenu(int vMode);
 
 	~LevelSelectMenu(void);

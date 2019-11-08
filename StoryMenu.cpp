@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   StoryMenu.cpp
  * Author: Clayton
@@ -13,21 +7,27 @@
 
 #include "StoryMenu.h"
 
+const std::string StoryMenu::menuText[StoryMenu::numOptions] = {
+	"STORY STUFF",
+	"Back"
+};
+
+void(StoryMenu::* const StoryMenu::menuActions[StoryMenu::numOptions])(void) = {
+	&MenuState::TEMP,
+	&MenuState::back
+};
+
+
+
 StoryMenu::StoryMenu(void){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("STORY STUFF", new Texture(), std::bind(&StoryMenu::Hold, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
 }
 
 StoryMenu::~StoryMenu(void){
+	//NONE
 }
 
 std::string StoryMenu::name(void) const{
@@ -35,8 +35,3 @@ std::string StoryMenu::name(void) const{
 }
 
 /*MENU FUNCTIONS*/
-void StoryMenu::Hold(void){
-    std::cout << "TEST HOLD TEST" << std::endl;
-
-    return;
-}

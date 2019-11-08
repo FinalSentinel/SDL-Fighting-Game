@@ -16,15 +16,24 @@
 
 #include "MenuState.h"
 
-enum Dials{
-	RESOLUTION,
-	FULLSCREEN,
-	VSYNC,
-	numDials
-};
+
 
 class VideoMenu: public MenuState{
 private:
+	enum Dials{
+		RESOLUTION_DIAL,
+		FULLSCREEN_DIAL,
+		VSYNC_DIAL,
+		numDials
+	};
+
+	static const char videoDefault[];
+
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(VideoMenu::* const menuActions[])(void);
+
 	int dials[numDials];
 	
 	//TODO ???
@@ -42,7 +51,14 @@ protected:
 	//NONE
 
 public:
-	static const char videoDefault[];
+	enum Video_Options{
+		RESOLUTION,
+		FULLSCREEN,
+		VSYNC,
+		DEFAULT,
+		BACK,
+		numOptions
+	};
 	
 	
 	

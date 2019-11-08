@@ -10,28 +10,15 @@
 
 #include "MenuState.h"
 
-enum CharacterList{
-	error_character = -1,
-	CHAR_1,
-	CHAR_2,
-	CHAR_3,
-	CHAR_4,
-	CHAR_5,
-	LAMBDA,
-	charNum
-};
 
-const std::string CHARACTER_LIST[charNum] = {
-	"Character 1",
-	"Character 2",
-	"Character 3",
-	"Character 4",
-	"Character 5",
-	"Lambda"
-};
 
 class CharacterSelectMenu: public MenuState{
 private:
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(CharacterSelectMenu::* const menuActions[])(void);
+
 	int mode;
 	
 	bool selected[2];
@@ -40,6 +27,17 @@ protected:
 	//NONE
 
 public:
+	enum CharacterSelect_Options{
+		CHAR_1,
+		CHAR_2,
+		CHAR_3,
+		CHAR_4,
+		CHAR_5,
+		LAMBDA,
+		BACK,
+		numOptions
+	};
+
 	CharacterSelectMenu(int vMode);
 
 	virtual ~CharacterSelectMenu(void);

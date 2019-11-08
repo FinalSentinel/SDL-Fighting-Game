@@ -10,17 +10,30 @@
 
 #include "MenuState.h"
 
+
+
 class AudioMenu: public MenuState{
 private:
-	//NONE
+	static const char audioDefault[];
+
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(AudioMenu::* const menuActions[])(void);
 
 protected:
 	//NONE
 
 public:
-	static const char audioDefault[];
-	
-	
+	enum Audio_Options{
+		MASTER,
+		MUSIC,
+		VOICES,
+		EFFECTS,
+		DEFAULT,
+		BACK,
+		numOptions
+	};
 	
 	AudioMenu(void);
 
@@ -35,7 +48,7 @@ public:
 	/*MENU FUNCTIONS*/
 	void Master(void);
 	void Music(void);
-	void Voice(void);
+	void Voices(void);
 	void Effects(void);
 	void Default(void);
 

@@ -14,53 +14,80 @@
 //TODO Keyboard controls
 //TODO Menu controls
 
-const char ControlsMenu::controlFormat[] = "controlFormat.txt";
-
 const char ControlsMenu::controlDefault[] = "controlConfigDefault.txt";
+
+const std::string ControlsMenu::menuText[ControlsMenu::numOptions] = {
+	"Quick Config",
+	"UP",
+	"DOWN",
+	"LEFT",
+	"RIGHT",
+	"PUNCH",
+	"KICK",
+	"HEAVY",
+	"SPECIAL",
+	"P+K",
+	"P+S",
+	"K+H",
+	"P+K+H",
+	"P+K+H+S",
+	"TAUNT",
+	"RECORD",
+	"PLAY",
+	"RESET",
+	"PAUSE",
+	"Default",
+	"Back"
+};
+
+void(ControlsMenu::* const ControlsMenu::menuActions[ControlsMenu::numOptions])(void) = {
+	&ControlsMenu::Quick_config,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::none,
+	&ControlsMenu::Default,
+	&MenuState::back
+};
 
 
 
 ControlsMenu::ControlsMenu(void){
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
+	for(int i = UP; i <= PAUSE; i++){
+		std::get<TEXT>(options[i]).append(": " + game->getPlayersList()[0]->controls[i]);
+	}
+    //TODO setup keyboard stuff
+
+
+
 	for(int i = 0; i < MAX_PLAYERS; i++){
 		config[i] = false;
 	}
 	for(int i = 0; i < MAX_PLAYERS; i++){
 		configNum[i] = 0;
 	}
-    
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-     */
-
-    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Quick Config", new Texture(), std::bind(&ControlsMenu::Quick_config, this)));
-
-    //TODO do better
-    game->fileI.open(controlFormat);
-    if(!game->fileI.is_open()){
-        std::cerr << "ERROR unable to open control format fileI." << std::endl;
-    }
-    else{
-        int i = 0;
-        while(game->fileI.getline(hold, 32)){
-            options.emplace_back(std::tuple < std::string, Texture*, std::function<void()>>
-                    (std::string(hold) + ": " + game->getPlayersList()[0]->controls[i], new Texture(), std::bind(&ControlsMenu::none, this)));
-            i++;
-        }
-    }
-    game->fileI.close();
-    //TODO setup keyboard stuff
-
-    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Default", new Texture(), std::bind(&ControlsMenu::Default, this)));
-
-    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Back", new Texture(), std::bind(&MenuState::back, this)));
 }
 
 ControlsMenu::~ControlsMenu(void){
+	//NONE
 }
 
 std::string ControlsMenu::name(void) const{
@@ -68,30 +95,15 @@ std::string ControlsMenu::name(void) const{
 }
 
 void ControlsMenu::reload(void){
-    //TODO DO BETTER
-    int n = 1;
-    game->fileI.open(controlFormat);
-    if(game->fileI.is_open()){
-        while(game->fileI.getline(hold, 32) && hold[0] != '!'){
-            //TODO better loop check
-            std::get<TEXT>(options[n]) = std::string(hold) + ": ";
-            n++;
-        }
-        hold[0] = ' ';
-    }
-    else{
-        std::cerr << "ERROR unable to open control format fileI." << std::endl;
-    }
-    game->fileI.close();
-    for(int i = 0; i < versusControlsNum; i++){
-        std::get<TEXT>(options[i + 1]).append(game->getPlayersList()[0]->controls[i]);
-    }
-    
+	for(int i = UP; i <= PAUSE; i++){
+		std::get<TEXT>(options[i]) = menuText[i] + ": " + game->getPlayersList()[0]->controls[i - UP];
+	}
     //TODO keyboard stuff
 
-    for(int i = 0; i < versusControlsNum; i++){
-        std::get<GRAPHIC>(options[i + 1])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i + 1]), 100);
+    for(int i = UP; i <= PAUSE; i++){
+        std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
     }
+
     if(!options.empty()){
         std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
     }
@@ -139,6 +151,7 @@ void ControlsMenu::update(void){
     return;
 }
 
+//TODO console output stuff
 void ControlsMenu::controllerAxisHandler(void){
     //TODO player differentiation
     //TODO menu mapping
@@ -161,12 +174,9 @@ void ControlsMenu::controllerAxisHandler(void){
                 configNum[0]++;
                 
                 if(configNum[0] >= TAUNT && configNum[0] < RECORD){
-                    for(int i = 0; i < RECORD - TAUNT; i++){
-                        game->fileI.getline(hold, 32);
-                    }
                     configNum[0] = RECORD;
                 }
-                else if(configNum[0] == versusControlsNum){
+                else if(configNum[0] >= PAUSE){
                     config[0] = false;
 
                     game->fileI.close();
@@ -181,9 +191,8 @@ void ControlsMenu::controllerAxisHandler(void){
                     }
                     std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 }
-                
-                game->fileI.getline(hold, 32);
-                prompt[0].loadText(game->gameWindow.renderer, std::string(hold), 100);
+
+                prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0]], 100);
             }
         }
     }
@@ -194,6 +203,7 @@ void ControlsMenu::controllerAxisHandler(void){
     return;
 }
 
+//TODO console output stuff
 void ControlsMenu::controllerButtonHandler(void){
     //TODO player differentiation
     if(selection >= 1 && selection <= versusControlsNum && game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN &&
@@ -240,12 +250,9 @@ void ControlsMenu::controllerButtonHandler(void){
                 configNum[0]++;
                 
                 if(configNum[0] >= TAUNT && configNum[0] < RECORD){
-                    for(int i = 0; i < RECORD - TAUNT; i++){
-                        game->fileI.getline(hold, 32);
-                    }
                     configNum[0] = RECORD;
                 }
-                else if(configNum[0] == versusControlsNum - 1){
+                else if(configNum[0] >= PAUSE){
                     config[0] = false;
 
                     game->fileI.close();
@@ -261,8 +268,7 @@ void ControlsMenu::controllerButtonHandler(void){
                     std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 }
                 
-                game->fileI.getline(hold, 32);
-                prompt[0].loadText(game->gameWindow.renderer, std::string(hold), 100);
+                prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0]], 100);
             }
             else{
                 config[0] = false;
@@ -288,24 +294,15 @@ void ControlsMenu::controllerButtonHandler(void){
 void ControlsMenu::Quick_config(void){
     std::cout << "Quick Config" << std::endl;
 
-    game->fileI.open(controlFormat);
-    if(game->fileI.is_open()){
-        config[0] = true;
-        configNum[0] = PUNCH;
+	config[0] = true;
+	configNum[0] = PUNCH;
 
-        for(unsigned int i = 0; i < options.size(); i++){
-            //TODO get RGBA
-            std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
-        }
-        for(int i = 0; i <= PUNCH; i++){
-            game->fileI.getline(hold, 32);
-        }
-        prompt[0].loadText(game->gameWindow.renderer, std::string(hold), 100);
-    }
-    else{
-        game->fileI.close();
-        std::cerr << "ERROR unable to open controls fileI." << std::endl;
-    }
+	for(unsigned int i = 0; i < options.size(); i++){
+		//TODO get RGBA
+		std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
+	}
+
+	prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0]], 100);
 
     return;
 }
@@ -321,6 +318,8 @@ void ControlsMenu::Default(void){
         game->getPlayersList()[0]->saveControls();
     }
     else{
+		char hold[32];
+
         for(int i = 0; i < versusControlsNum; i++){
             game->fileI.getline(hold, 32);
             
@@ -337,6 +336,6 @@ void ControlsMenu::Default(void){
     return;
 }
 
-void ControlsMenu::none(void) const{
+void ControlsMenu::none(void){
     return;
 }

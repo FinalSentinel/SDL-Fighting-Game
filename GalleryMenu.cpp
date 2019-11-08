@@ -7,21 +7,27 @@
 
 #include "GalleryMenu.h"
 
+const std::string GalleryMenu::menuText[GalleryMenu::numOptions] = {
+	"STORY STUFF"
+	"Back"
+};
+
+void(GalleryMenu::* const GalleryMenu::menuActions[GalleryMenu::numOptions])(void) = {
+	&MenuState::TEMP,
+	&MenuState::back
+};
+
+
+
 GalleryMenu::GalleryMenu(void){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-     */
-
-    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("STORY STUFF", new Texture(), std::bind(&GalleryMenu::Hold, this)));
-
-    options.emplace_back(std::tuple < std::string, Texture*, std::function<void()> >
-            ("Back", new Texture(), std::bind(&MenuState::back, this)));
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
 }
 
 GalleryMenu::~GalleryMenu(void){
+	//NONE
 }
 
 std::string GalleryMenu::name(void) const{
@@ -29,8 +35,3 @@ std::string GalleryMenu::name(void) const{
 }
 
 /*MENU FUNCTIONS*/
-void GalleryMenu::Hold(void) const{
-    std::cout << "TEST HOLD TEST" << std::endl;
-
-    return;
-}

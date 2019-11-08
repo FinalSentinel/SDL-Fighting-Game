@@ -11,24 +11,27 @@
 #include "ControlsMenu.h"
 #include "VideoMenu.h"
 
+const std::string OptionsMenu::menuText[OptionsMenu::numOptions] = {
+	"Change Controls",
+	"Video Settings",
+	"Audio Settings",
+	"Back"
+};
+
+void(OptionsMenu::* const OptionsMenu::menuActions[OptionsMenu::numOptions])(void) = {
+	&OptionsMenu::Change_controls,
+	&OptionsMenu::Video_settings,
+	&OptionsMenu::Audio_settings,
+	&MenuState::back
+};
+
+
+
 OptionsMenu::OptionsMenu(void){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Change Controls", new Texture(), std::bind(&OptionsMenu::Change_controls, this)));
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Video Settings", new Texture(), std::bind(&OptionsMenu::Video_settings, this)));
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Audio Settings", new Texture(), std::bind(&OptionsMenu::Audio_settings, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
 }
 
 OptionsMenu::~OptionsMenu(void){

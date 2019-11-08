@@ -12,19 +12,39 @@
 #include "OptionsMenu.h"
 #include "VersusState.h"
 
-//VersusMenu VersusMenu::menu;
-//
-//VersusMenu* VersusMenu::instance(void){
-//    return &menu;
-//}
+const std::string VersusMenu::menuText[VersusMenu::numOptions] = {
+	"Resume",
+	"Combo List",
+	"Demo",
+	"Command List",
+	"Training Options",
+	"Options",
+	"Hide Menu",
+	"Return to Lobby",
+	"Return To Main Menu"
+};
+
+void(VersusMenu::* const VersusMenu::menuActions[VersusMenu::numOptions])(void) = {
+	&MenuState::back,
+	&MenuState::TEMP,
+	&MenuState::TEMP,
+	&VersusMenu::Command_list,
+	&MenuState::TEMP,
+	&VersusMenu::Options,
+	&VersusMenu::Hide_menu,
+	&MenuState::TEMP,
+	&VersusMenu::Return_to_menu
+};
+
+
 
 VersusMenu::VersusMenu(const int vMode): mode(vMode), hide(false){
-
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&TEMP, this)));
-    
-    */
+	/*
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
+	*/
 
     options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
     ("Resume", new Texture(), std::bind(&MenuState::back, this)));
@@ -32,9 +52,7 @@ VersusMenu::VersusMenu(const int vMode): mode(vMode), hide(false){
     if(mode == COMBO){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
         ("Combo List", new Texture(), std::bind(&MenuState::TEMP, this)));
-    }
-
-    if(mode == COMBO){
+    
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
         ("Demo", new Texture(), std::bind(&MenuState::TEMP, this)));
     }

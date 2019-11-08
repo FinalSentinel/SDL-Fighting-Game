@@ -9,24 +9,37 @@
 
 #include "VersusState.h"
 
-MusicSelectMenu::MusicSelectMenu(int vMode, int vLevel): mode(vMode), level(vLevel){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    for(int i = 0; i < songNum; i++){
+const std::string MusicSelectMenu::menuText[MusicSelectMenu::numOptions]{
+	"Song 1",
+	"Song 2",
+	"Song 3",
+	"Song 4",
+	"Song 5",
+	"Song 6",
+	"Back"
+};
+
+void(MusicSelectMenu::* const MusicSelectMenu::menuActions[MusicSelectMenu::numOptions])(void) = {
+	&MusicSelectMenu::Set_music,
+	&MusicSelectMenu::Set_music,
+	&MusicSelectMenu::Set_music,
+	&MusicSelectMenu::Set_music,
+	&MusicSelectMenu::Set_music,
+	&MusicSelectMenu::Set_music,
+	&MenuState::back
+};
+
+
+
+MusicSelectMenu::MusicSelectMenu(int vMode, int vLevel): mode(vMode), level(vLevel){    
+    for(int i = 0; i < numOptions; i++){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        (MUSIC_LIST[i], new Texture(), std::bind(&MusicSelectMenu::Set_music, this)));
-    }
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
-    
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+    }    
 }
 
 MusicSelectMenu::~MusicSelectMenu(void){
+	//NONE
 }
 
 std::string MusicSelectMenu::name(void) const{
@@ -35,7 +48,7 @@ std::string MusicSelectMenu::name(void) const{
 
 /*MENU FUNCTIONS*/
 void MusicSelectMenu::Set_music(void){
-    std::cout<<"set music: "<<MUSIC_LIST[selection]<<std::endl;
+    std::cout<<"set music: "<<menuText[selection]<<std::endl;
     
     game->pushState(new VersusState(mode, level, selection));
     

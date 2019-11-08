@@ -11,24 +11,37 @@
 
 #include "Player.h"
 
+const std::string CharacterSelectMenu::menuText[CharacterSelectMenu::numOptions] = {
+	"Character 1",
+	"Character 2",
+	"Character 3",
+	"Character 4",
+	"Character 5",
+	"Lambda",
+	"Back"
+};
+
+void(CharacterSelectMenu::* const CharacterSelectMenu::menuActions[CharacterSelectMenu::numOptions])(void) = {
+	&CharacterSelectMenu::Set_character,
+	&CharacterSelectMenu::Set_character,
+	&CharacterSelectMenu::Set_character,
+	&CharacterSelectMenu::Set_character,
+	&CharacterSelectMenu::Set_character,
+	&CharacterSelectMenu::Set_character,
+	&MenuState::back
+};
+
+
+
 CharacterSelectMenu::CharacterSelectMenu(const int vMode): mode(vMode){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    for(int i = 0; i < charNum; i++){
+    for(int i = 0; i < numOptions; i++){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        (CHARACTER_LIST[i], new Texture(), std::bind(&CharacterSelectMenu::Set_character, this)));
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
     }
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
-    
 }
 
 CharacterSelectMenu::~CharacterSelectMenu(void){
+	//NONE
 }
 
 void CharacterSelectMenu::load(void){
@@ -61,7 +74,7 @@ void CharacterSelectMenu::update(void){
 
 /*MENU FUNCTIONS*/
 void CharacterSelectMenu::Set_character(void){
-    std::cout<<"set character: "<<CHARACTER_LIST[selection]<<std::endl;
+    std::cout<<"set character: "<<menuText[selection]<<std::endl;
     
     //TODO Set Player character choice
     //TODO player based logic

@@ -18,7 +18,7 @@ const char Audio::audioConfig[] = "audioConfig.txt";
 
 
 
-Audio::Audio(int ma, int mu, int vo, int ef): master(ma), music(mu), voice(vo), effects(ef){
+Audio::Audio(int ma, int mu, int vo, int ef): master(ma), music(mu), voices(vo), effects(ef){
     //NONE
 }
 
@@ -38,8 +38,8 @@ int Audio::get_music(void) const{
     return music;
 }
 
-int Audio::get_voice(void) const{
-    return voice;
+int Audio::get_voices(void) const{
+    return voices;
 }
 
 bool Audio::init(void){
@@ -94,7 +94,7 @@ void Audio::saveSettings(void){
     else{
         std::string temp = std::to_string(master) + '\n' +
                            std::to_string(music)  + '\n' +
-                           std::to_string(voice)  + '\n' +
+                           std::to_string(voices)  + '\n' +
                            std::to_string(effects);
 
         ofs << temp;
@@ -119,7 +119,7 @@ void Audio::set_master(const int ma){
 
     set_effects(effects);
     set_music(music);
-    set_voice(voice);
+    set_voices(voices);
     
     return;
 }
@@ -134,11 +134,11 @@ void Audio::set_music(const int mu){
     return;
 }
 
-void Audio::set_voice(const int vo){
-    voice = vo;
+void Audio::set_voices(const int vo){
+    voices = vo;
 
     for(int i = 0; i < 3; i++){
-        Mix_Volume(i, int((master / 100.0) * (voice / 100.0) * MIX_MAX_VOLUME + 0.5));
+        Mix_Volume(i, int((master / 100.0) * (voices / 100.0) * MIX_MAX_VOLUME + 0.5));
     }
     
     return;

@@ -11,9 +11,16 @@
 #include "MenuState.h"
 #include "Player.h"
 
+
+
 class ControlsMenu: public MenuState{
 private:
-    char hold[32];
+	static const char controlDefault[];
+
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(ControlsMenu::* const menuActions[])(void);
 
 protected:
 //	int altSelection[game->MAX_PLAYERS];
@@ -30,10 +37,31 @@ protected:
 	Texture prompt[MAX_PLAYERS];
 
 public:
-	static const char controlDefault[];
-	
-	static const char controlFormat[];
-	
+	enum Controls_Options{
+		QUICK_CONFIG,
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		PUNCH,
+		KICK,
+		HEAVY,
+		SPECIAL,
+		P_K,
+		P_S,
+		K_H,
+		P_K_H,
+		P_K_H_S,
+		TAUNT,
+		RECORD,
+		PLAY,
+		RESET,
+		PAUSE,
+		DEFAULT,
+		BACK,
+		numOptions
+	};
+
 	
 
 	ControlsMenu(void);
@@ -58,7 +86,7 @@ public:
 	void Quick_config(void);
 	void Default(void);
 	//void back(void);
-	void none(void) const;
+	void none(void);
 
 };
 

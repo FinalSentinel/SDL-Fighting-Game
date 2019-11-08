@@ -16,14 +16,25 @@
 
 #include "MenuState.h"
 
+
+
 class StoryMenu: public MenuState{
 private:
-	//NONE
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(StoryMenu::* const menuActions[])(void);
 
 protected:
 	//NONE
 
 public:
+	enum Story_Options{
+		STORY_STUFF,
+		BACK,
+		numOptions
+	};
+
 	StoryMenu(void);
 
 	virtual ~StoryMenu(void);
@@ -31,8 +42,6 @@ public:
 	std::string name(void) const;
 	
 	/*MENU FUNCTIONS*/
-	void Hold(void);
-	//   Back = MenuState::back(void);
 
 };
 

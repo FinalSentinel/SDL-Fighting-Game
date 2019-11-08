@@ -10,34 +10,32 @@
 
 #include "MenuState.h"
 
-enum MusicList{
-	invalid_music = -1,
-	SONG_1,
-	SONG_2,
-	SONG_3,
-	SONG_4,
-	SONG_5,
-	SONG_6,
-	songNum
-};
 
-const std::string MUSIC_LIST[songNum]{
-	"Song 1",
-	"Song 2",
-	"Song 3",
-	"Song 4",
-	"Song 5",
-	"Song 6"
-};
 
 class MusicSelectMenu: public MenuState{
 private:
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(MusicSelectMenu::* const menuActions[])(void);
+
 	int mode, level;
 
 protected:
 	//NONE
 
 public:
+	enum MusicSelect_Options{
+		SONG_1,
+		SONG_2,
+		SONG_3,
+		SONG_4,
+		SONG_5,
+		SONG_6,
+		BACK,
+		numOptions
+	};
+
 	MusicSelectMenu(int vMode, int vLevel);
 
 	virtual ~MusicSelectMenu(void);

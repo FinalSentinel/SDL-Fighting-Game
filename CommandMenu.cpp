@@ -7,30 +7,33 @@
 
 #include "CommandMenu.h"
 
+const std::string CommandMenu::menuText[CommandMenu::numOptions] = {
+	"CHARACTER NAME",
+	"Move 1",
+	"Move 2",
+	"Move 3",
+	"Back"
+};
+
+void(CommandMenu::* const CommandMenu::menuActions[CommandMenu::numOptions])(void) = {
+	&CommandMenu::none,
+	&CommandMenu::Play,
+	&CommandMenu::Play,
+	&CommandMenu::Play,
+	&MenuState::back
+};
+
+
+
 CommandMenu::CommandMenu(void){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("CHARACTER NAME", new Texture(), std::bind(&CommandMenu::none, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Move 1", new Texture(), std::bind(&CommandMenu::Play, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Move 2", new Texture(), std::bind(&CommandMenu::Play, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Move 3", new Texture(), std::bind(&CommandMenu::Play, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
 }
 
 CommandMenu::~CommandMenu(void){
+	//NONE
 }
 
 std::string CommandMenu::name(void) const{
@@ -40,9 +43,11 @@ std::string CommandMenu::name(void) const{
 /*MENU FUNCTIONS*/
 void CommandMenu::Play(void){
     //TODO
+	std::cout << "Play Move: " << menuText[selection] << std::endl;
+
     return;
 }
 
-void CommandMenu::none(void) const{
+void CommandMenu::none(void){
     return;
 }

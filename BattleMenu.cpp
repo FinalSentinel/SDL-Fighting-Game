@@ -9,30 +9,31 @@
 
 #include "CharacterSelectState.h"
 
+const std::string BattleMenu::menuText[numOptions] = {
+	"Versus",
+	"Online",
+	"Training",
+	"Combos",
+	"Tutorial",
+	"Back"
+};
+
+void(BattleMenu::* const BattleMenu::menuActions[numOptions])(void) = {
+	&BattleMenu::Char_select,
+	&BattleMenu::Char_select,
+	&BattleMenu::Char_select,
+	&BattleMenu::Char_select,
+	&BattleMenu::Char_select,
+	&MenuState::back
+};
+
+
+
 BattleMenu::BattleMenu(void){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Versus", new Texture(), std::bind(&BattleMenu::Char_select, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Online", new Texture(), std::bind(&BattleMenu::Char_select, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Training", new Texture(), std::bind(&BattleMenu::Char_select, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Combos", new Texture(), std::bind(&BattleMenu::Char_select, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Tutorial", new Texture(), std::bind(&BattleMenu::Char_select, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
 }
 
 BattleMenu::~BattleMenu(void){

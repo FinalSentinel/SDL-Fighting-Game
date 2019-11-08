@@ -10,14 +10,28 @@
 
 #include "MenuState.h"
 
+
+
 class CommandMenu: public MenuState{
 private:
-	//NONE
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(CommandMenu::* const menuActions[])(void);
 
 protected:
 	//NONE
 
 public:
+	enum Command_Options{
+		CHARACTER_NAME,
+		MOVE_1,
+		MOVE_2,
+		MOVE_3,
+		BACK,
+		numOptions
+	};
+
 	CommandMenu(void);
 
 	virtual ~CommandMenu(void);
@@ -27,9 +41,8 @@ public:
 	/*MENU FUNCTIONS*/
 	void Play(void);
 	//   Back = MenuState::back(void);
-	void none(void) const;
+	void none(void);
 
 };
 
 #endif /* COMMANDMENU_H */
-

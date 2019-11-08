@@ -10,18 +10,17 @@
 
 #include "MenuState.h"
 
-enum Main_Options{
-	BATTLE,
-	STORY,
-	GALLERY,
-	OPTIONS,
-	RETURN_TO_TITLE
-};
+
 
 class Song;
 
 class MainMenu: public MenuState{
 private:
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(MainMenu::* const menuActions[])(void);
+
 	static const char mainMenuMusic[];
 	
 	Song* mainMenuSong;
@@ -30,6 +29,15 @@ protected:
 	//NONE
 
 public:
+	enum Main_Options{
+		BATTLE,
+		STORY,
+		GALLERY,
+		OPTIONS,
+		RETURN_TO_TITLE,
+		numOptions
+	};
+
 	MainMenu(void);
 
 	virtual ~MainMenu(void);

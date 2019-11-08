@@ -9,24 +9,37 @@
 
 #include "MusicSelectMenu.h"
 
-LevelSelectMenu::LevelSelectMenu(const int vMode): mode(vMode){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    for(int i = 0; i < levelNum; i++){
+const std::string LevelSelectMenu::menuText[LevelSelectMenu::numOptions] = {
+	"Level 1",
+	"Level 2",
+	"Level 3",
+	"Level 4",
+	"Level 5",
+	"Level 6",
+	"Back"
+};
+
+void(LevelSelectMenu::* const LevelSelectMenu::menuActions[LevelSelectMenu::numOptions])(void) = {
+	&LevelSelectMenu::Set_level,
+	&LevelSelectMenu::Set_level,
+	&LevelSelectMenu::Set_level,
+	&LevelSelectMenu::Set_level,
+	&LevelSelectMenu::Set_level,
+	&LevelSelectMenu::Set_level,
+	&MenuState::back
+};
+
+
+
+LevelSelectMenu::LevelSelectMenu(const int vMode): mode(vMode){    
+    for(int i = 0; i < numOptions; i++){
         options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        (LEVEL_LIST[i], new Texture(), std::bind(&LevelSelectMenu::Set_level, this)));
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
     }
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
-    
 }
 
 LevelSelectMenu::~LevelSelectMenu(void){
+	//NONE
 }
 
 std::string LevelSelectMenu::name(void) const{
@@ -35,7 +48,7 @@ std::string LevelSelectMenu::name(void) const{
 
 /*MENU FUNCTIONS*/
 void LevelSelectMenu::Set_level(void){
-    std::cout<<"set level: "<<LEVEL_LIST[selection]<<std::endl;
+    std::cout<<"set level: "<<menuText[selection]<<std::endl;
     
     game->pushState(new MusicSelectMenu(mode, selection));
     

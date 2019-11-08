@@ -10,32 +10,35 @@
 
 const char AudioMenu::audioDefault[] = "audioConfigDefault.txt";
 
+const std::string AudioMenu::menuText[AudioMenu::numOptions] = {
+	"Master Volume: ",
+	"Music Volume: ",
+	"Voice Volume: ",
+	"Effects Volume: ",
+	"Default",
+	"Back"
+};
+
+void(AudioMenu::* const AudioMenu::menuActions[AudioMenu::numOptions])(void) = {
+	&AudioMenu::Master,
+	&AudioMenu::Music,
+	&AudioMenu::Voices,
+	&AudioMenu::Effects,
+	&AudioMenu::Default,
+	&MenuState::back
+};
+
 
 
 AudioMenu::AudioMenu(void){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Master Volume: " + std::to_string(game->gameAudio.get_master()), new Texture(), std::bind(&AudioMenu::Master, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Music Volume: " + std::to_string(game->gameAudio.get_music()), new Texture(), std::bind(&AudioMenu::Music, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Voice Volume: " + std::to_string(game->gameAudio.get_voice()), new Texture(), std::bind(&AudioMenu::Voice, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Effects Volume: " + std::to_string(game->gameAudio.get_effects()), new Texture(), std::bind(&AudioMenu::Effects, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Default", new Texture(), std::bind(&AudioMenu::Default, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
+	std::get<TEXT>(options[MASTER] ).append(std::to_string(game->gameAudio.get_master()	));
+	std::get<TEXT>(options[MUSIC]  ).append(std::to_string(game->gameAudio.get_music()	));
+	std::get<TEXT>(options[VOICES] ).append(std::to_string(game->gameAudio.get_voices()	));
+	std::get<TEXT>(options[EFFECTS]).append(std::to_string(game->gameAudio.get_effects()));
 }
 
 AudioMenu::~AudioMenu(void){
@@ -52,7 +55,7 @@ void AudioMenu::reload(void){
     std::get<TEXT>(options[1]) = "Music Volume: " + std::to_string(game->gameAudio.get_music());
     std::get<GRAPHIC>(options[1])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[1]), 100);
     
-    std::get<TEXT>(options[2]) = "Voice Volume: " + std::to_string(game->gameAudio.get_voice());
+    std::get<TEXT>(options[2]) = "Voice Volume: " + std::to_string(game->gameAudio.get_voices());
     std::get<GRAPHIC>(options[2])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[2]), 100);
     
     std::get<TEXT>(options[3]) = "Effects Volume: " + std::to_string(game->gameAudio.get_effects());
@@ -151,19 +154,19 @@ void AudioMenu::Music(void){
     return;
 }
 
-void AudioMenu::Voice(void){
+void AudioMenu::Voices(void){
     switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
-            if(game->gameAudio.get_voice() > 0){
-                game->gameAudio.set_voice(game->gameAudio.get_voice() - 1);
+            if(game->gameAudio.get_voices() > 0){
+                game->gameAudio.set_voices(game->gameAudio.get_voices() - 1);
             }
             
             break;
         }
         
         case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:{
-            if(game->gameAudio.get_voice() < 100){
-                game->gameAudio.set_voice(game->gameAudio.get_voice() + 1);
+            if(game->gameAudio.get_voices() < 100){
+                game->gameAudio.set_voices(game->gameAudio.get_voices() + 1);
             }
             
             break;
@@ -237,7 +240,7 @@ void AudioMenu::Default(void){
         game->fileI>>std::dec>>ma>>mu>>vo>>ef;
         
         game->gameAudio.set_music(mu);
-        game->gameAudio.set_voice(vo);
+        game->gameAudio.set_voices(vo);
         game->gameAudio.set_effects(ef);
         
         game->gameAudio.set_master(ma);

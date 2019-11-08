@@ -10,14 +10,27 @@
 
 #include "MenuState.h"
 
+
+
 class OptionsMenu: public MenuState{
 private:
-	//NONE
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(OptionsMenu::* const menuActions[])(void);
 
 protected:
 	//NONE
 
 public:
+	enum Options_Options{
+		CHANGE_CONTROLS,
+		VIDEO_SETTINGS,
+		AUDIO_SETTINGS,
+		BACK,
+		numOptions
+	};
+
 	OptionsMenu(void);
 
 	virtual ~OptionsMenu(void);

@@ -9,37 +9,43 @@
 
 const char VideoMenu::videoDefault[] = "videoConfigDefault.txt";
 
+const std::string VideoMenu::menuText[VideoMenu::numOptions] = {
+	"Resolution: ",
+	"Fullscreen: ",
+	"VSync: ",
+	"Default",
+	"Back"
+};
+
+void(VideoMenu::* const VideoMenu::menuActions[VideoMenu::numOptions])(void) = {
+	&VideoMenu::Resolution,
+	&VideoMenu::Fullscreen,
+	&VideoMenu::VSync,
+	&VideoMenu::Default,
+	&MenuState::back
+};
+
 
 
 VideoMenu::VideoMenu(): prompt(false), keep(false), isback(false){
-    dials[RESOLUTION] = game->gameWindow.get_resNum();
-    dials[FULLSCREEN] = (int)game->gameWindow.get_fullscreen();
-    dials[VSYNC] = (int)game->gameWindow.get_vSync();
+    dials[RESOLUTION_DIAL] =	  game->gameWindow.get_resNum();
+    dials[FULLSCREEN_DIAL] = (int)game->gameWindow.get_fullscreen();
+    dials[VSYNC_DIAL     ] = (int)game->gameWindow.get_vSync();
     
-    resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION]];
+    resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION_DIAL]];
     
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]), new Texture(), std::bind(&VideoMenu::Resolution, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Fullscreen: " + std::string(dials[FULLSCREEN] ? "ON" : "OFF"), new Texture(), std::bind(&VideoMenu::Fullscreen, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("VSync: " + std::string(dials[VSYNC] ? "ON" : "OFF"), new Texture(), std::bind(&VideoMenu::VSync, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Default", new Texture(), std::bind(&VideoMenu::Default, this)));
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Back", new Texture(), std::bind(&MenuState::back, this)));
-    
-    if(dials[FULLSCREEN]){
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
+
+	std::get<TEXT>(options[RESOLUTION]).append(std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]));
+	std::get<TEXT>(options[FULLSCREEN]).append(std::string(dials[FULLSCREEN_DIAL] ? "ON" : "OFF"));
+	std::get<TEXT>(options[VSYNC     ]).append(std::string(dials[VSYNC_DIAL] ? "ON" : "OFF"));
+
+
+
+    if(dials[FULLSCREEN_DIAL]){
         selection = 1;
         index = 1;
     }
@@ -54,7 +60,7 @@ VideoMenu::~VideoMenu(void){
 void VideoMenu::load(void){
     MenuState::load();
     
-    if(dials[FULLSCREEN]){
+    if(dials[FULLSCREEN_DIAL]){
         std::get<GRAPHIC>(options[0])->setRGBA(0x80, 0x80, 0x80);
     }
     
@@ -67,8 +73,8 @@ std::string VideoMenu::name(void) const{
 
 void VideoMenu::reload(void){
     std::get<TEXT>(options[0]) = "Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]);
-    std::get<TEXT>(options[1]) = "Fullscreen: " + std::string(dials[FULLSCREEN] ? "ON" : "OFF");
-    std::get<TEXT>(options[2]) = "VSync: " + std::string(dials[VSYNC] ? "ON" : "OFF");
+    std::get<TEXT>(options[1]) = "Fullscreen: " + std::string(dials[FULLSCREEN_DIAL] ? "ON" : "OFF");
+    std::get<TEXT>(options[2]) = "VSync: " + std::string(dials[VSYNC_DIAL] ? "ON" : "OFF");
     
     for(int i = 0; i < 3; i++){
         std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
@@ -112,15 +118,15 @@ void VideoMenu::controllerButtonHandler(void){
                     game->e.cbutton.button == SDL_CONTROLLER_BUTTON_A && !keep){
                 keep = false;
 
-                dials[RESOLUTION] = game->gameWindow.get_resNum();
-                dials[FULLSCREEN] = game->gameWindow.get_fullscreen();
-                dials[VSYNC] = game->gameWindow.get_vSync();
+                dials[RESOLUTION_DIAL] = game->gameWindow.get_resNum();
+                dials[FULLSCREEN_DIAL] = game->gameWindow.get_fullscreen();
+                dials[VSYNC_DIAL] = game->gameWindow.get_vSync();
 
-                resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION]];
+                resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION_DIAL]];
 
-                game->gameWindow.swapResolution(dials[RESOLUTION]);
-                game->gameWindow.swapDisplayMode(dials[FULLSCREEN]);
-                game->gameWindow.swapVSync(dials[VSYNC]);
+                game->gameWindow.swapResolution(dials[RESOLUTION_DIAL]);
+                game->gameWindow.swapDisplayMode(dials[FULLSCREEN_DIAL]);
+                game->gameWindow.swapVSync(dials[VSYNC_DIAL]);
 
                 if(isback){
                     MenuState::back();
@@ -134,7 +140,7 @@ void VideoMenu::controllerButtonHandler(void){
                         std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
                     std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
-                    if(dials[FULLSCREEN]){
+                    if(dials[FULLSCREEN_DIAL]){
                         std::get<GRAPHIC>(options[0])->setRGBA(0x80, 0x80, 0x80);
                     }
                 }
@@ -142,11 +148,11 @@ void VideoMenu::controllerButtonHandler(void){
             else if(game->e.cbutton.button == SDL_CONTROLLER_BUTTON_A && keep){
                 keep = false;
 
-                game->gameWindow.set_resNum(dials[RESOLUTION]);
-                game->gameWindow.set_fullscreen(dials[FULLSCREEN]);
-                game->gameWindow.set_vSync(dials[VSYNC]);
+                game->gameWindow.set_resNum(dials[RESOLUTION_DIAL]);
+                game->gameWindow.set_fullscreen(dials[FULLSCREEN_DIAL]);
+                game->gameWindow.set_vSync(dials[VSYNC_DIAL]);
                 
-                resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION]];
+                resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION_DIAL]];
                 
                 //TODO move to Window class
                 game->fileO.open(game->gameWindow.videoConfig);
@@ -154,9 +160,9 @@ void VideoMenu::controllerButtonHandler(void){
                     std::cerr<<"ERROR unable to open config file.";
                 }
                 else{
-                    std::string hold = std::to_string(dials[RESOLUTION] )+ '\n' +
-                                       std::to_string(dials[FULLSCREEN]) + '\n' +
-                                       std::to_string(dials[VSYNC])      + '\n'  ;
+                    std::string hold = std::to_string(dials[RESOLUTION_DIAL] )+ '\n' +
+                                       std::to_string(dials[FULLSCREEN_DIAL]) + '\n' +
+                                       std::to_string(dials[VSYNC_DIAL])      + '\n'  ;
                     
                     game->fileO << hold;
                 }
@@ -172,7 +178,7 @@ void VideoMenu::controllerButtonHandler(void){
                         std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
                     std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
-                    if(dials[FULLSCREEN]){
+                    if(dials[FULLSCREEN_DIAL]){
                         std::get<GRAPHIC>(options[0])->setRGBA(0x80, 0x80, 0x80);
                     }
                 }
@@ -193,35 +199,35 @@ void VideoMenu::controllerButtonHandler(void){
                 game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)){
             if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
                 switch(selection){
-                    case RESOLUTION:
+                    case RESOLUTION_DIAL:
                     {
                         if(game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT){
-                            dials[RESOLUTION] = (WINDOW_RESOLUTION_NUM + dials[RESOLUTION] - 1) % WINDOW_RESOLUTION_NUM;
+                            dials[RESOLUTION_DIAL] = (WINDOW_RESOLUTION_NUM + dials[RESOLUTION_DIAL] - 1) % WINDOW_RESOLUTION_NUM;
                         }
                         else{
-                            dials[RESOLUTION] = (WINDOW_RESOLUTION_NUM + dials[RESOLUTION] + 1) % WINDOW_RESOLUTION_NUM;
+                            dials[RESOLUTION_DIAL] = (WINDOW_RESOLUTION_NUM + dials[RESOLUTION_DIAL] + 1) % WINDOW_RESOLUTION_NUM;
                         }
-                        resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION]];
+                        resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION_DIAL]];
 
                         std::get<TEXT>(options[selection]) = "Resolution: " + std::to_string(resolution[0]) + "x" + std::to_string(resolution[1]);
 
                         break;
                     }
 
-                    case FULLSCREEN:
+                    case FULLSCREEN_DIAL:
                     {
-                        dials[FULLSCREEN] = !dials[FULLSCREEN];
+                        dials[FULLSCREEN_DIAL] = !dials[FULLSCREEN_DIAL];
 
-                        std::get<TEXT>(options[selection]) = "Fullscreen: " + std::string(dials[FULLSCREEN] ? "ON" : "OFF");
+                        std::get<TEXT>(options[selection]) = "Fullscreen: " + std::string(dials[FULLSCREEN_DIAL] ? "ON" : "OFF");
 
                         break;
                     }
 
-                    case VSYNC:
+                    case VSYNC_DIAL:
                     {
-                        dials[VSYNC] = !dials[VSYNC];
+                        dials[VSYNC_DIAL] = !dials[VSYNC_DIAL];
 
-                        std::get<TEXT>(options[selection]) = "VSync: " + std::string(dials[VSYNC] ? "ON" : "OFF");
+                        std::get<TEXT>(options[selection]) = "VSync: " + std::string(dials[VSYNC_DIAL] ? "ON" : "OFF");
 
                         break;
                     }
@@ -275,8 +281,8 @@ void VideoMenu::controllerButtonHandler(void){
 
 /*MENU FUNCTIONS*/
 void VideoMenu::Resolution(void){
-    if(!game->gameWindow.get_fullscreen() && dials[RESOLUTION] != game->gameWindow.get_resNum()){
-        game->gameWindow.swapResolution(dials[RESOLUTION]);
+    if(!game->gameWindow.get_fullscreen() && dials[RESOLUTION_DIAL] != game->gameWindow.get_resNum()){
+        game->gameWindow.swapResolution(dials[RESOLUTION_DIAL]);
     
         prompt = true;
         
@@ -292,10 +298,10 @@ void VideoMenu::Resolution(void){
 
 void VideoMenu::Fullscreen(void){
     //FIXME strange behavior coming out of fullscreen
-    if((bool)dials[FULLSCREEN] != game->gameWindow.get_fullscreen()){
-        game->gameWindow.swapDisplayMode(dials[RESOLUTION]);
+    if((bool)dials[FULLSCREEN_DIAL] != game->gameWindow.get_fullscreen()){
+        game->gameWindow.swapDisplayMode(dials[RESOLUTION_DIAL]);
         
-        resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION]];
+        resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION_DIAL]];
     
         prompt = true;
         
@@ -310,8 +316,8 @@ void VideoMenu::Fullscreen(void){
 }
 
 void VideoMenu::VSync(void){
-    if((bool)dials[VSYNC] != game->gameWindow.get_vSync()){
-        game->gameWindow.swapVSync(dials[VSYNC]);
+    if((bool)dials[VSYNC_DIAL] != game->gameWindow.get_vSync()){
+        game->gameWindow.swapVSync(dials[VSYNC_DIAL]);
         
         prompt = true;
         
@@ -331,9 +337,9 @@ void VideoMenu::Default(void){
         std::cerr<<"ERROR unable to open video default file"<<std::endl;
     }
     else{
-        game->fileI>>std::dec>>dials[RESOLUTION]>>dials[FULLSCREEN]>>dials[VSYNC];
+        game->fileI>>std::dec>>dials[RESOLUTION_DIAL]>>dials[FULLSCREEN_DIAL]>>dials[VSYNC_DIAL];
             
-        resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION]];
+        resolution = WINDOW_RESOLUTION_LIST[dials[RESOLUTION_DIAL]];
         
         reload();
         
@@ -351,9 +357,9 @@ void VideoMenu::Default(void){
 }
 
 void VideoMenu::back(void){
-    if(!game->gameWindow.get_fullscreen() && dials[RESOLUTION] != game->gameWindow.get_resNum() ||
-            (bool)dials[FULLSCREEN] != game->gameWindow.get_fullscreen()                        ||
-            (bool)dials[VSYNC] != game->gameWindow.get_vSync())                                   {
+    if(!game->gameWindow.get_fullscreen() && dials[RESOLUTION_DIAL] != game->gameWindow.get_resNum() ||
+            (bool)dials[FULLSCREEN_DIAL] != game->gameWindow.get_fullscreen()                        ||
+            (bool)dials[VSYNC_DIAL] != game->gameWindow.get_vSync())                                   {
         Resolution();
         Fullscreen();
         VSync();

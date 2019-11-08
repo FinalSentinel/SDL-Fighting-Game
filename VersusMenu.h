@@ -10,19 +10,34 @@
 
 #include "MenuState.h"
 
-enum Versus_Options{
-	RETURN_TO_MENU,
-	RESUME
-};
+
 
 class VersusMenu: public MenuState{
 private:
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(VersusMenu::* const menuActions[])(void);
+
 	int mode;
 
 protected:
 	bool hide;
 
 public:
+	enum Versus_Options{
+		RESUME,
+		COMBO_LIST,
+		DEMO,
+		COMMAND_LIST,
+		TRAINING_OPTIONS,
+		OPTIONS,
+		HIDE_MENU,
+		RETURN_TO_LOBBY,
+		RETURN_TO_MAIN_MENU,
+		numOptions
+	};
+
 	VersusMenu(int vMode);
 
 	virtual ~VersusMenu(void);

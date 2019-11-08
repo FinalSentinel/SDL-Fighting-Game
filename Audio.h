@@ -23,7 +23,7 @@ class SFX;
 
 class Audio{
 private:
-	int master, music, voice, effects;
+	int master, music, voices, effects;
 
 protected:
 	//NONE
@@ -43,7 +43,7 @@ public:
 	
 	int get_music() const;
 	
-	int get_voice() const;
+	int get_voices() const;
 	
 	bool init();
 	
@@ -61,11 +61,11 @@ public:
 	
 	void set_effects(int ma);
 	
-	void set_master(int ma);
+	void set_master(int ef);
 	
-	void set_music(int ma);
+	void set_music(int mu);
 	
-	void set_voice(int ma);
+	void set_voices(int vo);
 	
 	void unloadEffect(SFX* sound);
 	

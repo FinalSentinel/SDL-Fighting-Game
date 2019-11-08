@@ -15,34 +15,35 @@
 
 const char MainMenu::mainMenuMusic[] = "AEUHHH.wav";
 
+const std::string MainMenu::menuText[MainMenu::numOptions] = {
+	"Battle",
+	"Story",
+	"Gallery",
+	"Options",
+	"Return to Title"
+};
+
+void(MainMenu::* const MainMenu::menuActions[MainMenu::numOptions])(void) = {
+	&MainMenu::Battle,
+	&MainMenu::Story,
+	&MainMenu::Gallery,
+	&MainMenu::Options,
+	&MenuState::back
+};
+
 
 
 MainMenu::MainMenu(void){
-    /*
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("", new Texture(), std::bind(&, this)));
-    
-    */
-    
-    mainMenuSong = game->gameAudio.loadSong(mainMenuMusic);
-    if(!mainMenuSong->get_song()){
-        std::cerr << "ERROR loading main menu music"  << std::endl;
-    }
+	for(int i = 0; i < numOptions; i++){
+		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+	}
 
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Battle", new Texture(), std::bind(&MainMenu::Battle, this)));
 
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Story", new Texture(), std::bind(&MainMenu::Story, this)));
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Gallery", new Texture(), std::bind(&MainMenu::Gallery, this)));
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Options", new Texture(), std::bind(&MainMenu::Options, this)));
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Return to Title", new Texture(), std::bind(&MenuState::back, this)));
+	mainMenuSong = game->gameAudio.loadSong(mainMenuMusic);
+	if(!mainMenuSong->get_song()){
+		std::cerr << "ERROR loading main menu music" << std::endl;
+	}
 }
 
 MainMenu::~MainMenu(void){

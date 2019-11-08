@@ -10,24 +10,32 @@
 
 #include "MenuState.h"
 
+
+
 class GalleryMenu: public MenuState{
 private:
-	//NONE
+	static const std::string menuText[];
+
+	//TODO lambdas?
+	static void(GalleryMenu::* const menuActions[])(void);
 
 protected:
 	//NONE
 
 public:
-	GalleryMenu(void);
+	enum Gallery_Options{
+		GALLERY_STUFF,
+		BACK,
+		numOptions
+	};
 
-	GalleryMenu(const GalleryMenu& orig);
+	GalleryMenu(void);
 
 	virtual ~GalleryMenu(void);
 	
 	std::string name(void) const;
 	
 	/*MENU FUNCTIONS*/
-	void Hold(void) const;
 	//   Back = MenuState::back(void);
 
 };
