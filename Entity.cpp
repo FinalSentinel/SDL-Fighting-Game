@@ -77,8 +77,10 @@ void Entity::move(void){
 }
 
 void Entity::position(const int nx, const int ny){
-	x = nx;
-	y = ny;
+	x   = nx;
+
+	y   = ny * (ny >= 0);
+	dy *= (ny >= 0);
 
 	for(int type = 0; type < BoxTypeNum; type++){
 		for(unsigned int i = 0; i < boxes[type].size(); i++){

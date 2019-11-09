@@ -46,8 +46,6 @@ public:
 
     void decollide(Character* c1, Character* c2);
 
-	int floorCollision(Character* c) const;
-
     void load(void);
 	
 	void moveCamera(Character* c);

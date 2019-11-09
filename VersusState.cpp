@@ -33,25 +33,13 @@ VersusState::~VersusState(void){
 void VersusState::decollide(Character* c1, Character* c2){
 	int col = 0;
 	//TODO can I remove the wallb's?
-	int floor1, floor2, wall1, wall1b, wall2, wall2b;
+	int wall1, wall1b, wall2, wall2b;
 
 	//TODO double check
 	side = (c1->get_x() < c2->get_x() || (c1->get_x() == c2->get_x() && c1->get_left()));
-	bool specCondition = false;
 
 	/*WALL COLLISION*/
 	{
-		//TODO ACTIVE_PLAYER for loop
-		floor1 = floorCollision(c1);
-		floor2 = floorCollision(c2);
-
-		if(floor1){
-			c1->set_dy(0);
-		}
-		if(floor2){
-			c2->set_dy(0);
-		}
-
 		wall1 = wallDistance(c1, side);
 		wall1b = wallDistance(c1, !side);
 
@@ -77,18 +65,20 @@ void VersusState::decollide(Character* c1, Character* c2){
 			c2->set_wall(false);
 		}
 
-		if(wall1 < 0 || wall2 < 0 || floor1 || floor2){
-			c1->position((c1->get_x() - (wall1 * (wall1 < 0) - wall1b * (wall1b < 0)) * ((2 * side) - 1)), c1->get_y() - floor1);
-			c2->position((c2->get_x() + (wall2 * (wall2 < 0) - wall2b * (wall2b < 0)) * ((2 * side) - 1)), c2->get_y() - floor2);
+		if(wall1 < 0 || wall2 < 0){
+			c1->position((c1->get_x() - (wall1 * (wall1 < 0) - wall1b * (wall1b < 0)) * ((2 * side) - 1)), c1->get_y());
+			c2->position((c2->get_x() + (wall2 * (wall2 < 0) - wall2b * (wall2b < 0)) * ((2 * side) - 1)), c2->get_y());
 		}
 	}
     
     /*CHARACTER COLLISION*/
+	bool specCondition = false;
 	{
 		for(unsigned int i = 0; i < c1->getBoxes(COLLISION).size(); i++){
 			for(unsigned int j = 0; i < c2->getBoxes(COLLISION).size(); i++){
 				if(c1->getBoxes(COLLISION)[i].collides(c2->getBoxes(COLLISION)[j])){
-					specCondition = ((wall1 < 0 && (wall2 + c2->getBoxes(COLLISION)[j].get_w()) >= game->gameWindow.getWidth()) || ((wall1 + c1->getBoxes(COLLISION)[i].get_w()) >= game->gameWindow.getWidth() && wall2 < 0));
+					specCondition = ((wall1 < 0 && (wall2 + c2->getBoxes(COLLISION)[j].get_w()) >= STAGE_WIDTH)
+								 || ((wall1 + c1->getBoxes(COLLISION)[i].get_w()) >= STAGE_WIDTH && wall2 < 0));
 					if((side && !specCondition) || (!side && specCondition)){
 						col = std::max(col, ((c1->getBoxes(COLLISION)[i].get_x() + c1->getBoxes(COLLISION)[i].get_w()) - c2->getBoxes(COLLISION)[j].get_x()));
 					}
@@ -162,20 +152,6 @@ void VersusState::decollide(Character* c1, Character* c2){
 	}
 
     return;
-}
-
-int VersusState::floorCollision(Character* c) const{
-	//Decollide from floor.
-	int colY = 0;
-	for(unsigned int i = 0; i < c->getBoxes(COLLISION).size(); i++){
-		//If character's collision box clips below the stage floor.
-		if(c->getBoxes(COLLISION)[i].get_y() < 0){
-			//Find the greatest abs. collision height.
-			colY = std::min(colY, c->getBoxes(COLLISION)[i].get_y() - game->gameWindow.getHeight());
-		}
-	}
-
-	return colY;
 }
 
 void VersusState::load(void){
@@ -317,17 +293,17 @@ void VersusState::update(void){
     for(unsigned int i = 0; i < STAGE_ACTIVE_PLAYERS; i++){
         if(active[i]->controller != nullptr){
             if(SDL_GameControllerGetButton(active[i]->controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT)){
-                active[i]->character->set_dx(-64 * STAGE_SNAP_UNIT);
+                active[i]->character->set_dx(-32 * STAGE_SNAP_UNIT);
             }
             else if(SDL_GameControllerGetButton(active[i]->controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)){
-                active[i]->character->set_dx(64 * STAGE_SNAP_UNIT);
+                active[i]->character->set_dx(32 * STAGE_SNAP_UNIT);
             }
             else{
                 active[i]->character->set_dx(0);
             }
             
             if(SDL_GameControllerGetButton(active[i]->controller, SDL_CONTROLLER_BUTTON_DPAD_UP)){
-                active[i]->character->set_dy(64 * STAGE_SNAP_UNIT);
+                active[i]->character->set_dy(32 * STAGE_SNAP_UNIT);
             }
             else if(SDL_GameControllerGetButton(active[i]->controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN)){
                 //TODO if y + h >= STAGE_HEIGHT then crouch.
@@ -338,25 +314,19 @@ void VersusState::update(void){
             else if(active[i]->character->get_dy() > 0 || active[i]->character->get_y() > 0){
                 active[i]->character->set_dy(active[i]->character->get_dy() - 1 * STAGE_SNAP_UNIT);
             }
+			else{
+				active[i]->character->set_dy(0);
+			}
         }
         else{
             const Uint8* keys = SDL_GetKeyboardState(nullptr);
 
             //TODO Key player associations
-            //If key pressed... else...
-            /*
-            if(keys[SDL_SCANCODE_]){
-
-            }
-            else{
-
-            }
-             */
             if(keys[SDL_SCANCODE_A] && !keys[SDL_SCANCODE_D]){
-                active[i]->character->set_dx(-64 * STAGE_SNAP_UNIT);
+                active[i]->character->set_dx(-32 * STAGE_SNAP_UNIT);
             }
             else if(keys[SDL_SCANCODE_D] && !keys[SDL_SCANCODE_A]){
-                active[i]->character->set_dx(64 * STAGE_SNAP_UNIT);
+                active[i]->character->set_dx(32 * STAGE_SNAP_UNIT);
             }
             else{
                 active[i]->character->set_dx(0);
@@ -366,11 +336,14 @@ void VersusState::update(void){
                 //CROUCH STUFF
             }
             else if(keys[SDL_SCANCODE_W] && !keys[SDL_SCANCODE_S]){
-                active[i]->character->set_dy(64 * STAGE_SNAP_UNIT);
+                active[i]->character->set_dy(32 * STAGE_SNAP_UNIT);
             }
             else if(active[i]->character->get_dy() > 0 || active[i]->character->get_y() > 0){
                 active[i]->character->set_dy(active[i]->character->get_dy() - 1 * STAGE_SNAP_UNIT);
             }
+			else{
+				active[i]->character->set_dy(0);
+			}
         }
 
         active[i]->character->move();
@@ -413,7 +386,7 @@ int VersusState::wallDistance(Character* c, const bool left) const{
 }
 
 void VersusState::controllerAxisHandler(void){
-
+	//TODO
     
     return;
 }
