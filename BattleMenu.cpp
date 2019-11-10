@@ -9,8 +9,9 @@
 
 #include "CharacterSelectState.h"
 
-const std::string BattleMenu::menuText[numOptions] = {
+const std::string BattleMenu::menuText[BattleMenu::numOptions] = {
 	"Versus",
+	"Arcade",
 	"Online",
 	"Training",
 	"Combos",
@@ -18,7 +19,8 @@ const std::string BattleMenu::menuText[numOptions] = {
 	"Back"
 };
 
-void(BattleMenu::* const BattleMenu::menuActions[numOptions])(void) = {
+void(BattleMenu::* const BattleMenu::menuActions[BattleMenu::numOptions])(void) = {
+	&BattleMenu::Char_select,
 	&BattleMenu::Char_select,
 	&BattleMenu::Char_select,
 	&BattleMenu::Char_select,

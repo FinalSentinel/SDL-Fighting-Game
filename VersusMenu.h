@@ -53,6 +53,7 @@ public:
 	/*MENU FUNCTIONS*/
 	//   Resume = MenuState::back(void){
 	void Command_list(void);
+	void Training_options(void);
 	void Options(void);
 	void Hide_menu(void);
 	void Return_to_menu(void);

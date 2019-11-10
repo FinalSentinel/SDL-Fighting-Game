@@ -12,12 +12,11 @@
 
 enum Versus_Types{
 	VERSUS,
+	ARCADE,
 	ONLINE,
 	TRAINING,
 	COMBO,
-	TUTORIAL,
-	ARCADE,
-	Versus_TypesNum
+	TUTORIAL
 };
 
 class Character;

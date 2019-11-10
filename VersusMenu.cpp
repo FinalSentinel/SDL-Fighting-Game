@@ -10,6 +10,7 @@
 #include "CommandMenu.h"
 #include "MainMenu.h"
 #include "OptionsMenu.h"
+#include "TrainingMenu.h"
 #include "VersusState.h"
 
 const std::string VersusMenu::menuText[VersusMenu::numOptions] = {
@@ -29,7 +30,7 @@ void(VersusMenu::* const VersusMenu::menuActions[VersusMenu::numOptions])(void) 
 	&MenuState::TEMP,
 	&MenuState::TEMP,
 	&VersusMenu::Command_list,
-	&MenuState::TEMP,
+	&VersusMenu::Training_options,
 	&VersusMenu::Options,
 	&VersusMenu::Hide_menu,
 	&MenuState::TEMP,
@@ -39,48 +40,70 @@ void(VersusMenu::* const VersusMenu::menuActions[VersusMenu::numOptions])(void) 
 
 
 VersusMenu::VersusMenu(const int vMode): mode(vMode), hide(false){
-	/*
 	for(int i = 0; i < numOptions; i++){
-		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+		switch(mode){
+			case VERSUS:
+			{
+				if(!(i == COMBO_LIST || i == DEMO || i == TRAINING_OPTIONS || i == RETURN_TO_LOBBY)){
+					options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+						(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+				}
+			}
+			break;
+
+			case ARCADE:
+			{
+				if(!(i == COMBO_LIST || i == DEMO || i == TRAINING_OPTIONS || i == RETURN_TO_LOBBY)){
+					options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+						(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+				}
+			}
+			break;
+
+			case ONLINE:
+			{
+				if(!(i == COMBO_LIST || i == DEMO || i == TRAINING_OPTIONS)){
+					options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+						(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+				}
+			}
+			break;
+
+			case TRAINING:
+			{
+				if(!(i == COMBO_LIST || i == DEMO || i == RETURN_TO_LOBBY)){
+					options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+						(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+				}
+			}
+			break;
+
+			case COMBO:
+			{
+				if(!(i == TRAINING_OPTIONS || i == RETURN_TO_LOBBY)){
+					options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+						(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+				}
+			}
+			break;
+
+			case TUTORIAL:
+			{
+				if(!(i == COMBO_LIST || i == TRAINING_OPTIONS || i == RETURN_TO_LOBBY)){
+					options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+						(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+				}
+			}
+			break;
+
+			default:
+			{
+				options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
+					(menuText[i], new Texture(), std::bind(menuActions[i], this)));
+			}
+			break;
+		}
 	}
-	*/
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Resume", new Texture(), std::bind(&MenuState::back, this)));
-
-    if(mode == COMBO){
-        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Combo List", new Texture(), std::bind(&MenuState::TEMP, this)));
-    
-        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Demo", new Texture(), std::bind(&MenuState::TEMP, this)));
-    }
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Command List", new Texture(), std::bind(&VersusMenu::Command_list, this)));
-
-    if(mode == TRAINING){
-        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Training Options", new Texture(), std::bind(&MenuState::TEMP, this)));
-    }
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Options", new Texture(), std::bind(&VersusMenu::Options, this)));
-
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Hide Menu", new Texture(), std::bind(&VersusMenu::Hide_menu, this)));
-    
-    if(mode == ONLINE){
-        options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-        ("Return to Lobby", new Texture(), std::bind(&MenuState::TEMP, this)));
-    }
-    
-    options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
-    ("Return To Main Menu", new Texture(), std::bind(&VersusMenu::Return_to_menu, this)));
-    
-    //TODO Where to put display options?
-    //TODO Character Select
 }
 
 VersusMenu::~VersusMenu(void){
@@ -218,9 +241,15 @@ void VersusMenu::Return_to_menu(void){
 }
 
 void VersusMenu::Command_list(void){
-    game->pushState(new CommandMenu());
+	game->pushState(new CommandMenu());
 
-    return;
+	return;
+}
+
+void VersusMenu::Training_options(void){
+	game->pushState(new TrainingMenu());
+
+	return;
 }
 
 void VersusMenu::Options(void){

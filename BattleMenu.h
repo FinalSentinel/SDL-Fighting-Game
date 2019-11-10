@@ -10,25 +10,26 @@
 
 #include "MenuState.h"
 
-enum Battle_Options{
-	VERSUS,
-	ONLINE,
-	TRAINING,
-	COMBO,
-	TUTORIAL,
-	BACK,
-	numOptions
-};
+
 
 class BattleMenu: public MenuState{
 private:
 	//TODO lambdas?
-	static void(BattleMenu::* const menuActions[numOptions])(void);
+	static void(BattleMenu::* const menuActions[])(void);
 
 	static const std::string menuText[];
 
 protected:
-	//NONE
+	enum Battle_Options{
+		VERSUS,
+		ARCADE,
+		ONLINE,
+		TRAINING,
+		COMBO,
+		TUTORIAL,
+		BACK,
+		numOptions
+	};
 
 public:
 	BattleMenu(void);
