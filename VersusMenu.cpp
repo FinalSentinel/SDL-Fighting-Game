@@ -39,9 +39,9 @@ void(VersusMenu::* const VersusMenu::menuActions[VersusMenu::numOptions])(void) 
 
 
 
-VersusMenu::VersusMenu(const int vMode): mode(vMode), hide(false){
+VersusMenu::VersusMenu(VersusState* versus): vstate(versus), hide(false){
 	for(int i = 0; i < numOptions; i++){
-		switch(mode){
+		switch(vstate->get_mode()){
 			case VERSUS:
 			{
 				if(!(i == COMBO_LIST || i == DEMO || i == TRAINING_OPTIONS || i == RETURN_TO_LOBBY)){
@@ -247,7 +247,7 @@ void VersusMenu::Command_list(void){
 }
 
 void VersusMenu::Training_options(void){
-	game->pushState(new TrainingMenu());
+	game->pushState(new TrainingMenu(vstate));
 
 	return;
 }

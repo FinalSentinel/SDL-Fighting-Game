@@ -54,10 +54,10 @@ void MenuState::load(void){
     std::cout << "MENU STATE: " << name() << std::endl;
 
     for(unsigned int i = 0; i < options.size(); i++){
-        std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
+        std::get<TEXTURE>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
     }
     if(!options.empty()){
-        std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+        std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
     }
     
     return;
@@ -78,7 +78,7 @@ void MenuState::render(void) const{
     int h = game->gameWindow.getHeight() / (std::min((int)options.size(), MAX_MENU_SIZE) + 2);
 
     for(unsigned int i = 0; i < MAX_MENU_SIZE && i < options.size(); i++){
-        std::get<GRAPHIC>(options[i + selection - index])->render(game->gameWindow.renderer, x, h * (i + 1), 3 * x, h);
+        std::get<TEXTURE>(options[i + selection - index])->render(game->gameWindow.renderer, x, h * (i + 1), 3 * x, h);
     }
 
     return;
@@ -92,12 +92,12 @@ void MenuState::resume(void){
 }
 
 void MenuState::returnToTop(void){
-    std::get<GRAPHIC>(options[selection])->setRGBA();
+    std::get<TEXTURE>(options[selection])->setRGBA();
 
     index = 0;
     selection = 0;
     
-    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+    std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
     
     return;
 }
@@ -194,9 +194,9 @@ void MenuState::controllerButtonHandler(void){
                     index = std::min((int) options.size() - 1, MAX_MENU_SIZE - 1);
                 }
 
-                std::get<GRAPHIC>(options[selection])->setRGBA();
+                std::get<TEXTURE>(options[selection])->setRGBA();
                 selection = (options.size() + selection - 1) % options.size();
-                std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
                 game->gameAudio.play(menuClickSFX);
 
@@ -211,9 +211,9 @@ void MenuState::controllerButtonHandler(void){
                     index = 0;
                 }
 
-                std::get<GRAPHIC>(options[selection])->setRGBA();
+                std::get<TEXTURE>(options[selection])->setRGBA();
                 selection = (options.size() + selection + 1) % options.size();
-                std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 
                 game->gameAudio.play(menuClickSFX);
 

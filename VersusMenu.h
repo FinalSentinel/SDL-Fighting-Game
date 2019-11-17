@@ -10,7 +10,7 @@
 
 #include "MenuState.h"
 
-
+class VersusState;
 
 class VersusMenu: public MenuState{
 private:
@@ -19,7 +19,7 @@ private:
 	//TODO lambdas?
 	static void(VersusMenu::* const menuActions[])(void);
 
-	int mode;
+	VersusState* vstate;
 
 protected:
 	bool hide;
@@ -38,7 +38,7 @@ public:
 		numOptions
 	};
 
-	VersusMenu(int vMode);
+	VersusMenu(VersusState* versus);
 
 	virtual ~VersusMenu(void);
 	

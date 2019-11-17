@@ -21,7 +21,7 @@
 
 enum Option_Structure{
 	TEXT,
-	GRAPHIC,
+	TEXTURE,
 	FUNCTION
 };
 

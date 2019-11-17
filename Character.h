@@ -17,7 +17,7 @@ enum CharacterID {
 	CHARACTER_3,
 	CHARACTER_4,
 	CHARACTER_5,
-	LAMEDH,
+	LAMBDA,
 	CharacterIDNum
 };
 

@@ -15,11 +15,71 @@
 #include "Player.h"
 #include "Texture.h"
 
+const char* VersusState::trainingConfig = "trainingConfig.txt";
+const char* VersusState::trainingConfigDefault = "trainingConfigDefault.txt";
+
+
+
 VersusState::VersusState(int vMode, int vLevel, int vMusic):
 							mode(vMode), level(vLevel), music(vMusic), side(true), 
 							camera(new SDL_Rect), stage(new Texture()){
 	for(int i = 0; i < STAGE_ACTIVE_PLAYERS; i++){
 		active[i] = nullptr;
+	}
+
+	/*LOAD MODE SETTINGS*/
+	const char* config = nullptr;
+	int* settings = nullptr;
+	int num = 0;
+
+	switch(mode){
+		case VERSUS:{
+			//TODO
+		}
+		break;
+
+		case ARCADE:{
+			//TODO
+		}
+		break;
+
+		case ONLINE:{
+			//TODO
+		}
+		break;
+
+		case TRAINING:{
+			config = trainingConfig;
+			settings = trainingSettings;
+			num = num_Training;
+		}
+		break;
+
+		case COMBO:{
+			//TODO
+		}
+		break;
+
+		case TUTORIAL:{
+			//TODO
+		}
+		break;
+	}
+
+	game->fileI.open(config);
+	if(!game->fileI.is_open()){
+		std::cerr << "ERROR cannot open training config file." << std::endl;
+
+		for(int i = 0; i < num; i++){
+			settings[i] = 0;
+		}
+	}
+	else{
+		for(int i = 0; i < num; i++){
+			game->fileI >> settings[i];
+		}
+
+		game->fileI.close();
 	}
 }
 
@@ -154,6 +214,22 @@ void VersusState::decollide(Character* c1, Character* c2){
     return;
 }
 
+int VersusState::get_mode(void) const{
+	return mode;
+}
+
+const char* VersusState::get_trainingConfig(void) const{
+	return trainingConfig;
+}
+
+const char* VersusState::get_trainingConfigDefault(void) const{
+	return trainingConfigDefault;
+}
+
+int VersusState::get_trainingSettings(const int i) const{
+	return trainingSettings[i];
+}
+
 void VersusState::load(void){
     //TODO
     std::cout << "VERSUS STATE" << std::endl;
@@ -275,9 +351,64 @@ void VersusState::render(void) const{
     return;
 }
 
+void VersusState::reset(void){
+	if(mode == TRAINING){
+		int pos;
+		int dist = STAGE_WIDTH * trainingSettings[RESET_DISTANCE] / (num_Training_ResetDistance - 1);
+
+		if(trainingSettings[RESET_SWAP]){
+
+		}
+		else{
+
+		}
+	}
+	//TODO other modes such as COMBO/TUTORIAL
+	else{
+		for(int i = 0; i < STAGE_ACTIVE_PLAYERS; i++){
+			active[i]->character->position((i + 1) * STAGE_WIDTH / (STAGE_ACTIVE_PLAYERS + 1), 0);
+		}
+	}
+
+	return;
+}
+
 void VersusState::resume(void){
-    //TODO
+	//TODO
+    //TODO Training mode settings
     return;
+}
+
+void VersusState::set_resetDistance(const int rD){
+	trainingSettings[RESET_DISTANCE] = Training_ResetDistance(rD  % num_Training_ResetDistance);
+
+	if(trainingSettings[RESET_DISTANCE] < 0){
+		trainingSettings[RESET_DISTANCE] = Training_ResetDistance(trainingSettings[RESET_DISTANCE] + num_Training_ResetDistance);
+	}
+
+	return;
+}
+
+void VersusState::set_resetLock(const int rL){
+	trainingSettings[RESET_LOCK] = rL;
+
+	return;
+}
+
+void VersusState::set_resetPosition(const int rP){
+	trainingSettings[RESET_POSITION] = Training_ResetPosition(rP % num_Training_ResetPosition);
+
+	if(trainingSettings[RESET_POSITION] < 0){
+		trainingSettings[RESET_POSITION] = Training_ResetPosition(trainingSettings[RESET_POSITION] + num_Training_ResetPosition);
+	}
+
+	return;
+}
+
+void VersusState::set_resetSwap(const int s){
+	trainingSettings[RESET_SWAP] = s;
+
+	return;
 }
 
 void VersusState::unload(void){
@@ -396,6 +527,15 @@ void VersusState::controllerButtonHandler(void){
     //TODO multiple control method exclusion
     //TODO player differentiation
 
+	//TODO reimplement button logic to get action easier than by searching.
+	/*
+	int button = game->e.cbutton.button;
+
+	switch(button){
+		//TODO game actions function stuff
+	}
+	*/
+
     switch(game->e.cbutton.button){
         case SDL_CONTROLLER_BUTTON_A:
             break;
@@ -413,11 +553,14 @@ void VersusState::controllerButtonHandler(void){
             break;
 
         case SDL_CONTROLLER_BUTTON_GUIDE:
-            break;
+		{
+			//NONE
+		}
+        break;
 
         case SDL_CONTROLLER_BUTTON_START:
             if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
-                game->pushState(new VersusMenu(mode));
+                game->pushState(new VersusMenu(this));
             }
             break;
 
@@ -430,7 +573,13 @@ void VersusState::controllerButtonHandler(void){
             break;
 
         case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
-            break;
+		{
+			if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN && 
+			  (mode == TRAINING || mode == COMBO || mode == TUTORIAL)){
+				reset();
+			}
+		}
+		break;
 
         case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
             break;

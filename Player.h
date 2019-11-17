@@ -13,27 +13,7 @@
 #include "Character.h"
 #include "SDL.h"
 
-enum versusControls{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-	PUNCH,
-	KICK,
-	HEAVY,
-	SPECIAL,
-	TAUNT,
-	PK,
-	PS,
-	KH,
-	PKH,
-	PKHS,
-	RECORD,
-	PLAY,
-	RESET,
-	PAUSE,
-	versusControlsNum
-};
+
 
 class Player {
 private:
@@ -43,6 +23,29 @@ protected:
 	//NONE
 
 public:
+	enum versusActions{
+		INVALID_CONTROL = -1,
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		PUNCH,
+		KICK,
+		HEAVY,
+		SPECIAL,
+		TAUNT,
+		P_K,
+		P_S,
+		K_H,
+		P_K_H,
+		P_K_H_S,
+		RECORD,
+		PLAY,
+		RESET,
+		PAUSE,
+		num_versusActions
+	};
+
 	static const char controlConfig[];
 	
 	static const char controlDefault[];
@@ -56,7 +59,7 @@ public:
     Character* character;
 	CharacterID charID;
 	
-	std::string controls[versusControlsNum];
+	int controls[SDL_CONTROLLER_AXIS_MAX + SDL_CONTROLLER_BUTTON_MAX];
 
     //TODO Bool for Controller/Keyboard
 	
@@ -69,6 +72,8 @@ public:
 	
 	void saveControls() const;
 	
+	int setButton(int action, int button);
+
 	void set_character(CharacterID ch);
 
 };

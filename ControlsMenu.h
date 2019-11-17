@@ -22,14 +22,9 @@ private:
 	//TODO lambdas?
 	static void(ControlsMenu::* const menuActions[])(void);
 
+	std::string controlMap[Player::num_versusActions];
+
 protected:
-//	int altSelection[game->MAX_PLAYERS];
-//	
-//	int altIndex[game->MAX_PLAYERS];
-//	
-//	//Tuple of menu option Text, Graphic, and Function
-//	std::vector<std::tuple<std::string, Texture*, std::function<void(void)>>> altOptions[game->MAX_PLAYERS];
-	
 	bool config[MAX_PLAYERS];
 	
 	int configNum[MAX_PLAYERS];
@@ -37,7 +32,7 @@ protected:
 	Texture prompt[MAX_PLAYERS];
 
 public:
-	enum Controls_Options{
+	enum ControlsOptions{
 		QUICK_CONFIG,
 		UP,
 		DOWN,
@@ -59,7 +54,7 @@ public:
 		PAUSE,
 		DEFAULT,
 		BACK,
-		numOptions
+		num_ControlsOptions
 	};
 
 	
@@ -68,11 +63,9 @@ public:
 
 	virtual ~ControlsMenu(void);
 	
-	void setButton(Player* p, int n, std::string button);
-	
 	std::string name(void) const;
 	
-	void reload(void);
+	void reloadMenu(void);
 	
 	void render(void) const;
 	

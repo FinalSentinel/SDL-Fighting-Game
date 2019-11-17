@@ -16,7 +16,7 @@
 
 const char ControlsMenu::controlDefault[] = "controlConfigDefault.txt";
 
-const std::string ControlsMenu::menuText[ControlsMenu::numOptions] = {
+const std::string ControlsMenu::menuText[ControlsMenu::num_ControlsOptions] = {
 	"Quick Config",
 	"UP",
 	"DOWN",
@@ -40,7 +40,7 @@ const std::string ControlsMenu::menuText[ControlsMenu::numOptions] = {
 	"Back"
 };
 
-void(ControlsMenu::* const ControlsMenu::menuActions[ControlsMenu::numOptions])(void) = {
+void(ControlsMenu::* const ControlsMenu::menuActions[ControlsMenu::num_ControlsOptions])(void) = {
 	&ControlsMenu::Quick_config,
 	&ControlsMenu::none,
 	&ControlsMenu::none,
@@ -67,16 +67,13 @@ void(ControlsMenu::* const ControlsMenu::menuActions[ControlsMenu::numOptions])(
 
 
 ControlsMenu::ControlsMenu(void){
-	for(int i = 0; i < numOptions; i++){
+	for(int i = 0; i < num_ControlsOptions; i++){
 		options.emplace_back(std::tuple<std::string, Texture*, std::function<void()> >
 			(menuText[i], new Texture(), std::bind(menuActions[i], this)));
 	}
-	for(int i = UP; i <= PAUSE; i++){
-		std::get<TEXT>(options[i]).append(": " + game->getPlayersList()[0]->controls[i]);
-	}
+	reloadMenu();
+
     //TODO setup keyboard stuff
-
-
 
 	for(int i = 0; i < MAX_PLAYERS; i++){
 		config[i] = false;
@@ -94,18 +91,39 @@ std::string ControlsMenu::name(void) const{
     return "ControlsMenu";
 }
 
-void ControlsMenu::reload(void){
-	for(int i = UP; i <= PAUSE; i++){
-		std::get<TEXT>(options[i]) = menuText[i] + ": " + game->getPlayersList()[0]->controls[i - UP];
+void ControlsMenu::reloadMenu(void){
+	for(int i = 0; i < Player::num_versusActions; i++){
+		controlMap[i] = "-";
+	}
+	for(int i = 0; i < SDL_CONTROLLER_AXIS_MAX; i++){
+		if(game->getPlayersList()[0]->controls[i] >= 0 && game->getPlayersList()[0]->controls[i] < num_ControlsOptions){
+			controlMap[game->getPlayersList()[0]->controls[i]] = SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(i));
+		}
+	}
+	for(int i = SDL_CONTROLLER_AXIS_MAX; i < SDL_CONTROLLER_AXIS_MAX + SDL_CONTROLLER_BUTTON_MAX; i++){
+		if(game->getPlayersList()[0]->controls[i] >= 0 && game->getPlayersList()[0]->controls[i] < num_ControlsOptions){
+			controlMap[game->getPlayersList()[0]->controls[i]] = SDL_GameControllerGetStringForButton(SDL_GameControllerButton(i - SDL_CONTROLLER_AXIS_MAX));
+		}
+	}
+
+	int pos = 0;
+	for(int i = 0; i < Player::num_versusActions; i++){
+		pos = std::get<TEXT>(options[i + UP]).find(":");
+
+		if(pos != std::string::npos){
+			std::get<TEXT>(options[i + UP]).erase(pos);
+		}
+
+		std::get<TEXT>(options[i + UP]).append(": " + controlMap[i]);
 	}
     //TODO keyboard stuff
 
     for(int i = UP; i <= PAUSE; i++){
-        std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
+        std::get<TEXTURE>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
     }
 
     if(!options.empty()){
-        std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+        std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
     }
 
     return;
@@ -125,26 +143,6 @@ void ControlsMenu::render(void) const{
     return;
 }
 
-void ControlsMenu::setButton(Player* p, const int n, const std::string button){
-    if(n < versusControlsNum){
-        for(int i = 0; i < versusControlsNum; i++){
-            if(i == n){
-                i++;
-            }
-            if(button == p->controls[i] && button != "-"){
-                p->controls[i] = p->controls[n];
-            }
-        }
-
-        p->controls[n] = button;
-    }
-    else{
-        std::cerr << "ERROR setButton position out of bounds" << std::endl;
-    }
-
-    return;
-}
-
 void ControlsMenu::update(void){
     //NONE
 
@@ -155,44 +153,58 @@ void ControlsMenu::update(void){
 void ControlsMenu::controllerAxisHandler(void){
     //TODO player differentiation
     //TODO menu mapping
-    if(selection >= 1 && selection < versusControlsNum && game->e.caxis.value > 30000){
-        if(selection >= PUNCH + 1 && selection <= versusControlsNum){
+    if(selection >= UP && selection <= PAUSE && game->e.caxis.value > 30000){
+		int pos = std::get<TEXT>(options[selection]).find(":") + 2;
+        if(selection >= PUNCH && selection < PAUSE &&
+				std::get<TEXT>(options[selection]).substr(pos) != SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis))){
             std::cout << "Set Button" << std::endl;
 
-            setButton(game->getPlayersList()[0], selection - 1, SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis)));
-            game->getPlayersList()[0]->saveControls();
+			std::string hold = std::get<TEXT>(options[selection]).substr(pos);
 
-            reload();
+			int replace = game->getPlayersList()[0]->setButton(selection - UP, game->e.caxis.axis);
+			game->getPlayersList()[0]->saveControls();
+
+			std::get<TEXT>(options[selection]).erase(pos);
+			std::get<TEXT>(options[selection]).append(SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis)));
+
+			std::get<TEXTURE>(options[selection])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[selection]), 100);
+			std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+
+			if(replace >= 0){
+				pos = std::get<TEXT>(options[replace + UP]).find(":") + 2;
+
+				std::get<TEXT>(options[replace + UP]).erase(pos);
+				std::get<TEXT>(options[replace + UP]).append(hold);
+
+				std::get<TEXTURE>(options[replace + UP])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[replace + UP]), 100);
+			}
         }
     }
-    
     else if(config[0]){
         if(game->e.caxis.value > 30000){
             if(game->e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || game->e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT){
-                setButton(game->getPlayersList()[0], configNum[0], SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(game->e.caxis.axis)));
+				game->getPlayersList()[0]->setButton(configNum[0], game->e.caxis.axis);
 
                 configNum[0]++;
                 
-                if(configNum[0] >= TAUNT && configNum[0] < RECORD){
-                    configNum[0] = RECORD;
+                if(configNum[0] >= Player::TAUNT && configNum[0] < Player::RECORD){
+                    configNum[0] = Player::RECORD;
                 }
-                else if(configNum[0] >= PAUSE){
+                else if(configNum[0] >= Player::PAUSE){
                     config[0] = false;
-
-                    game->fileI.close();
 
                     game->getPlayersList()[0]->saveControls();
 
-                    reload();
+                    reloadMenu();
 
                     for(unsigned int i = 0; i < options.size(); i++){
                         //TODO get RGBA
-                        std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                        std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
-                    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                    std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 }
 
-                prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0]], 100);
+                prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0] + UP], 100);
             }
         }
     }
@@ -206,38 +218,66 @@ void ControlsMenu::controllerAxisHandler(void){
 //TODO console output stuff
 void ControlsMenu::controllerButtonHandler(void){
     //TODO player differentiation
-    if(selection >= 1 && selection <= versusControlsNum && game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN &&
+    if(selection >= UP && selection <= PAUSE && game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN &&
             game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_UP && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_DOWN){
+		int pos = std::get<TEXT>(options[selection]).find(":") + 2;
         switch(game->e.cbutton.button){
-            case SDL_CONTROLLER_BUTTON_DPAD_LEFT:{
+            case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+			{
                 returnToTop();
-
-                break;
             }
+			break;
             
-            case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:{
-                if(selection >= PUNCH + 1 && selection < versusControlsNum){
-                    std::cout << "Set Button" << std::endl;
+            case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+			{
+                if(selection >= PUNCH && selection < PAUSE && std::get<TEXT>(options[selection]).substr(pos) != "-"){
+                    std::cout << "Erase Button" << std::endl;
                     
-                    setButton(game->getPlayersList()[0], selection - 1, "-");
-                    game->getPlayersList()[0]->saveControls();
-                    
-                    reload();
-                }
-                break;
-            }
+					for(int i = 0; i < Player::num_versusActions; i++){
+						if(game->getPlayersList()[0]->controls[i] == selection - UP){
+							game->getPlayersList()[0]->setButton(-1, i);
+							game->getPlayersList()[0]->saveControls();
 
-            default:{
-                if(selection >= PUNCH + 1 && selection < versusControlsNum){
-                    std::cout << "Set Button" << std::endl;
-                    
-                    setButton(game->getPlayersList()[0], selection - 1, SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button)));
-                    game->getPlayersList()[0]->saveControls();
-                    
-                    reload();
+							std::get<TEXT>(options[selection]).erase(pos);
+							std::get<TEXT>(options[selection]).append("-");
+
+							std::get<TEXTURE>(options[selection])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[selection]), 100);
+
+							i = Player::num_versusActions;
+						}
+					}
                 }
-                break;
             }
+			break;
+
+            default:
+			{
+                if(selection >= PUNCH && selection < PAUSE &&
+						std::get<TEXT>(options[selection]).substr(pos) != SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button))){
+                    std::cout << "Set Button" << std::endl;
+
+					std::string hold = std::get<TEXT>(options[selection]).substr(pos);
+
+					int replace = game->getPlayersList()[0]->setButton(selection - UP, SDL_CONTROLLER_AXIS_MAX + game->e.cbutton.button);
+                    game->getPlayersList()[0]->saveControls();
+
+					std::get<TEXT>(options[selection]).erase(pos);
+					std::get<TEXT>(options[selection]).append(SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button)));
+
+					std::get<TEXTURE>(options[selection])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[selection]), 100);
+					std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+
+					if(replace >= 0){
+						pos = std::get<TEXT>(options[replace + UP]).find(":") + 2;
+
+						std::get<TEXT>(options[replace + UP]).erase(pos);
+						std::get<TEXT>(options[replace + UP]).append(hold);
+
+						std::get<TEXTURE>(options[replace + UP])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[replace + UP]), 100);
+					}
+                }
+            }
+			break;
         }
     }
     else if(config[0]){
@@ -245,41 +285,41 @@ void ControlsMenu::controllerButtonHandler(void){
                 game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_UP && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_DOWN &&
                 game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_LEFT && game->e.cbutton.button != SDL_CONTROLLER_BUTTON_DPAD_RIGHT){
             if(game->e.cbutton.button != SDL_CONTROLLER_BUTTON_START){
-                setButton(game->getPlayersList()[0], configNum[0], SDL_GameControllerGetStringForButton(SDL_GameControllerButton(game->e.cbutton.button)));
+				game->getPlayersList()[0]->setButton(configNum[0], SDL_CONTROLLER_AXIS_MAX + game->e.cbutton.button);
                 
                 configNum[0]++;
                 
-                if(configNum[0] >= TAUNT && configNum[0] < RECORD){
-                    configNum[0] = RECORD;
+                if(configNum[0] >= Player::TAUNT && configNum[0] < Player::RECORD){
+                    configNum[0] = Player::RECORD;
                 }
-                else if(configNum[0] >= PAUSE){
+                else if(configNum[0] >= Player::PAUSE){
                     config[0] = false;
-
-                    game->fileI.close();
 
                     game->getPlayersList()[0]->saveControls();
 
-                    reload();
+                    reloadMenu();
 
                     for(unsigned int i = 0; i < options.size(); i++){
                         //TODO get RGBA
-                        std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                        std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
-                    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                    std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                 }
                 
-                prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0]], 100);
+                prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0] + UP], 100);
             }
             else{
                 config[0] = false;
 
                 game->fileI.close();
 
+				//TODO loadControls function.
+
                 for(unsigned int i = 0; i < options.size(); i++){
                     //TODO get RGBA
-                    std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                    std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                 }
-                std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
             }
         }
     }
@@ -295,14 +335,14 @@ void ControlsMenu::Quick_config(void){
     std::cout << "Quick Config" << std::endl;
 
 	config[0] = true;
-	configNum[0] = PUNCH;
+	configNum[0] = Player::PUNCH;
 
 	for(unsigned int i = 0; i < options.size(); i++){
 		//TODO get RGBA
-		std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
+		std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
 	}
 
-	prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0]], 100);
+	prompt[0].loadText(game->gameWindow.renderer, menuText[configNum[0] + UP], 100);
 
     return;
 }
@@ -314,23 +354,26 @@ void ControlsMenu::Default(void){
 
     if(!game->fileI.is_open()){
         std::cerr << "ERROR cannot open controls default." << std::endl;
-        
-        game->getPlayersList()[0]->saveControls();
     }
     else{
-		char hold[32];
+		char hold[4];
 
-        for(int i = 0; i < versusControlsNum; i++){
-            game->fileI.getline(hold, 32);
+        for(int i = 0; i < SDL_CONTROLLER_AXIS_MAX + SDL_CONTROLLER_BUTTON_MAX; i++){
+            game->fileI.getline(hold, 4);
             
-            game->getPlayersList()[0]->controls[i] = std::string(hold);
+			if(hold[0] == '-'){
+				hold[0] = '-';
+				hold[1] = '1';
+			}
+			int test1 = std::atoi(hold);
+			game->getPlayersList()[0]->controls[i] = std::atoi(hold);
         }
         
         game->getPlayersList()[0]->saveControls();
         
         game->fileI.close();
     
-        reload();
+        reloadMenu();
     }
 
     return;

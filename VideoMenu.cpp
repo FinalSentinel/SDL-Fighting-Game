@@ -61,7 +61,7 @@ void VideoMenu::load(void){
     MenuState::load();
     
     if(dials[FULLSCREEN_DIAL]){
-        std::get<GRAPHIC>(options[0])->setRGBA(0x80, 0x80, 0x80);
+        std::get<TEXTURE>(options[0])->setRGBA(0x80, 0x80, 0x80);
     }
     
     return;
@@ -77,7 +77,7 @@ void VideoMenu::reload(void){
     std::get<TEXT>(options[2]) = "VSync: " + std::string(dials[VSYNC_DIAL] ? "ON" : "OFF");
     
     for(int i = 0; i < 3; i++){
-        std::get<GRAPHIC>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
+        std::get<TEXTURE>(options[i])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[i]), 100);
     }
     
     return;
@@ -137,11 +137,11 @@ void VideoMenu::controllerButtonHandler(void){
                     reload();
 
                     for(unsigned int i = 0; i < options.size(); i++){
-                        std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                        std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
-                    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                    std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                     if(dials[FULLSCREEN_DIAL]){
-                        std::get<GRAPHIC>(options[0])->setRGBA(0x80, 0x80, 0x80);
+                        std::get<TEXTURE>(options[0])->setRGBA(0x80, 0x80, 0x80);
                     }
                 }
             }
@@ -175,11 +175,11 @@ void VideoMenu::controllerButtonHandler(void){
                     prompt = false;
 
                     for(unsigned int i = 0; i < options.size(); i++){
-                        std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
+                        std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0xFF);
                     }
-                    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                    std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
                     if(dials[FULLSCREEN_DIAL]){
-                        std::get<GRAPHIC>(options[0])->setRGBA(0x80, 0x80, 0x80);
+                        std::get<TEXTURE>(options[0])->setRGBA(0x80, 0x80, 0x80);
                     }
                 }
             }
@@ -239,14 +239,14 @@ void VideoMenu::controllerButtonHandler(void){
                         break;
                     }
                 }
-                std::get<GRAPHIC>(options[selection])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[selection]), 100);
-                std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                std::get<TEXTURE>(options[selection])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[selection]), 100);
+                std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
             }
         }
         if(game->gameWindow.get_fullscreen() && (game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP ||
                 game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)){
             if(game->e.cbutton.type == SDL_CONTROLLERBUTTONDOWN){
-                std::get<GRAPHIC>(options[selection])->setRGBA();
+                std::get<TEXTURE>(options[selection])->setRGBA();
                 if(game->e.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP){
                     if(index > 1){
                         index--;
@@ -267,7 +267,7 @@ void VideoMenu::controllerButtonHandler(void){
 
                     selection = ((options.size() + selection - 1) % (options.size() - 1)) + 1;
                 }
-                std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+                std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
 
             }
         }
@@ -289,7 +289,7 @@ void VideoMenu::Resolution(void){
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
 
         for(unsigned int i = 0; i < options.size(); i++){
-            std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
+            std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
     
@@ -308,7 +308,7 @@ void VideoMenu::Fullscreen(void){
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
 
         for(unsigned int i = 0; i < options.size(); i++){
-            std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
+            std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
     
@@ -324,7 +324,7 @@ void VideoMenu::VSync(void){
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
 
         for(unsigned int i = 0; i < options.size(); i++){
-            std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
+            std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
     
@@ -348,7 +348,7 @@ void VideoMenu::Default(void){
         resPrompt->loadText(game->gameWindow.renderer, "Keep video settings?: " + std::string(keep ? "Yes" : "No"), 100);
         
         for(unsigned int i = 0; i < options.size(); i++){
-            std::get<GRAPHIC>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
+            std::get<TEXTURE>(options[i])->setRGBA(0xFF, 0xFF, 0xFF, 0x40);
         }
     }
     game->fileI.close();

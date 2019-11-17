@@ -50,18 +50,18 @@ std::string AudioMenu::name(void) const{
 
 void AudioMenu::reload(void){
     std::get<TEXT>(options[0]) = "Master Volume: " + std::to_string(game->gameAudio.get_master());
-    std::get<GRAPHIC>(options[0])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[0]), 100);
+    std::get<TEXTURE>(options[0])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[0]), 100);
     
     std::get<TEXT>(options[1]) = "Music Volume: " + std::to_string(game->gameAudio.get_music());
-    std::get<GRAPHIC>(options[1])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[1]), 100);
+    std::get<TEXTURE>(options[1])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[1]), 100);
     
     std::get<TEXT>(options[2]) = "Voice Volume: " + std::to_string(game->gameAudio.get_voices());
-    std::get<GRAPHIC>(options[2])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[2]), 100);
+    std::get<TEXTURE>(options[2])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[2]), 100);
     
     std::get<TEXT>(options[3]) = "Effects Volume: " + std::to_string(game->gameAudio.get_effects());
-    std::get<GRAPHIC>(options[3])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[3]), 100);
+    std::get<TEXTURE>(options[3])->loadText(game->gameWindow.renderer, std::get<TEXT>(options[3]), 100);
     
-    std::get<GRAPHIC>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
+    std::get<TEXTURE>(options[selection])->setRGBA(0xFF, 0x80, 0x00);
         
     return;
 }
